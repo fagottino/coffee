@@ -17,9 +17,9 @@ class Database {
         $whitelist = array('127.0.0.1', "::1");
 
         if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
-            // your local connection
+            // $connection = new mysqli("your local parameter");
         } else {
-            // your remote connection
+            // $connection = new mysqli("your remote connection");
         }
         return $connection;
     }
