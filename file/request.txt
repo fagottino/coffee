@@ -53,3 +53,8 @@
 23/12/2016 18:18:39 / {"update_id":624792387,
 "message":{"message_id":1300,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482513518,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
 23/12/2016 18:58:27 / 
+23/12/2016 20:41:55 / 
+23/12/2016 20:43:04 / 
+23/12/2016 20:43:57 / 
+24/12/2016 14:55:01 / 
+24/12/2016 23:34:52 / 

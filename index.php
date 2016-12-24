@@ -10,28 +10,47 @@ ini_set('error_reporting', E_ALL);
 set_time_limit(0);
 $arrayUser = array();
 $userController = new UserController();
-
-$newOffset = isset($_GET['offset']) ? (int)$_GET['offset'] : null;
+$menuController = new MenuController();
+$messageManager = new MessageManager();
+$user = new User();
 
 $getUnreadMessage = file_get_contents("php://input");
 $unreadMessageArray = json_decode($getUnreadMessage, TRUE);
 
-isset($newOffset) ? $newOffset : $unreadMessageArray["result"]["update_id"];
-
-$user = new User();
-$user->getUserData($unreadMessageArray);
-
-
-
 $whitelist = array('127.0.0.1', "::1");
 
 if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
-    $user->setMessage("listaUtenti");
-    $user->setIdTelegram("19179842");
-    $user->setChatId("19179842");
+    $unreadMessageArray = [
+        "update_id" => 624792369,
+        "message" => [
+            "message_id" => 1270,
+            "from" => [
+                "id" => "19179842",
+                "first_name" => "fagottino",
+                "username" => "fagottino"
+            ],
+             "chat" => [
+                "id" => 19179842,
+                 "first_name" => "fagottino",
+                 "username" => "fagottino",
+                 "type" => "private"
+            ],
+            "date" => "1482502325",
+            "text" => "/hapagato",
+            "entities" => [
+                "type" => "bot_command",
+                "offset" => 0,
+                "length" => 9
+            ]
+        ]
+    ];
+//    $user->setMessage("listaUtenti");
+//    $user->setIdTelegram("19179842");
+//    $chat = $user->getChat();
+//    $chat->setId("19179842");
 }
 
-
+$user->getUserData($unreadMessageArray);
 
 try {
     $userProfile = $userController->getInfo($user->getIdTelegram());
@@ -44,103 +63,107 @@ try {
         sendMessage($user->getChatId(), $e->getMessage());
     }
 }
-$menuController = new MenuController();
-$messageManager = new MessageManager();
 
-switch ($user->getMessage()) {
-    case "/ilbenefattore":
-    case "/ilbenefattore@IlBenefattoreDelCaffe_Bot":
-        $benefattore = chiPaga();
-        $text = $benefattore;
-        $messageManager->send($user->getChatId(), $text, false, true);
-    break;
-    case "/hapagato":
-        if ($user->getOperation() == "setNumeroCaffe") {
-            $text = "Ho capito. Dammi il nome di chi sta pagando!";
-            $messageManager->sendSimpleMessage($user->getChatId(), $text);
-        } else {
-            $user->setOperation("setNumeroCaffe");
-            $userController->updateCurrentOperation($user);
-            $allName = $userController->getAllUserName();
-//            try {
-//                $customMenu = $menuController->createInlineMenu($allName);
-//                $text = "Chi ha pagato i caffè?";
-//                $messageManager->sendInline($user->getChatId(), $text, $customMenu);
-//            } catch (MessageException $ex) {
-                $customMenu = $menuController->createCustomMenu($allName, true);
-                $text = "Chi ha pagato i caffè?";
-                $messageManager->send($user->getChatId(), $text, $customMenu);
-//            }
-        }
-    break;
-    case "listaUtenti":
 
-        $args = array(
-        'chat_id' => "-114342037",
-        'user_id' => "19179842d"
-        );
-        $getAllUser = new HttpRequest("get", API_URL."/getChatMember", $args);
 
-        $rr = $r->getResponse();
-        $ar = json_decode($rr, true);
-        $messageManager->send($user->getChatId(), $ar);
+
+
+
+switch ($user->getChat()->getId()) {
+
+    case "private":
+        $text = "beccato!";
+        $messageManager->sendSimpleMessage($user->getChat()->getId(), $text);
     break;
-        
+    case "group":
+        $text = "anche qui!";
+        $messageManager->sendSimpleMessage($user->getChat()->getId(), $text);
+    break;
     default:
-        $currentOperation = $user->getOperation();
-        
-        switch ($currentOperation) {
-            case "setNumeroCaffe":
-                $user->setNomeBenefattore($user->getMessage());
-                $user->setOperation("setNumeroCaffe_step1");
-                try {
-                    $userController->updateCurrentOperation($user);
-                } catch (DatabaseException $ex) {
-                    // errore
-                }
-                $text = "Quanti caffè ha pagato ".$user->getMessage()."?";
-                $messageManager->send($user->getChatId(), $text, false, true);
-            break;
-            case "setNumeroCaffe_step1":
-                $user->setOperation("");
-                try {
-                    $userController->updateCurrentOperation($user);
-                } catch (DatabaseException $ex) {
-                    // errore
-                }
-                setPayment($user, $user->getMessage());
-                $text = "Ho regisrato il pagamento di ".$user->getMessage() ." caffè.";
-                $messageManager->send($user->getChatId(), $text);
-            break;
-            default:
-                $text = "Cheddici? Usa i comandi di defaultAVvzv.";
-                $messageManager->send($user->getChatId(), $text);
-                    if (!file_exists($errorFile)) {
-                        $eF = fopen($errorFile, "wr");
-                        fclose($eF);
-                    }
-            break;
-    }
+    break;
+    
 }
-    $errorFile = "./file/request.txt";
-    $errorCurrent = file_get_contents($errorFile);
-    $errorCurrent .= date("d/m/Y H:i:s / ");
-    $errorCurrent .= $getUnreadMessage;
-    $errorCurrent .= "\n";
-    file_put_contents($errorFile, $errorCurrent);
 
-//$result = array(
-//    'offset' => $offset
-//);
-//$json = json_encode($result);
-//$getUnreadMessage = file_get_contents(API_URL."/getUpdates?offset=".$offset);
-//$j++;
-//try {
-//    $allName = $userController->getAllUserName();
-//    print_r("ECCCOLI I NOMII<br />".$allName);
-//} catch (Exception $ex) {
-//    echo "ERRORE ".$ex->getMessage();
+
+
+
+
+
+
+//switch ($user->getMessage()) {
+//    case "/ilbenefattore":
+//    case "/ilbenefattore@IlBenefattoreDelCaffe_Bot":
+//        $benefattore = chiPaga();
+//        $text = $benefattore;
+//        $messageManager->send($user->getChatId(), $text, false, true);
+//    break;
+//    case "/hapagato":
+//        if ($user->getOperation() == "setNumeroCaffe") {
+//            $text = "Ho capito. Dammi il nome di chi sta pagando!";
+//            $messageManager->sendSimpleMessage($user->getChatId(), $text);
+//        } else {
+//            $user->setOperation("setNumeroCaffe");
+//            $userController->updateCurrentOperation($user);
+//            $allName = $userController->getAllUserName();
+////            try {
+////                $customMenu = $menuController->createInlineMenu($allName);
+////                $text = "Chi ha pagato i caffè?";
+////                $messageManager->sendInline($user->getChatId(), $text, $customMenu);
+////            } catch (MessageException $ex) {
+//                $customMenu = $menuController->createCustomMenu($allName, true);
+//                $text = "Chi ha pagato i caffè?";
+//                $messageManager->send($user->getChatId(), $text, $customMenu);
+////            }
+//        }
+//    break;
+//    case "listaUtenti":
+//        $messageManager->send("-114342037", "19179842d");
+//    break;
+//
+//    default:
+//        $currentOperation = $user->getOperation();
+//
+//        switch ($currentOperation) {
+//            case "setNumeroCaffe":
+//                $user->setNomeBenefattore($user->getMessage());
+//                $user->setOperation("setNumeroCaffe_step1");
+//                try {
+//                    $userController->updateCurrentOperation($user);
+//                } catch (DatabaseException $ex) {
+//                    // errore
+//                }
+//                $text = "Quanti caffè ha pagato ".$user->getMessage()."?";
+//                $messageManager->send($user->getChatId(), $text, false, true);
+//            break;
+//            case "setNumeroCaffe_step1":
+//                $user->setOperation("");
+//                try {
+//                    $userController->updateCurrentOperation($user);
+//                } catch (DatabaseException $ex) {
+//                    // errore
+//                }
+//                setPayment($user, $user->getMessage());
+//                $text = "Ho regisrato il pagamento di ".$user->getMessage() ." caffè.";
+//                $messageManager->send($user->getChatId(), $text);
+//            break;
+//            default:
+//                $text = "Cheddici? Usa i comandi di defaultAVvzv.";
+//                $messageManager->send($user->getChatId(), $text);
+//                    if (!file_exists($errorFile)) {
+//                        $eF = fopen($errorFile, "wr");
+//                        fclose($eF);
+//                    }
+//            break;
+//    }
 //}
+    
+$errorFile = "./file/request.txt";
+$errorCurrent = file_get_contents($errorFile);
+$errorCurrent .= date("d/m/Y H:i:s / ");
+$errorCurrent .= $getUnreadMessage;
+$errorCurrent .= "\n";
+file_put_contents($errorFile, $errorCurrent);
+
 function chiPaga() {
     $connection = new Database();
     $conn = $connection->getConnection();
@@ -197,7 +220,7 @@ function setPayment(User $_user, $n_caffe) {
 }
 
 function registerOperation($_user) {
-    $sql = "UPDATE utente SET operation = ".$_user->getOperation()." WHERE id_utente = ".$_user->getId();
+    $sql = "UPDATE utente SET operation = ".$_user->getCurrentOperation()." WHERE id_utente = ".$_user->getId();
     $query = $conn->prepare($sql);
         if ($query) {
             $query->execute();

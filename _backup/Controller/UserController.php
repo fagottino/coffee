@@ -86,7 +86,7 @@ class UserController {
         try {
             $db = Database::getConnection();
             
-            $result = $db->query ("UPDATE utente SET operation = '".$_user->getOperation()."' WHERE id_telegram = ".$_user->getIdTelegram()."");
+            $result = $db->query ("UPDATE utente SET operation = '".$_user->getCurrentOperation()."' WHERE id_telegram = ".$_user->getIdTelegram()."");
             
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage()." Line -> ".$ex->getLine()." Code -> ".$ex->getCode());

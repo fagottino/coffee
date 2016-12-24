@@ -1,4 +1,5 @@
 <?php
+require_once './Model/Chat.php';
 /**
  * Description of User
  *
@@ -10,15 +11,15 @@ class User {
     private $username;
     private $chatId;
     private $message;
-    private $nomeBenefattore;
+    private $chat;
     private $currentOperation;
     
     public function getUserData($_user) {
         $this->idTelegram = $_user["message"]["from"]["id"];
         $this->name = $_user["message"]["from"]["first_name"];
         $this->username = $_user["message"]["from"]["username"];
-        $this->chatId = $_user["message"]["chat"]["id"];
         $this->message = $_user["message"]["text"];
+        $this->chat = new Chat($_user["message"]["chat"]);
     }
     
     public function setUserDataFromDb($_user) {
@@ -41,12 +42,12 @@ class User {
         return $this->username;
     }
     
-    public function getChatId() {
-        return $this->chatId;
+    public function getChat() {
+        return $this->chat;
     }
     
     public function setChatId($_chatId) {
-        $this->chatId = $_chatId;
+        $this->chat = "";
     }
     
     public function getMessage() {
@@ -57,19 +58,11 @@ class User {
         $this->message = $_message;
     }
     
-    public function getNomeBenefattore() {
-        return $this->nomeBenefattore;
-    }
-    
-    public function setNomeBenefattore($_name) {
-        $this->nomeBenefattore = $_name;
-    }
-    
-    public function getOperation() {
+    public function getCurrentOperation() {
         return $this->currentOperation;
     }
     
-    public function setOperation($_operation) {
+    public function setCurrentOperation($_operation) {
         $this->currentOperation = $_operation;
     }
 }

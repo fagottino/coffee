@@ -55,11 +55,11 @@ switch ($user->getMessage()) {
         $messageManager->send($user->getChatId(), $text, false, true);
     break;
     case "/hapagato":
-        if ($user->getOperation() == "setNumeroCaffe") {
+        if ($user->getCurrentOperation() == "setNumeroCaffe") {
             $text = "Ho capito. Dammi il nome di chi sta pagando!";
             $messageManager->sendSimpleMessage($user->getChatId(), $text);
         } else {
-            $user->setOperation("setNumeroCaffe");
+            $user->setCurrentOperation("setNumeroCaffe");
             $userController->updateCurrentOperation($user);
             $allName = $userController->getAllUserName();
 //            try {
@@ -87,12 +87,12 @@ switch ($user->getMessage()) {
     break;
         
     default:
-        $currentOperation = $user->getOperation();
+        $currentOperation = $user->getCurrentOperation();
         
         switch ($currentOperation) {
             case "setNumeroCaffe":
                 $user->setNomeBenefattore($user->getMessage());
-                $user->setOperation("setNumeroCaffe_step1");
+                $user->setCurrentOperation("setNumeroCaffe_step1");
                 try {
                     $userController->updateCurrentOperation($user);
                 } catch (DatabaseException $ex) {
@@ -102,7 +102,7 @@ switch ($user->getMessage()) {
                 $messageManager->send($user->getChatId(), $text, false, true);
             break;
             case "setNumeroCaffe_step1":
-                $user->setOperation("");
+                $user->setCurrentOperation("");
                 try {
                     $userController->updateCurrentOperation($user);
                 } catch (DatabaseException $ex) {
@@ -197,7 +197,7 @@ function setPayment(User $_user, $n_caffe) {
 }
 
 function registerOperation($_user) {
-    $sql = "UPDATE utente SET operation = ".$_user->getOperation()." WHERE id_utente = ".$_user->getId();
+    $sql = "UPDATE utente SET operation = ".$_user->getCurrentOperation()." WHERE id_utente = ".$_user->getId();
     $query = $conn->prepare($sql);
         if ($query) {
             $query->execute();
