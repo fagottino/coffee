@@ -25,7 +25,7 @@ if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
         "message" => [
             "message_id" => 1270,
             "from" => [
-                "id" => "19179842",
+                "id" => 19179842,
                 "first_name" => "fagottino",
                 "username" => "fagottino"
             ],
@@ -35,7 +35,7 @@ if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
                  "username" => "fagottino",
                  "type" => "private"
             ],
-            "date" => "1482502325",
+            "date" => 1482502325,
             "text" => "/hapagato",
             "entities" => [
                 "type" => "bot_command",
