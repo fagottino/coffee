@@ -30,10 +30,6 @@ class User {
         return $this->idTelegram;
     }
     
-    public function setIdTelegram($_idTelegram) {
-        $this->idTelegram = $_idTelegram;
-    }
-    
     public function getName() {
         return $this->name;
     }
@@ -44,10 +40,6 @@ class User {
     
     public function getChat() {
         return $this->chat;
-    }
-    
-    public function setChatId($_chatId) {
-        $this->chat = "";
     }
     
     public function getMessage() {

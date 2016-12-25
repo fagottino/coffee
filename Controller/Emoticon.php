@@ -10,6 +10,10 @@ class Emoticon {
         
     }
     
+    public static function error() {
+        return "\xe2\x9c\x96 ";
+    }
+    
     public static function back() {
         return "\xF0\x9F\x94\x99 ";
     }
@@ -28,5 +32,9 @@ class Emoticon {
     
     public static function plus() {
         return "\xE2\x9E\x95 ";
+    }
+    
+    public static function retry() {
+        return "\xe2\x9f\xb3 ";
     }
 }

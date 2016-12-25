@@ -26,3 +26,17 @@
 23/12/2016 20:41:55 / Bad Request: Message text is empty{"hide_keyboard":true}
 23/12/2016 20:43:04 / Bad Request: Message text is empty{"hide_keyboard":true}
 23/12/2016 20:43:57 / Bad Request: Message text is empty{"hide_keyboard":true}
+25/12/2016 03:23:41 / Bad Request: REPLY_MARKUP_INVALID{"inline_keyboard":[[]]}
+25/12/2016 03:24:29 / Bad Request: REPLY_MARKUP_INVALID{"inline_keyboard":[[]]}
+25/12/2016 04:14:20 / Not Found: method not found
+25/12/2016 04:14:43 / Not Found: method not found
+25/12/2016 04:15:00 / Not Found: method not found
+25/12/2016 04:17:53 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array
+25/12/2016 04:17:55 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array
+25/12/2016 04:18:32 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array
+25/12/2016 04:18:34 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array
+25/12/2016 04:21:37 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array
+25/12/2016 04:23:17 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array{"keyboard":true,"resize_keyboard":true}
+25/12/2016 04:23:17 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array{"keyboard":true,"resize_keyboard":true}
+25/12/2016 04:23:18 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array{"keyboard":true,"resize_keyboard":true}
+25/12/2016 04:23:25 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array{"keyboard":true,"resize_keyboard":true}

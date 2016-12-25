@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <menu>
+        <home>Menù principale</home>
+        <back>Indietro</back>
+    </menu>
+    <error>
+        <errorWithCreationOfCustomMenu>Errore nella creazione del menù custom.</errorWithCreationOfCustomMenu>
+        <textIsRequired>Scrivi il messaggio da inviare.</textIsRequired>
+        <inlineKeyboardIsRequired>Devi specificare una tastiera inline da inviare.</inlineKeyboardIsRequired>
+    </error>
+    <general>
+        <retry>Riprova.</retry>
+    </general>
+</document>

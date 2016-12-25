@@ -36,4 +36,8 @@ class Chat {
     public function setId($_idChat) {
         $this->idChat = $_idChat;
     }
+    
+    public function getType() {
+        return $this->type;
+    }
 }

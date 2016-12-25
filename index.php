@@ -1,5 +1,6 @@
 <?php
 require_once './Model/Database.php';
+require_once './Model/Lang.php';
 require_once './Model/User.php';
 require_once './Controller/UserController.php';
 require_once './Controller/MenuController.php';
@@ -8,19 +9,18 @@ clearstatcache();
 
 ini_set('error_reporting', E_ALL);
 set_time_limit(0);
-$arrayUser = array();
 $userController = new UserController();
 $menuController = new MenuController();
 $messageManager = new MessageManager();
 $user = new User();
 
 $getUnreadMessage = file_get_contents("php://input");
-$unreadMessageArray = json_decode($getUnreadMessage, TRUE);
+$unreadMessage = json_decode($getUnreadMessage, TRUE);
 
 $whitelist = array('127.0.0.1', "::1");
 
-if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
-    $unreadMessageArray = [
+if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
+    $privateMessage = [
         "update_id" => 624792369,
         "message" => [
             "message_id" => 1270,
@@ -44,13 +44,10 @@ if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
             ]
         ]
     ];
-//    $user->setMessage("listaUtenti");
-//    $user->setIdTelegram("19179842");
-//    $chat = $user->getChat();
-//    $chat->setId("19179842");
+    $unreadMessage = $privateMessage;
 }
 
-$user->getUserData($unreadMessageArray);
+$user->getUserData($unreadMessage);
 
 try {
     $userProfile = $userController->getInfo($user->getIdTelegram());
@@ -60,20 +57,22 @@ try {
     try {
         $userController->register($user);
     } catch (UserControllerException $e) {
-        sendMessage($user->getChatId(), $e->getMessage());
+        sendMessage($user->getChat()->getId(), $e->getMessage());
     }
 }
 
 
 
-
-
-
-switch ($user->getChat()->getId()) {
+switch ($user->getChat()->getType()) {
 
     case "private":
         $text = "beccato!";
-        $messageManager->sendSimpleMessage($user->getChat()->getId(), $text);
+        $allName = $userController->getAllUserName();
+        $customMenu = $menuController->createCustomMenu($allName, true);
+        $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
+//        $customMenus = $menuController->createInlineMenu($allName);
+//        $textq = "Chi ha pagato i caffè?";
+//        $messageManager->sendInline($user->getChat()->getId(), $textq, $customMenus);
     break;
     case "group":
         $text = "anche qui!";
@@ -157,12 +156,12 @@ switch ($user->getChat()->getId()) {
 //    }
 //}
     
-$errorFile = "./file/request.txt";
-$errorCurrent = file_get_contents($errorFile);
-$errorCurrent .= date("d/m/Y H:i:s / ");
-$errorCurrent .= $getUnreadMessage;
-$errorCurrent .= "\n";
-file_put_contents($errorFile, $errorCurrent);
+$requestFile = "./file/request.txt";
+$requestCurrent = file_get_contents($requestFile);
+$requestCurrent .= date("d/m/Y H:i:s / ");
+$requestCurrent .= $getUnreadMessage;
+$requestCurrent .= "\n";
+file_put_contents($requestFile, $requestCurrent);
 
 function chiPaga() {
     $connection = new Database();
