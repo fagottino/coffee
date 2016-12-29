@@ -317,21 +317,6 @@ function setPayment(User $_user, $n_caffe) {
     return false;
 }
 
-//function registerOperation(User $_user) {
-//    $connection = new Database();
-//    $conn = $connection->getConnection();
-//    //$sql = "UPDATE utente SET operation = ".$_user->getCurrentOperation()." WHERE id_utente = ".$_user->getId();
-//    $sql = "UPDATE utente SET operation = (SELECT id_operation FROM operation WHERE name_operation = ".$_user->getCurrentOperation().") WHERE id_telegram = ".$_user->getId();
-//    $query = $conn->prepare($sql);
-//        if ($query) {
-//            $query->execute();
-//        } else 
-//            trigger_error('Database connection failed: ' . $conn->connect_error, E_USER_ERROR);
-//
-//        $query->close();
-//        return true;
-//}
-
 function situazioneAttuale() {
     $conn = new Database();
     
