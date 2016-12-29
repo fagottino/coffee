@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
     <menu>
+        <help>Aiuto</help>
+        <settings>Impostazioni</settings>
+        <quit>Esci dal bot</quit>
         <home>Menù principale</home>
         <back>Indietro</back>
+        <offer>Ti piace il bot? Offrimi un caffè</offer>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Errore nella creazione del menù custom.</errorWithCreationOfCustomMenu>
-        <textIsRequired>Scrivi il messaggio da inviare.</textIsRequired>
         <inlineKeyboardIsRequired>Devi specificare una tastiera inline da inviare.</inlineKeyboardIsRequired>
+        <cantUnderstandTypeOfChat>Non riesco a riconoscere il tipo di chat.</cantUnderstandTypeOfChat>
+        <textIsRequired>Il messaggio da inviare è obbligatorio.</textIsRequired>
+        <noResultsFound>Nessun risultato trovato</noResultsFound>
+        <cantGetNameOfUser>Errore durante la lettura dei nomi degli utenti.</cantGetNameOfUser>
+        <errorWhileUserRegistration>Errore nella registrazione dell'utente.</errorWhileUserRegistration>
+        <cantGetLastOperation>Errore durante la lettura dell'operazione corrente.</cantGetLastOperation>
+        <cantUnderstandMessage>Se scrivi così non riesco a capirti. Usa i tasti in basso.</cantUnderstandMessage>
     </error>
     <general>
         <retry>Riprova.</retry>
+        <line>Linea -></line>
+        <code>Codice -></code>
     </general>
 </document>

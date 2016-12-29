@@ -18,20 +18,21 @@ class MessageManager {
     public function sendReplyMarkup($chatID, $text, $rm = false, $dis = false)
     {
         if (!$rm) {
-            $rm = array('hide_keyboard' => true);
-            $rm = json_encode($rm);
+            $rmGen = array('hide_keyboard' => true);
+            $rm = json_encode($rmGen);
         } else {
-            $rm = array('keyboard' => $rm,
+            $rmGen = array('keyboard' => $rm,
             'resize_keyboard' => true
             );
-            $rm = json_encode($rm);
+            $rm = json_encode($rmGen);
         }
 
         $args = array(
-        'chat_id' => $chatID,
-        'text' => $text,
-        'reply_markup' => $rm,
-        'disable_notification' => $dis
+            'chat_id' => $chatID,
+            'text' => $text,
+            'reply_markup' => $rm,
+            'parse_mode' => "HTML",
+            'disable_notification' => $dis
         );
         
         $this->sendMessage("sendMessage", $args);
@@ -42,13 +43,13 @@ class MessageManager {
         global $lang;
         if ($text) {
             if ($_keyboard) {
-                $_keyboard = array('inline_keyboard' => $_keyboard);
-                $_keyboard = json_encode($_keyboard);
+                $_keyboardGen = array('inline_keyboard' => $_keyboard);
+                $_keyboard = json_encode($_keyboardGen);
 
             $args = array(
-            'chat_id' => $chatID,
-            'text' => $text,
-            'reply_markup' => $_keyboard
+                'chat_id' => $chatID,
+                'text' => $text,
+                'reply_markup' => $_keyboard
             );
 
             $this->sendMessage("sendMessage", $args);
@@ -64,8 +65,8 @@ class MessageManager {
         global $lang;
         if ($_text) {
             if ($_keyboard) {
-                    $_keyboard = array('inline_keyboard' => $_keyboard);
-                    $_keyboard = json_encode($_keyboard);
+                    $_keyboardGen = array('inline_keyboard' => $_keyboard);
+                    $_keyboard = json_encode($_keyboardGen);
 
                 $args = array(
                     'chat_id' => $_chatId,
@@ -82,15 +83,27 @@ class MessageManager {
             throw new MessageException($lang->error->textIsRequired);
         }
     }
+    
+    public function getNumberMemberGroup($_chatID, $_userId)
+    {
+        $args = array(
+        'chat_id' => $chatID,
+        'text' => $text,
+        'reply_markup' => $rm,
+        'disable_notification' => $dis
+        );
+        
+        $this->sendMessage("getChatMembersCount", $args);
+    }
 
     private function sendMessage($_action, $_args) {
-        $r = new HttpRequest("get", API_URL."/".$_action, $_args);
+        $request = new HttpRequest("get", API_URL."/".$_action, $_args);
 
-        $rr = $r->getResponse();
-        $ar = json_decode($rr, true);
-        $ok = $ar["ok"]; //false
+        $response = $request->getResponse();
+        $data = json_decode($response, true);
+        $ok = $data["ok"]; //false
         if ($ok == 0) {
-            $error = $ar["error_code"];
+            $error = $data["error_code"];
             switch ($error) {
                 case 403:
                 //imposta che tale utente ha disattivato il bot.                        
@@ -104,7 +117,7 @@ class MessageManager {
                     }
                     $errorCurrent = file_get_contents($errorFile);
                     $errorCurrent .= date("d/m/Y H:i:s / ");
-                    $errorCurrent .= $ar["description"];
+                    $errorCurrent .= $data["description"];
                     $errorCurrent .= $_args["reply_markup"];
                     $errorCurrent .= "\n";
                     file_put_contents($errorFile, $errorCurrent);
@@ -112,49 +125,10 @@ class MessageManager {
             }
         }
     }
-    
-    public function getNumberMemberGroup($_chatID, $_userId)
-    {
-        $args = array(
-        'chat_id' => $chatID,
-        'text' => $text,
-        'reply_markup' => $rm,
-        'disable_notification' => $dis
-        );
-
-        if($text)
-        {
-            $r = new HttpRequest("get", API_URL."/sendmessage", $args);
-            
-            $rr = $r->getResponse();
-            $ar = json_decode($rr, true);
-            $ok = $ar["ok"]; //false
-            if ($ok == 0) {
-                $error = $ar["error_code"];
-                if($error == 403)
-                {
-                    //imposta che tale utente ha disattivato il bot.
-                } else if ($error == 400) {
-                    $errorFile = "./file/errors.txt";
-                    if (!file_exists($errorFile)) {
-                        $eF = fopen($errorFile, "wr");
-                        fclose($eF);
-                    }
-                    $errorCurrent = file_get_contents($errorFile);
-                    $errorCurrent .= date("d/m/Y H:i:s / ");
-                    $errorCurrent .= $ar["description"];
-                    $errorCurrent .= $rm;
-                    $errorCurrent .= "\n";
-                    file_put_contents($errorFile, $errorCurrent);
-                }
-            }
-        }
-    }
         
     function sendSimpleMessage($id, $message) {
        file_get_contents(API_URL."/sendmessage?chat_id=".$id."&text=".urlencode($message));
     }
-
 }
 
 class MessageException extends Exception { }

@@ -1,127 +1,30 @@
-23/12/2016 10:39:22 / {"update_id":624792358,
-"message":{"message_id":1249,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":-114342037,"title":"TestGroup","type":"group","all_members_are_administrators":true},"date":1482485962,"left_chat_participant":{"id":186132931,"first_name":"Il benefattore del caff\u00e8","username":"IlBenefattoreDelCaffe_Bot"},"left_chat_member":{"id":186132931,"first_name":"Il benefattore del caff\u00e8","username":"IlBenefattoreDelCaffe_Bot"}}}
-23/12/2016 10:43:59 / 
-23/12/2016 10:44:03 / {"update_id":624792363,
-"message":{"message_id":1258,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482486242,"text":"/ilbenefattore","entities":[{"type":"bot_command","offset":0,"length":14}]}}
-23/12/2016 10:48:58 / {"update_id":624792364,
-"message":{"message_id":1260,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":-114342037,"title":"TestGroup","type":"group","all_members_are_administrators":true},"date":1482486538,"new_chat_participant":{"id":186132931,"first_name":"Il benefattore del caff\u00e8","username":"IlBenefattoreDelCaffe_Bot"},"new_chat_member":{"id":186132931,"first_name":"Il benefattore del caff\u00e8","username":"IlBenefattoreDelCaffe_Bot"}}}
-23/12/2016 10:49:51 / {"update_id":624792365,
-"message":{"message_id":1262,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":-114342037,"title":"TestGroup","type":"group","all_members_are_administrators":true},"date":1482486591,"left_chat_participant":{"id":126125310,"first_name":"fagottino","username":"fagobot"},"left_chat_member":{"id":126125310,"first_name":"fagottino","username":"fagobot"}}}
-23/12/2016 10:57:11 / {"update_id":624792366,
-"message":{"message_id":1264,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":-114342037,"title":"TestGroup","type":"group","all_members_are_administrators":true},"date":1482487031,"text":"/ilbenefattore@IlBenefattoreDelCaffe_Bot","entities":[{"type":"bot_command","offset":0,"length":40}]}}
-23/12/2016 10:58:00 / {"update_id":624792367,
-"message":{"message_id":1266,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":-114342037,"title":"TestGroup","type":"group","all_members_are_administrators":true},"date":1482487080,"text":"/ilbenefattore@IlBenefattoreDelCaffe_Bot","entities":[{"type":"bot_command","offset":0,"length":40}]}}
-23/12/2016 10:58:36 / {"update_id":624792368,
-"message":{"message_id":1268,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":-114342037,"title":"TestGroup","type":"group","all_members_are_administrators":true},"date":1482487116,"text":"/ilbenefattore@IlBenefattoreDelCaffe_Bot","entities":[{"type":"bot_command","offset":0,"length":40}]}}
-23/12/2016 15:12:05 / {"update_id":624792369,
-"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 15:12:10 / {"update_id":624792370,
-"message":{"message_id":1271,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502330,"text":"/ilbenefattore","entities":[{"type":"bot_command","offset":0,"length":14}]}}
-23/12/2016 15:12:19 / {"update_id":624792371,
-"message":{"message_id":1273,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502339,"text":"G"}}
-23/12/2016 15:38:38 / {"update_id":624792372,
-"message":{"message_id":1275,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482503918,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 15:45:40 / {"update_id":624792373,
-"message":{"message_id":1277,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482504340,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 15:45:57 / {"update_id":624792374,
-"message":{"message_id":1279,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482504356,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 15:47:39 / {"update_id":624792375,
-"message":{"message_id":1281,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482504458,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 15:47:43 / {"update_id":624792376,
-"message":{"message_id":1283,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482504463,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 15:47:48 / {"update_id":624792377,
-"message":{"message_id":1285,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482504468,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 15:48:06 / {"update_id":624792378,
-"message":{"message_id":1287,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482504486,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 15:50:04 / {"update_id":624792379,
-"message":{"message_id":1289,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482504604,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 15:50:33 / {"update_id":624792380,
-"message":{"message_id":1291,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482504633,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 16:22:54 / 
-23/12/2016 16:57:14 / {"update_id":624792381,
-"message":{"message_id":1292,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482508633,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 16:57:31 / {"update_id":624792382,
-"message":{"message_id":1294,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482508650,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 17:02:38 / {"update_id":624792383,
-"message":{"message_id":1296,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482508958,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 18:16:43 / {"update_id":624792384,
-"callback_query":{"id":"82376794491371865","from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"message":{"message_id":1297,"from":{"id":186132931,"first_name":"Il benefattore del caff\u00e8","username":"IlBenefattoreDelCaffe_Bot"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482508958,"text":"Chi ha pagato i caff\u00e8?"},"chat_instance":"-4206174352189128888","data":"http://www.google.it"}}
-23/12/2016 18:16:45 / {"update_id":624792385,
-"callback_query":{"id":"82376794279730460","from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"message":{"message_id":1297,"from":{"id":186132931,"first_name":"Il benefattore del caff\u00e8","username":"IlBenefattoreDelCaffe_Bot"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482508958,"text":"Chi ha pagato i caff\u00e8?"},"chat_instance":"-4206174352189128888","data":"http://www.google.it"}}
-23/12/2016 18:17:45 / {"update_id":624792386,
-"message":{"message_id":1298,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482513465,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 18:18:39 / {"update_id":624792387,
-"message":{"message_id":1300,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482513518,"text":"/hapagato","entities":[{"type":"bot_command","offset":0,"length":9}]}}
-23/12/2016 18:58:27 / 
-23/12/2016 20:41:55 / 
-23/12/2016 20:43:04 / 
-23/12/2016 20:43:57 / 
-24/12/2016 14:55:01 / 
-24/12/2016 23:34:52 / 
-24/12/2016 23:36:59 / 
-25/12/2016 00:39:02 / 
-25/12/2016 00:48:39 / 
-25/12/2016 01:27:43 / 
-25/12/2016 01:30:07 / 
-25/12/2016 01:39:34 / 
-25/12/2016 01:42:36 / 
-25/12/2016 01:54:01 / 
-25/12/2016 01:55:35 / 
-25/12/2016 01:56:50 / 
-25/12/2016 01:57:39 / 
-25/12/2016 01:57:50 / 
-25/12/2016 01:59:51 / 
-25/12/2016 02:00:39 / 
-25/12/2016 02:09:20 / 
-25/12/2016 02:09:26 / 
-25/12/2016 02:11:19 / 
-25/12/2016 02:11:51 / 
-25/12/2016 02:12:39 / 
-25/12/2016 02:46:07 / 
-25/12/2016 02:48:07 / 
-25/12/2016 02:48:08 / 
-25/12/2016 02:48:09 / 
-25/12/2016 02:48:09 / 
-25/12/2016 02:48:09 / 
-25/12/2016 02:50:28 / 
-25/12/2016 02:50:37 / 
-25/12/2016 02:51:01 / 
-25/12/2016 02:51:31 / 
-25/12/2016 02:52:24 / Array
-25/12/2016 02:53:30 / 
-25/12/2016 02:55:59 / 624792369,Array
-25/12/2016 02:56:36 / 1
-25/12/2016 02:58:17 / Array
-25/12/2016 02:59:57 / 
-25/12/2016 02:59:58 / 
-25/12/2016 03:02:07 / 
-25/12/2016 03:03:56 / 
-25/12/2016 03:13:23 / 
-25/12/2016 03:23:41 / 
-25/12/2016 03:24:19 / 
-25/12/2016 03:24:29 / 
-25/12/2016 03:25:32 / 
-25/12/2016 03:26:40 / 
-25/12/2016 03:26:57 / 
-25/12/2016 03:49:52 / 
-25/12/2016 03:51:17 / 
-25/12/2016 04:03:03 / 
-25/12/2016 04:03:37 / 
-25/12/2016 04:14:20 / 
-25/12/2016 04:14:43 / 
-25/12/2016 04:15:00 / 
-25/12/2016 04:15:58 / 
-25/12/2016 04:16:27 / 
-25/12/2016 04:17:36 / 
-25/12/2016 04:17:46 / 
-25/12/2016 04:17:53 / 
-25/12/2016 04:17:55 / 
-25/12/2016 04:18:32 / 
-25/12/2016 04:18:34 / 
-25/12/2016 04:21:37 / 
-25/12/2016 04:23:17 / 
-25/12/2016 04:23:17 / 
-25/12/2016 04:23:18 / 
-25/12/2016 04:23:25 / 
-25/12/2016 04:25:26 / 
-25/12/2016 04:25:52 / 
+29/12/2016 10:04:11 / Array
+29/12/2016 10:04:39 / Array
+29/12/2016 10:05:22 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:05:36 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:11:21 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:11:33 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:11:38 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:11:47 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:12:07 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:12:18 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:12:25 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:12:41 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:14:55 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:14:56 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:15:13 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:15:19 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:15:29 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:15:51 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:16:16 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:16:22 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:18:00 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:18:14 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:18:48 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:19:16 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:24:40 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:25:10 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:25:42 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:29:30 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udcd0 Impostazioni","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:35:14 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udeb6 Esci dal bot","entities":{"type":"bot_command","offset":0,"length":9}}}
+29/12/2016 10:35:37 / {"update_id":624792369,"message":{"message_id":1270,"from":{"id":19179842,"first_name":"fagottino","username":"fagottino"},"chat":{"id":19179842,"first_name":"fagottino","username":"fagottino","type":"private"},"date":1482502325,"text":"\ud83d\udeb6 Esci dal bot","entities":{"type":"bot_command","offset":0,"length":9}}}

@@ -1,42 +1,6 @@
-23/12/2016 00:12:15 / Bad Request: Can't parse inline keyboard button: InlineKeyboardButton should be an Object{"inline_keyboard":[["Alfredo","Andrea","Angelo"],["Antonioaaa","Davide"]]}
-23/12/2016 00:12:27 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 00:12:29 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 00:12:53 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 00:12:53 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 00:12:58 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 00:13:07 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 00:13:40 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 00:14:23 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 00:14:26 / Bad Request: Can't parse inline keyboard button: InlineKeyboardButton should be an Object{"inline_keyboard":[["Alfredo","Andrea","Angelo"],["Antonioaaa","Davide"]]}
-23/12/2016 01:02:03 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 01:03:30 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 09:14:15 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 09:18:17 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 09:18:21 / Bad Request: Can't parse inline keyboard button: InlineKeyboardButton should be an Object{"inline_keyboard":[["Alfredo","Andrea","Angelo"],["Antonioaaa","Davide"]]}
-23/12/2016 09:25:29 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 10:27:27 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 10:43:59 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 15:12:05 / Bad Request: Can't parse inline keyboard button: InlineKeyboardButton should be an Object{"inline_keyboard":[[{"text":"Alfredo","url":"http:\/\/www.google.com"},null,null],{"3":{"text":"Antonioaaa","url":"http:\/\/www.google.com"},"4":null}]}
-23/12/2016 15:38:38 / Bad Request: Can't parse inline keyboard button: InlineKeyboardButton should be an Object{"inline_keyboard":[[{"text":"Alfredo","url":"http:\/\/www.google.com"},null],[{"text":"Antonioaaa","url":"http:\/\/www.google.com"},null]]}
-23/12/2016 15:50:33 / Bad Request: Can't parse inline keyboard button: Text buttons are unallowed in the inline keyboard{"inline_keyboard":[[{"text":"Alfredo"},{"text":"Andrea"},{"text":"Angelo"}],[{"text":"Antonio"},{"text":"Davide"}]]}
-23/12/2016 16:22:54 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 16:57:31 / Bad Request: Can't parse inline keyboard button: Text buttons are unallowed in the inline keyboard{"inline_keyboard":[[{"text":"Alfredo"},{"text":"Andrea"},{"text":"Angelo"}],[{"text":"Antonio"},{"text":"Davide"}]]}
-23/12/2016 18:16:43 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 18:16:45 / Bad Request: chat_id is empty{"hide_keyboard":true}
-23/12/2016 20:41:55 / Bad Request: Message text is empty{"hide_keyboard":true}
-23/12/2016 20:43:04 / Bad Request: Message text is empty{"hide_keyboard":true}
-23/12/2016 20:43:57 / Bad Request: Message text is empty{"hide_keyboard":true}
-25/12/2016 03:23:41 / Bad Request: REPLY_MARKUP_INVALID{"inline_keyboard":[[]]}
-25/12/2016 03:24:29 / Bad Request: REPLY_MARKUP_INVALID{"inline_keyboard":[[]]}
-25/12/2016 04:14:20 / Not Found: method not found
-25/12/2016 04:14:43 / Not Found: method not found
-25/12/2016 04:15:00 / Not Found: method not found
-25/12/2016 04:17:53 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array
-25/12/2016 04:17:55 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array
-25/12/2016 04:18:32 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array
-25/12/2016 04:18:34 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array
-25/12/2016 04:21:37 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array
-25/12/2016 04:23:17 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array{"keyboard":true,"resize_keyboard":true}
-25/12/2016 04:23:17 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array{"keyboard":true,"resize_keyboard":true}
-25/12/2016 04:23:18 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array{"keyboard":true,"resize_keyboard":true}
-25/12/2016 04:23:25 / Bad Request: Field "keyboard" of the ReplyKeyboardMarkup should be an Array{"keyboard":true,"resize_keyboard":true}
+29/12/2016 10:15:29 / Bad Request: Field "inline_keyboard" of the InlineKeyboardMarkup should be an Array of Arrays{"inline_keyboard":[[{"text":"Pulsante settings 1","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 3","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 4","callback_data":"http:\/\/www.google.it"}],{"0":{"text":"Pulsante settings 5","callback_data":"http:\/\/www.google.it"},"2":null}]}
+29/12/2016 10:15:51 / Bad Request: Field "inline_keyboard" of the InlineKeyboardMarkup should be an Array of Arrays{"inline_keyboard":[[{"text":"Pulsante settings 1","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 3","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 4","callback_data":"http:\/\/www.google.it"}],{"0":{"text":"Pulsante settings 5","callback_data":"http:\/\/www.google.it"},"2":null}]}
+29/12/2016 10:16:16 / Bad Request: Can't parse inline keyboard button: InlineKeyboardButton should be an Object{"inline_keyboard":[[{"text":"Pulsante settings 1","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 3","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 4","callback_data":"http:\/\/www.google.it"}],[{"text":"Pulsante settings 5","callback_data":"http:\/\/www.google.it"},null]]}
+29/12/2016 10:18:00 / Bad Request: Field "inline_keyboard" of the InlineKeyboardMarkup should be an Array of Arrays{"inline_keyboard":[[{"text":"Pulsante settings 1","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 3","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 4","callback_data":"http:\/\/www.google.it"}],[{"text":"Pulsante settings 5","callback_data":"http:\/\/www.google.it"}],{"1":{"text":"\ud83c\udf75 Ti piace il bot? Offrimi un caff\u00e8","url":"https:\/\/www.paypal.com\/cgi-bin\/webscr?cmd=_donations&business=anto%2eorla%40gmail%2ecom&lc=IT&item_name=Il%20Benefattore%20del%20Caff%c3%a8&item_number=bdc&amount=0%2e80&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted"}}]}
+29/12/2016 10:18:14 / Bad Request: Field "inline_keyboard" of the InlineKeyboardMarkup should be an Array of Arrays{"inline_keyboard":[[{"text":"Pulsante settings 1","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 3","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 4","callback_data":"http:\/\/www.google.it"}],[{"text":"Pulsante settings 5","callback_data":"http:\/\/www.google.it"}],{"1":{"text":"\ud83c\udf75 Ti piace il bot? Offrimi un caff\u00e8","url":"https:\/\/www.paypal.com\/cgi-bin\/webscr?cmd=_donations&business=anto%2eorla%40gmail%2ecom&lc=IT&item_name=Il%20Benefattore%20del%20Caff%c3%a8&item_number=bdc&amount=0%2e80&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted"}}]}
+29/12/2016 10:18:48 / Bad Request: Field "inline_keyboard" of the InlineKeyboardMarkup should be an Array of Arrays{"inline_keyboard":[[{"text":"Pulsante settings 1","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 3","callback_data":"http:\/\/www.google.it"},{"text":"Pulsante settings 4","callback_data":"http:\/\/www.google.it"}],[{"text":"Pulsante settings 5","callback_data":"http:\/\/www.google.it"}],{"2":{"text":"\ud83c\udf75 Ti piace il bot? Offrimi un caff\u00e8","url":"https:\/\/www.paypal.com\/cgi-bin\/webscr?cmd=_donations&business=anto%2eorla%40gmail%2ecom&lc=IT&item_name=Il%20Benefattore%20del%20Caff%c3%a8&item_number=bdc&amount=0%2e80&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted"}}]}

@@ -1,5 +1,6 @@
 <?php
-require_once './Model/Chat.php';
+require_once './Model/ChatPrivate.php';
+require_once './Model/ChatGroup.php';
 /**
  * Description of User
  *
@@ -9,7 +10,6 @@ class User {
     private $idTelegram;
     private $name;
     private $username;
-    private $chatId;
     private $message;
     private $chat;
     private $currentOperation;
@@ -19,11 +19,24 @@ class User {
         $this->name = $_user["message"]["from"]["first_name"];
         $this->username = $_user["message"]["from"]["username"];
         $this->message = $_user["message"]["text"];
-        $this->chat = new Chat($_user["message"]["chat"]);
+//        $this->chat = Chat::getChat($_user["message"]["chat"]);
+        switch ($_user["message"]["chat"]["type"]) {
+            case "private":
+                $this->chat = new ChatPrivate($_user["message"]["chat"]);
+                break;
+            case "group":
+                $this->chat = new ChatGroup($_chat);
+                break;
+            default:
+            break;
+        }
+        
+        if ($this->idTelegram == null || $this->name == null || $this->username == null || $this->message == null)
+            return false;
     }
     
     public function setUserDataFromDb($_user) {
-        $this->currentOperation = $_user['operation'];
+        $this->currentOperation = $_user['name_operation'];
     }
     
     public function getIdTelegram() {

@@ -1,5 +1,5 @@
 <?php
-require_once './Config/Config.php';
+//require_once './Config/Config.php';
 
 /**
  * Description of Lang
