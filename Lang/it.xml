@@ -7,6 +7,7 @@
         <home>Menù principale</home>
         <back>Indietro</back>
         <offer>Ti piace il bot? Offrimi un caffè</offer>
+        <addBenefactor>Scegliamo il benefattore</addBenefactor>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Errore nella creazione del menù custom.</errorWithCreationOfCustomMenu>
@@ -18,6 +19,7 @@
         <errorWhileUserRegistration>Errore nella registrazione dell'utente.</errorWhileUserRegistration>
         <cantGetLastOperation>Errore durante la lettura dell'operazione corrente.</cantGetLastOperation>
         <cantUnderstandMessage>Se scrivi così non riesco a capirti. Usa i tasti in basso.</cantUnderstandMessage>
+        <notImplementedYet>Non ancora implementata.</notImplementedYet>
     </error>
     <general>
         <retry>Riprova.</retry>

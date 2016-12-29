@@ -38,7 +38,7 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
                  "type" => "private"
             ),
             "date" => 1482502325,
-            "text" => Emoticon::quit().$lang->menu->quit,
+            "text" => Emoticon::back().$lang->menu->back,
             "entities" => array(
                 "type" => "bot_command",
                 "offset" => 0,
@@ -48,8 +48,6 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
     );
     $unreadMessage = $privateMessage;
 }
-
-// PROBLEMA SULLE QUERY
 
 $user->getUserData($unreadMessage);
 if ($user->getIdTelegram() != null) {
@@ -132,7 +130,7 @@ if ($user->getIdTelegram() != null) {
                             try {
                                 $user->setCurrentOperation("home");
                                 $userController->updateCurrentOperation($user);
-                                $menu = array(array("action" => Emoticon::help().$lang->menu->help), array("action" => Emoticon::settings().$lang->menu->settings), array("action" => Emoticon::quit().$lang->menu->quit));
+                                $menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => false));
                                 $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
                                 $text = "Sei al ".$lang->menu->home;
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
@@ -157,6 +155,9 @@ if ($user->getIdTelegram() != null) {
                                 $text = "QUA1 ".$dbEx->getMessage();
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
                             }
+                            break;
+                        case Emoticon::plus().$lang->menu->addBenefactor:
+                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet);
                             break;
                 default:
                     $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->cantUnderstandMessage);

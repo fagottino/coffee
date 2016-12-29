@@ -72,12 +72,16 @@ class MenuController {
         $i = 0;
         $j = -1;
         foreach ($_itemArray as $key => $value) {
-            if ($i % 3 == 0) {
-                $menu[++$j] = array("" . $value["action"]);
+            if ($value["alone"]) {
+                $menu[++$j] = array($value["action"]);
             } else {
-                array_push($menu[$j], "" . $value["action"]);
+                if ($i % 3 == 0) {
+                    $menu[++$j] = array($value["action"]);
+                } else {
+                    array_push($menu[$j], $value["action"]);
+                }
+                $i++;
             }
-            $i++;
         }
         
         if (sizeof($menu) == 0)
