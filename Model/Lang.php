@@ -1,6 +1,4 @@
 <?php
-//require_once './Config/Config.php';
-
 /**
  * Description of Lang
  *
@@ -12,14 +10,14 @@ class Lang {
         
     }
     
-    public static function getLang() {
-        switch (DEFAULT_LANGUAGE) {
+    public static function getLang($_lang = "it") {
+        switch ($_lang) {
             case "it":
             default:
                 $_lang = simplexml_load_file("./Lang/it.xml") or die("Error: Cannot create object");
             break;
             case "en":
-                
+                $_lang = simplexml_load_file("./Lang/en.xml") or die("Error: Cannot create object");
             break;
         }
         return $_lang;

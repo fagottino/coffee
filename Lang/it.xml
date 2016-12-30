@@ -8,6 +8,10 @@
         <back>Indietro</back>
         <offer>Ti piace il bot? Offrimi un caffè</offer>
         <addBenefactor>Scegliamo il benefattore</addBenefactor>
+        <quitNow>Si, esci subito.</quitNow>
+        <justJoking>No, ho sbagliato.</justJoking>
+        <setLanguage>Setta la lingua:</setLanguage>
+        <makeDonation>Fai una donazione</makeDonation>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Errore nella creazione del menù custom.</errorWithCreationOfCustomMenu>
@@ -25,5 +29,24 @@
         <retry>Riprova.</retry>
         <line>Linea -></line>
         <code>Codice -></code>
+        <languageSet>Hai settato la lingua in Italiano.</languageSet>
+        <moreInfo>Usa i pulsanti in basso per capirne di più</moreInfo>
+        <disableBot>Sei sicuro di voler disabilitare il bot?</disableBot>
+        <it>Italiano</it>
+        <en>Inglese</en>
+        <youAreHere>Sei qui:</youAreHere>
     </general>
+    <ui>
+        <hi>Ciao</hi>
+        <welcome>Benvenuto</welcome>
+        <initialText>Ogni giorno, insieme, possiamo decidere chi è il benefattore che si offre di pagare i caffè!</initialText>
+        <initialText1>Qui in basso trovi dei pulsanti con cui puoi darmi gli ordini.</initialText1>
+        <initialText2>Sei pronto per iniziare? Ok, cominciamo!</initialText2>
+        <enjoy>Buon divertimento!</enjoy>
+        <infoBot>PS: tutte le informazioni utili sul bot e sullo sviluppatore le trovi</infoBot>
+        <botAlreadyStarted>Hai già avviato il bot</botAlreadyStarted>
+        <sendSomeButtons>Ti invio alcuni pulsanti se vuoi che ti aiuti su qualcosa di specifico.</sendSomeButtons>
+        <giveMeTips>I suggerimenti sono benvenuti, qualora ne avessi inviameli pure</giveMeTips>
+        <clickingHere>Cliccando qui</clickingHere>
+    </ui>
 </document>

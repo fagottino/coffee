@@ -75,7 +75,11 @@ class MessageManager {
                     'reply_markup' => $_keyboard
                 );
 
-                $this->sendMessage("editMessageText", $args);
+                //throw new MessageException($lang->error->inlineKeyboardIsRequired);
+                //https://api.telegram.org/bot186132931:AAHLkdfVXtdWX53wsySA219hABBeUUirgko/editMessageReplyMarkup?chat_id=19179842&message_id=2781&reply_markup={"inline_keyboard":[[{"text":"Italiano","callback_data":"it"},{"text":"English","callback_data":"en"}]]}
+                //https://api.telegram.org/bot186132931:AAHLkdfVXtdWX53wsySA219hABBeUUirgko/editMessageReplyMarkup?chat_id=19179842&message_id=2781&reply_markup={"inline_keyboard":[{"text":"ItalianoAAAAAAAAA","callback_data":"it"},{"text":"English","callback_data":"en"}]}
+                
+            $this->sendMessage("editMessageReplyMarkup", $args);
             } else {
                 throw new MessageException($lang->error->inlineKeyboardIsRequired);
             }
@@ -128,6 +132,10 @@ class MessageManager {
         
     function sendSimpleMessage($id, $message) {
        file_get_contents(API_URL."/sendmessage?chat_id=".$id."&text=".urlencode($message));
+    }
+        
+    function answerCallbackQuery($_id, $_message = "", $_showAlert = false) {
+       file_get_contents(API_URL."/answerCallbackQuery?callback_query_id=".$_id."&text=".urlencode($_message)."&show_alert=".$_showAlert);
     }
 }
 

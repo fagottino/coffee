@@ -38,7 +38,7 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
                  "type" => "private"
             ),
             "date" => 1482502325,
-            "text" => Emoticon::back().$lang->menu->back,
+            "text" => Emoticon::settings().$lang->menu->settings,
             "entities" => array(
                 "type" => "bot_command",
                 "offset" => 0,
@@ -46,6 +46,37 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
             )
         )
     );
+    
+    $privateMessage = array(
+        "update_id" => 624792859,
+        "callback_query" => array(
+            "id" => "82376795026451405",
+            "from" => array(
+                "id" => 19179842,
+                "first_name" => "fagottino",
+                "username" => "fagottino"
+                ),
+            "message" => array(
+                "message_id" => 2777,
+                "from" => array(
+                    "id" => 186132931,
+                    "first_name" => "Il benefattore del caff\u00e8",
+                    "username" => "IlBenefattoreDelCaffe_Bot"
+                    ),
+                "chat" => array(
+                    "id" => 19179842,
+                    "first_name" => "fagottino",
+                    "username" => "fagottino",
+                    "type" => "private"
+                    ),
+                "date" => 1483050172,
+                "text" => "Setta la linuga:"
+                ),
+            "chat_instance" => "-4206174352189128888",
+            "data" => "it"
+            )
+        );
+    
     $unreadMessage = $privateMessage;
 }
 
@@ -54,6 +85,7 @@ if ($user->getIdTelegram() != null) {
     try {
         $userProfile = $userController->getInfo($user->getIdTelegram());
         $user->setUserDataFromDb($userProfile);
+        $lang = Lang::getLang($user->getLang());
     } catch (DatabaseException $ex) {
         // se non lo trovo lo registro
         try {
@@ -71,57 +103,94 @@ if ($user->getIdTelegram() != null) {
                 switch ($user->getMessage()) {
                 case START:
                     if ($newUser) {
-                        $text = '
-                            Ciao <strong>'.$user->getName().'</strong>, benvenuto!'.chr(10)."".chr(10)
-                            .'Ogni giorno, insieme, possiamo decidere chi è il benefattore che si offre di pagare i caffè!'.chr(10)
-                            .'Qui in basso trovi dei pulsanti con cui puoi darmi gli ordini.'.chr(10)."".chr(10)
-                            .'Sei pronto per iniziare? Ok, cominciamo! '.Emoticon::smile().chr(10)
-                            .'Buon divertimento!'.chr(10)."".chr(10)
-                            .'PS: tutte le informazioni utili sul bot e sullo sviluppatore le trovi <a href="http://www.orlandoantonio.it/">cliccando qui</a>'
+                        $text = 
+                            $lang->ui->hi.' <strong>'.$user->getName().'</strong>, '.$lang->ui->welcome.'!'.chr(10)."".chr(10)
+                            .$lang->ui->initialText.chr(10)
+                            .$lang->ui->initialText1.chr(10).chr(10)
+                            .$lang->ui->initialText2.' '.Emoticon::smile().chr(10)
+                            .$lang->ui->enjoy.chr(10).chr(10)
+                            .$lang->ui->infoBot." <a href='http://www.orlandoantonio.it'>".$lang->ui->clickingHere."</a>."
                         ;
                     } else {
                         $text = '
-                            <strong>'.$user->getName().'</strong>, hai già avviato il bot'.Emoticon::smile().chr(10)."".chr(10)
-                            .'Ti invio alcuni pulsanti se vuoi che ti aiuti su qualcosa di specifico.'.chr(10).chr(10)
-                            .'I suggerimenti sono benvenuti, qualora ne avessi inviameli pure qui <a href="http://www.orlandoantonio.it/">cliccando qui</a>.'.Emoticon::smile()
+                            <strong>'.$user->getName().'</strong>, '.$lang->ui->botAlreadyStarted." ".Emoticon::smile().chr(10)."".chr(10)
+                            .$lang->ui->sendSomeButtons.chr(10).chr(10)
+                            .$lang->ui->giveMeTips." <a href='http://www.orlandoantonio.it'>".$lang->ui->clickingHere."</a> ".Emoticon::smile()
                         ;
                     }
                     $menu = array(array("action" => Emoticon::help().$lang->menu->help), array("action" => Emoticon::settings().$lang->menu->settings), array("action" => Emoticon::quit().$lang->menu->quit));
                     $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
                     $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);                
                     break;
-                //case Emoticon::help().$lang->menu->help:
-                case Emoticon::help().HELP:
+                    
+                //case Emoticon::help().HELP:
+                case Emoticon::help().$lang->menu->help:
                     try {
                         $user->setCurrentOperation("help");
                         $userController->updateCurrentOperation($user);
-                        $text = 'Usa i pulsanti in basso per scoprire le loro funzioni';
-                        $menu = array(array("action" => "Pulsante aiuto 1"), array("action" => "Pulsante aiuto 2"), array("action" => "Pulsante aiuto 3"), array("action" => "Pulsante aiuto 4"));
+                        $text = (string)$lang->general->moreInfo;
+                        $menu = array(array("action" => $lang->menu->help."1"), array("action" => $lang->menu->help."2"), array("action" => $lang->menu->help."3"));
                         $customMenu = $menuController->createCustomReplyMarkupMenu($menu, true);
                         $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
                     } catch (DatabaseException $dbEx) {
                         $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->cantUnderstandTypeOfChat);
                     }
                     break;
+                
                 case Emoticon::settings().$lang->menu->settings:
                     $user->setCurrentOperation("settings");
                     $userController->updateCurrentOperation($user);
-                    //$menu = array(array("nome" => "Settings 1"), array("nome" => "Settings 2"), array("nome" => "Settings 3"), array("nome" => "Settings 4"));
-                    $menu = array(array("action" => "Settings 1"), array("action" => "Settings 2"), array("action" => "Settings 3"), array("action" => "Settings 4"));
+//                    $menu = array(array("action" => "Settings 1"), array("action" => "Settings 2"), array("action" => "Settings 3"), array("action" => "Settings 4"), array("action" => "Settings 5"));
+//                    $customMenu = $menuController->createCustomReplyMarkupMenu($menu, true);
+                    $text = (string)$lang->menu->setLanguage;
+                    $menu = array(array("text" => Emoticon::it()."Italiano", "callback_data" => "it"), array("text" => Emoticon::en()."English", "callback_data" => "en"));
+                    $customMenu = $menuController->createCustomInlineMenu($menu);
+                    try {
+                    $messageManager->sendInline($user->getChat()->getId(), $text, $customMenu);
+//                    $text = "Setta un'altra cosa:";
+//                    $menu = array(array("text" => "Setting 1", "callback_data" => "s1"), array("text" => "Setting 2", "callback_data" => "s2"), array("text" => "Setting 3", "callback_data" => "s3"), array("text" => "Google", "url" => "http://www.google.it"));
 //                    $customMenu = $menuController->createCustomInlineMenu($menu);
-                    $text = "Impostazioni del bot:";
 //                    $messageManager->sendInline($user->getChat()->getId(), $text, $customMenu);
-                    $customMenu = $menuController->createCustomReplyMarkupMenu($menu, true);
-                    $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
+//                    $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
+                        
+                        $text = Emoticon::money().Emoticon::money().Emoticon::money().(string)$lang->menu->makeDonation.Emoticon::money().Emoticon::money().Emoticon::money();
+                        $customMenu = $menuController->createCustomInlineMenu(null, false, 3, true);
+                        $messageManager->sendInline($user->getChat()->getId(), $text, $customMenu);
+                    } catch (MessageException $ex) {
+                        $messageManager->sendSimpleMessage($user->getIdTelegram(), "UN ERRORE".$ex);
+                    }
                     break;
+                
+                case "it":
+                case "en":
+                    try {
+                        $user->setLang($user->getMessage());
+                        $userController->updateLang($user);
+                        $lang = Lang::getLang($user->getLang());
+                        $menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+                        $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                        $text = (string)$lang->general->languageSet;
+                        $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
+                        $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text, true);
+                    
+                        $menu = array(array(array("text" => Emoticon::it().$lang->general->it.($user->getMessage() == IT ? Emoticon::check() : ""), "callback_data" => "it"), array("text" => Emoticon::en().$lang->general->en.($user->getMessage() == EN ? Emoticon::check() : ""), "callback_data" => "en")));
+                        $customMenu = $menuController->createCustomInlineMenu($menu);
+                        $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageId($unreadMessage), $text, $menu);
+                    } catch (DatabaseException $ex) {
+                        $messageManager->sendSimpleMessage($ex->getMessage());
+                    }
+                    break;
+                
                 case Emoticon::quit().$lang->menu->quit:
                     $user->setCurrentOperation("quit");
                     $userController->updateCurrentOperation($user);
-                    $item = array(array("nome" => "Si, esci subito."), array("nome" => "No, ho sbagliato."));
+                    //$item = array(array("text" => $lang->menu->quitNow, "callback_data" => "yes"), array("text" => $lang->menu->justJoking, "callback_data" => "no"));
+                    $item = array(array("text" => (string)$lang->menu->quitNow, "callback_data" => "yes"), array("text" => (string)$lang->menu->justJoking, "callback_data" => "no"));
                     $customMenu = $menuController->createCustomInlineMenu($item, false, 2);
-                    $text = "Sei sicuro di voler disabilitare il bot?";
+                    $text = (string)$lang->general->disableBot;
                     $messageManager->sendInline($user->getChat()->getId(), $text, $customMenu);
                     break;
+                
                 case Emoticon::back().$lang->menu->back:
                     $operation = $user->getCurrentOperation();
                     switch ($operation) {
@@ -130,35 +199,40 @@ if ($user->getIdTelegram() != null) {
                             try {
                                 $user->setCurrentOperation("home");
                                 $userController->updateCurrentOperation($user);
-                                $menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => false));
+                                $menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
                                 $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
-                                $text = "Sei al ".$lang->menu->home;
+                                $text = $lang->general->youAreHere." ".$lang->menu->home;
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
                             } catch (DataBaseException $dbEx) {
                                 $text = "QUA1 ".$dbEx->getMessage();
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
                             }
                         break;
+                    
                     default:
                         break;
                     }
                     break;
-                        case Emoticon::home().$lang->menu->home:
-                            try {
-                                $user->setCurrentOperation("home");
-                                $userController->updateCurrentOperation($user);
-                                $menu = array(array("action" => Emoticon::help().$lang->menu->help), array("action" => Emoticon::settings().$lang->menu->settings), array("action" => Emoticon::quit().$lang->menu->quit));
-                                $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
-                                $text = "Sei al ".$lang->menu->home;
-                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
-                            } catch (DataBaseException $dbEx) {
-                                $text = "QUA1 ".$dbEx->getMessage();
-                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
-                            }
-                            break;
-                        case Emoticon::plus().$lang->menu->addBenefactor:
-                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet);
-                            break;
+                
+                    case Emoticon::home().$lang->menu->home:
+                        try {
+                            $user->setCurrentOperation("home");
+                            $userController->updateCurrentOperation($user);
+                            //$menu = array(array("action" => Emoticon::help().$lang->menu->help), array("action" => Emoticon::settings().$lang->menu->settings), array("action" => Emoticon::quit().$lang->menu->quit));
+                            $menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+                            $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                            $text = "Sei al ".$lang->menu->home;
+                            $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
+                        } catch (DataBaseException $dbEx) {
+                            $text = "QUA1 ".$dbEx->getMessage();
+                            $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
+                        }
+                        break;
+                    
+                    case Emoticon::plus().$lang->menu->addBenefactor:
+                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet);
+                        break;
+                    
                 default:
                     $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->cantUnderstandMessage);
         //        $customMenus = $menuController->createInlineMenu($allName);
@@ -255,13 +329,14 @@ if ($user->getIdTelegram() != null) {
     //    }
     //}
 
-    $requestFile = "./file/request.txt";
-    $requestCurrent = file_get_contents($requestFile);
-    $requestCurrent .= date("d/m/Y H:i:s / ");
-    $requestCurrent .= json_encode($unreadMessage);
-    $requestCurrent .= "\n";
-    file_put_contents($requestFile, $requestCurrent);
 }
+
+$requestFile = "./file/request.txt";
+$requestCurrent = file_get_contents($requestFile);
+$requestCurrent .= date("d/m/Y H:i:s / ");
+$requestCurrent .= json_encode($unreadMessage);
+$requestCurrent .= "\n";
+file_put_contents($requestFile, $requestCurrent);
 
 function chiPaga() {
     $connection = new Database();

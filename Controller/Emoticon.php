@@ -65,4 +65,12 @@ class Emoticon {
     public static function smile() {
         return " \xF0\x9F\x98\x8A ";
     }
+    
+    public static function check() {
+        return " \xE2\x9C\x94 ";
+    }
+    
+    public static function money() {
+        return "\xF0\x9F\x92\xB0 ";
+    }
 }

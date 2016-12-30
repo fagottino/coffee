@@ -12,7 +12,9 @@ define ('FR', 'fr');
 define ('ES', 'es');
 
 // change this
-define('DEFAULT_LANGUAGE', "it");
+define('DEFAULT_LANGUAGE', IT);
+
+define('DB_PREFIX', 'coffee_');
 
 
 // Menu list

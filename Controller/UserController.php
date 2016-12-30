@@ -33,9 +33,7 @@ class UserController {
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
-        
-        //$result = $db->query("SELECT * FROM utente AS u WHERE u.id_telegram = '".$_idTelegram."'");
-        $result = $db->query("SELECT utente.nome, utente.id_telegram, operation.name_operation FROM utente JOIN operation ON utente.operation = operation.id_operation WHERE utente.id_telegram = '".$_idTelegram."'");
+        $result = $db->query("SELECT ".DB_PREFIX."utente.nome, ".DB_PREFIX."utente.id_telegram, ".DB_PREFIX."operation.name_operation, ".DB_PREFIX."lang.name_lang FROM ".DB_PREFIX."utente JOIN ".DB_PREFIX."operation ON ".DB_PREFIX."utente.operation = ".DB_PREFIX."operation.id_operation JOIN ".DB_PREFIX."lang ON ".DB_PREFIX."utente.lang = ".DB_PREFIX."lang.id_lang WHERE ".DB_PREFIX."utente.id_telegram = '".$_idTelegram."'");
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
             $result->free();
@@ -50,7 +48,7 @@ class UserController {
         try {
             $db = Database::getConnection();
             
-            $result = $db->query ("SELECT nome FROM utente");
+            $result = $db->query ("SELECT nome FROM ".DB_PREFIX."utente");
             if ($result) {
                 if ($result->num_rows > 0) {
                     return $result;
@@ -69,7 +67,7 @@ class UserController {
         try {
             $db = Database::getConnection();
             
-            $result = $db->query("INSERT INTO utente (nome, id_telegram, operation) VALUES('".$_user->getName()."', '".$_user->getIdTelegram()."', '6')");
+            $result = $db->query("INSERT INTO ".DB_PREFIX."utente (nome, id_telegram, operation) VALUES('".$_user->getName()."', '".$_user->getIdTelegram()."', '6')");
             if ($result) {
 //                $lastId = $db->insert_id;
 //                // Valore opzionale, non presente a tutti i messaggi
@@ -92,9 +90,8 @@ class UserController {
         try {
             $db = Database::getConnection();
             
-            $sql = "UPDATE `utente` SET `operation` = (SELECT id_operation FROM `operation` WHERE name_operation = '".$_user->getCurrentOperation()."') WHERE id_telegram = '".$_user->getIdTelegram()."'";
-            
-            $result = $db->query ($sql);
+            $sql = "UPDATE `".DB_PREFIX."utente` SET `operation` = (SELECT id_operation FROM `".DB_PREFIX."operation` WHERE name_operation = '".$_user->getCurrentOperation()."') WHERE id_telegram = '".$_user->getIdTelegram()."'";
+            $result = $db->query($sql);
             $db->close();
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
@@ -106,20 +103,29 @@ class UserController {
         try {
             $db = Database::getConnection();
             
-            $result = $db->query ("SELECT operation FROM utente WHERE id_telegram = ".$_user->getIdTelegram()."");
-            if ($result) {
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    $result->free();
-                    return $row["operation"];
-                } else {
-                    throw new DatabaseException($lang->error->cantGetLastOperation);
-                }
+            $result = $db->query ("SELECT operation FROM ".DB_PREFIX."utente WHERE id_telegram = ".$_user->getIdTelegram()."");
+            if ($result && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $result->free();
+                return $row["operation"];
+            } else {
+                throw new DatabaseException($lang->error->cantGetLastOperation);
             }
-            
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
+    }
+    
+    public function updateLang($_user) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            $sql = "UPDATE `".DB_PREFIX."utente` SET `lang` = (SELECT id_lang FROM `".DB_PREFIX."lang` WHERE name_lang = '".$_user->getLang()."') WHERE id_telegram = '".$_user->getIdTelegram()."'";
+            $result = $db->query($sql);
+            $db->close();
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }        
     }
 }
 

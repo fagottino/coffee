@@ -41,7 +41,11 @@ class Chat {
     }
 
     public function getType() {
-        return $this->type;
+        if ($this->type != null)
+            return $this->type;
+        else
+            throw new ChatException("");
     }
-
 }
+
+class ChatException extends Exception { }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <menu>
+        <help>Help</help>
+        <settings>Settings</settings>
+        <quit>Leave</quit>
+        <home>Start</home>
+        <back>Back</back>
+        <offer>Do you like the bot? Give me a coffee!</offer>
+        <addBenefactor>Choose the big hearted</addBenefactor>
+        <quitNow>Yes, quit now.</quitNow>
+        <justJoking>No, i'm joking</justJoking>
+        <setLanguage>Set language:</setLanguage>
+        <makeDonation>Make a donation</makeDonation>
+    </menu>
+    <error>
+        <errorWithCreationOfCustomMenu>Error while the creation of the custom menu'.</errorWithCreationOfCustomMenu>
+        <inlineKeyboardIsRequired>You must specify an inline keyboard to sent.</inlineKeyboardIsRequired>
+        <cantUnderstandTypeOfChat>I can't recognize the type of chat.</cantUnderstandTypeOfChat>
+        <textIsRequired>The message to be sent is required.</textIsRequired>
+        <noResultsFound>No results found.</noResultsFound>
+        <cantGetNameOfUser>Error while reading the names of users.</cantGetNameOfUser>
+        <errorWhileUserRegistration>Error while user registration.</errorWhileUserRegistration>
+        <cantGetLastOperation>Error while current operation reading.</cantGetLastOperation>
+        <cantUnderstandMessage>If you write like this I can't understand you. Use the buttons below.</cantUnderstandMessage>
+        <notImplementedYet>Not implemented yet</notImplementedYet>
+    </error>
+    <general>
+        <retry>Retry.</retry>
+        <line>Line -></line>
+        <code>Code -></code>
+        <languageSet>Language default changed.</languageSet>
+        <moreInfo>Use the buttons below to learn more</moreInfo>
+        <disableBot>Are you sure that you want to disable the bot?</disableBot>
+        <it>Italian</it>
+        <en>English</en>
+        <youAreHere>You are here:</youAreHere>
+    </general>
+    <ui>
+        <hi>Hi</hi>
+        <welcome>Welcome</welcome>
+        <initialText>Every day, together, we can decide who is the big hearted who offers to pay the coffee!</initialText>
+        <initialText1>Here below you can find the buttons with which you can give me orders.</initialText1>
+        <initialText2>Are you ready to start? Ok, let's go!</initialText2>
+        <enjoy>Enjoy!</enjoy>
+        <infoBot>PS: You can find all useful information about the bot by</infoBot>
+        <botAlreadyStarted>You have already started the bot</botAlreadyStarted>
+        <sendSomeButtons>I send you some buttons if you want me to help you with something.</sendSomeButtons>
+        <giveMeTips>Suggestions are welcome, if you had someone send me by.</giveMeTips>
+        <clickingHere>Clicking here</clickingHere>
+    </ui>
+</document>
