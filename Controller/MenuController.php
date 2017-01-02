@@ -116,7 +116,7 @@ class MenuController {
         }
         
         if (sizeof($menu) == 0 && !$_backButton && !$_offer) {
-            array_push($menu[$j], array(Emoticon::back().$lang->error->errorWithCreationOfCustomMenu, Emoticon::home().$lang->general->retry));
+            array_push($menu[$j], array(Emoticon::error().$lang->error->errorWithCreationOfCustomMenu, Emoticon::home().$lang->general->retry));
         }
         
         if ($_backButton) {

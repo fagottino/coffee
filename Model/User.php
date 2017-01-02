@@ -17,21 +17,21 @@ class User {
     
     public function getUserData($_user) {
         if (isset($_user["message"])) {
-        $this->idTelegram = $_user["message"]["from"]["id"];
-        $this->name = $_user["message"]["from"]["first_name"];
-        $this->username = $_user["message"]["from"]["username"];
-        $this->message = $_user["message"]["text"];
-        
-        switch ($_user["message"]["chat"]["type"]) {
-            case "private":
-                $this->chat = new ChatPrivate($_user["message"]["chat"]);
+            $this->idTelegram = $_user["message"]["from"]["id"];
+            $this->name = $_user["message"]["from"]["first_name"];
+            $this->username = $_user["message"]["from"]["username"];
+            $this->message = $_user["message"]["text"];
+
+            switch ($_user["message"]["chat"]["type"]) {
+                case "private":
+                    $this->chat = new ChatPrivate($_user["message"]["chat"]);
+                    break;
+                case "group":
+                    $this->chat = new ChatGroup($_user["message"]["chat"]);
+                    break;
+                default:
                 break;
-            case "group":
-                $this->chat = new ChatGroup($_chat);
-                break;
-            default:
-            break;
-        }
+            }
         } else if ($this->idTelegram == null || $this->name == null || $this->username == null || $this->message == null) {
             $this->idTelegram = $_user["callback_query"]["from"]["id"];
             $this->name = $_user["callback_query"]["from"]["first_name"];
