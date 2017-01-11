@@ -1,6 +1,7 @@
 <?php
 require_once './Model/ChatPrivate.php';
 require_once './Model/ChatGroup.php';
+require_once './Model/ChatMember.php';
 /**
  * Description of User
  *
@@ -13,6 +14,7 @@ class User {
     private $message;
     private $lang;
     private $chat;
+    private $chatMember;
     private $currentOperation;
     
     public function getUserData($_user) {
@@ -20,7 +22,8 @@ class User {
             $this->idTelegram = $_user["message"]["from"]["id"];
             $this->name = $_user["message"]["from"]["first_name"];
             $this->username = $_user["message"]["from"]["username"];
-            $this->message = $_user["message"]["text"];
+            if (isset($_user["message"]["text"]))
+                $this->message = $_user["message"]["text"];
 
             switch ($_user["message"]["chat"]["type"]) {
                 case "private":
@@ -28,11 +31,19 @@ class User {
                     break;
                 case "group":
                     $this->chat = new ChatGroup($_user["message"]["chat"]);
+                    
+                    if (isset($_user["message"]["new_chat_member"])) {
+                        $this->chatMember = new ChatMember("new_chat_member", $_user["message"]["new_chat_member"]);
+                        //$this->chatMember = array("type" => "new_chat_member", "id" => $_user["message"]["new_chat_member"]["id"], "first_name" => $_user["message"]["new_chat_member"]["first_name"], "username" => $_user["message"]["new_chat_member"]["username"]);
+                    } else if (isset($_user["message"]["left_chat_member"])) {
+                        $this->chatMember = new ChatMember("left_chat_member", $_user["message"]["left_chat_member"]);
+                        //$this->chatMember = array("type" => "left_chat_member", "id" => $_user["message"]["new_chat_member"]["id"], "first_name" => $_user["message"]["new_chat_member"]["first_name"], "username" => $_user["message"]["new_chat_member"]["username"]);
+                    }
                     break;
                 default:
                 break;
             }
-        } else if ($this->idTelegram == null || $this->name == null || $this->username == null || $this->message == null) {
+        } else if (isset($_user["callback_query"])) {
             $this->idTelegram = $_user["callback_query"]["from"]["id"];
             $this->name = $_user["callback_query"]["from"]["first_name"];
             $this->username = $_user["callback_query"]["from"]["username"];
@@ -50,8 +61,8 @@ class User {
             }
         }
         
-        if ($this->idTelegram == null || $this->name == null || $this->username == null || $this->message == null)
-            return false;
+//        if ($this->idTelegram == null || $this->name == null || $this->username == null || $this->message == null)
+//            return false;
     }
     
     public function setUserDataFromDb($_user) {
@@ -91,8 +102,8 @@ class User {
         return $this->chat;
     }
     
-    public function setMessage($_message) {
-        $this->message = $_message;
+    public function getChatMember() {
+        return $this->chatMember;
     }
     
     public function setLang($_lang) {

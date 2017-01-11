@@ -14,17 +14,17 @@ class UserController {
         
     }
     
-    public function getMessageData($_data) {
-        $idTelegram = $_data["message"]["from"]["id"];
-        $name = $_data["message"]["from"]["first_name"];
-        $username = $_data["message"]["from"]["username"];
-        $idChat = $_data["message"]["chat"]["id"];
-        $message = $_data["message"]["text"];
-
-        $user = new User();
-        $user->createUser($idTelegram, $name, $message, $idChat, START_OPERATION, (isset($username) ? $username : NULL));
-        return $user;
-    }
+//    public function getMessageData($_data) {
+//        $idTelegram = $_data["message"]["from"]["id"];
+//        $name = $_data["message"]["from"]["first_name"];
+//        $username = $_data["message"]["from"]["username"];
+//        $idChat = $_data["message"]["chat"]["id"];
+//        $message = $_data["message"]["text"];
+//
+//        $user = new User();
+//        $user->createUser($idTelegram, $name, $message, $idChat, START_OPERATION, (isset($username) ? $username : NULL));
+//        return $user;
+//    }
     
     public function getInfo($_idTelegram) {
         global $lang;
@@ -39,7 +39,7 @@ class UserController {
             $result->free();
             return $row;
         } else {
-            throw new DatabaseException($lang->error->noResultsFound);
+            throw new UserControllerException($lang->error->noResultsFound);
         }
     }
     
@@ -53,10 +53,9 @@ class UserController {
                 if ($result->num_rows > 0) {
                     return $result;
                 } else {
-                    throw new DatabaseException($lang->error->cantGetNameOfUser);
+                    throw new UserControllerException($lang->error->cantGetNameOfUser);
                 }
             }
-            
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
@@ -91,7 +90,7 @@ class UserController {
             $db = Database::getConnection();
             
             $sql = "UPDATE `".DB_PREFIX."utente` SET `operation` = (SELECT id_operation FROM `".DB_PREFIX."operation` WHERE name_operation = '".$_user->getCurrentOperation()."') WHERE id_telegram = '".$_user->getIdTelegram()."'";
-            $result = $db->query($sql);
+            $db->query($sql);
             $db->close();
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
@@ -109,7 +108,7 @@ class UserController {
                 $result->free();
                 return $row["operation"];
             } else {
-                throw new DatabaseException($lang->error->cantGetLastOperation);
+                throw new UserControllerException($lang->error->cantGetLastOperation);
             }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());

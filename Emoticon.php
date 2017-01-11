@@ -93,8 +93,4 @@ class Emoticon {
     public static function lists() {
         return "\xF0\x9F\x93\x9C";
     }
-    
-    public static function off() {
-        return "\xE2\xAD\x95";
-    }
 }

@@ -5,52 +5,109 @@ require_once './Model/Lang.php';
 require_once './Model/User.php';
 require_once './Controller/UserController.php';
 require_once './Controller/MenuController.php';
+require_once './Controller/GroupController.php';
 require_once './Controller/MessageManager.php';
+require_once './Controller/Emoticon.php';
 clearstatcache();
 
 ini_set('error_reporting', E_ALL);
 set_time_limit(0);
 $userController = new UserController();
 $menuController = new MenuController();
+$groupController = new GroupController();
 $messageManager = new MessageManager();
 $user = new User();
 $lang = Lang::getLang();
 $newUser = false;
+$me = $messageManager->getMe();
 
 $getUnreadMessage = file_get_contents("php://input");
 $unreadMessage = json_decode($getUnreadMessage, TRUE);
 
 $whitelist = array('127.0.0.1', "::1");
+// PRIVATE
 if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
-    $privateMessage = array(
-        "update_id" => 624792369,
-        "message" => array(
-            "message_id" => 1270,
-            "from" => array(
-                "id" => 19179842,
-                "first_name" => "fagottino",
-                "username" => "fagottino"
-            ),
-             "chat" => array(
-                "id" => 19179842,
-                 "first_name" => "fagottino",
-                 "username" => "fagottino",
-                 "type" => "private"
-            ),
-            "date" => 1482502325,
-            "text" => Emoticon::settings().$lang->menu->settings,
-            "entities" => array(
-                "type" => "bot_command",
-                "offset" => 0,
-                "length" => 9
-            )
-        )
-    );
+//    $privateMessage = array(
+//        "update_id" => 624792369,
+//        "message" => array(
+//            "message_id" => 1270,
+//            "from" => array(
+//                "id" => 19179842,
+//                "first_name" => "fagottino",
+//                "username" => "fagottino"
+//            ),
+//             "chat" => array(
+//                "id" => 19179842,
+//                 "first_name" => "fagottino",
+//                 "username" => "fagottino",
+//                 "type" => "private"
+//            ),
+//            "date" => 1482502325,
+//            "text" => Emoticon::settings().$lang->menu->settings,
+//            "entities" => array(
+//                "type" => "bot_command",
+//                "offset" => 0,
+//                "length" => 9
+//            )
+//        )
+//    );
     
+// GROUP
+//    $privateMessage = array(
+//        "update_id" => 627311072,
+//        "message" => array(
+//            "message_id" => 8932,
+//            "from" => array(
+//                "id" => 19179842,
+//                "first_name" => "fagottino",
+//                "username" => "fagottino"
+//            ),
+//             "chat" => array(
+//                "id" => -114342037,
+//                "title" => "TestGroup",
+//                "type" => "group",
+//                "all_members_are_administrators" => true
+//            ),
+//            "date" => 1483134810,
+//            "text" => "\/start@IlBenefattoreDelCaffe_Bot",
+//            "entities" => array(
+//                "type" => "bot_command",
+//                "offset" => 0,
+//                "length" => 14
+//            )
+//        )
+//    );
+    
+// ADD/REMOVE BOT FROM GROUP
+//    $privateMessage = array(
+//        "update_id" => 624793628,
+//        "message" => array(
+//            "message_id" => 3407,
+//            "from" => array(
+//                "id" => 19179842,
+//                "first_name" => "fagottino",
+//                "username" => "fagottino"
+//            ),
+//             "chat" => array(
+//                "id" => -114342037,
+//                "title" => "TestGroup",
+//                "type" => "group",
+//                "all_members_are_administrators" => true
+//            ),
+//            "date" => 1483614336,
+//            "new_chat_member" => array(
+//                "id" => 186132931,
+//                "first_name" => "Il benefattore del caff\u00e8",
+//                "username" => "IlBenefattoreDelCaffe_Bot"
+//            )
+//        )
+//    );
+    
+// MESSAGE WITH ANSWER
     $privateMessage = array(
-        "update_id" => 627311072,
+        "update_id" => 624793660,
         "message" => array(
-            "message_id" => 8932,
+            "message_id" => 3722,
             "from" => array(
                 "id" => 19179842,
                 "first_name" => "fagottino",
@@ -62,17 +119,33 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
                 "type" => "group",
                 "all_members_are_administrators" => true
             ),
-            "date" => 1483134810,
-            "text" => "\/start@fagobot",
-            "entities" => array(
-                "type" => "bot_command",
-                "offset" => 0,
-                "length" => 14
-            )
-        )
-    );
+            "date" => 1483905746,
+            "reply_to_message" => array(
+                "message_id" => 3471,
+                "from" => array(
+                    "id" => 186132931,
+                    "first_name" => "Il benefattore del caff\u00e8",
+                    "username" => "IlBenefattoreDelCaffe_Bot"
+                ),
+                 "chat" => array(
+                    "id" => -114342037,
+                    "title" => "TestGroup",
+                    "type" => "group",
+                    "all_members_are_administrators" => true
+                ),
+                "date" => 1483905728,
+                "text" => "Ciao a tutti! @fagottino ha il potere.\nPer iniziare chiedete a lui.",
+                "entities" => array(
+                    "type" => "mention",
+                    "offset" => 14,
+                    "length" => 10
+                )
+                ),
+            "text" => Emoticon::plus().$lang->menu->chooseBenefactor
+                )
+            );
     
-    
+// CALLACK QUERY
 //    $privateMessage = array(
 //        "update_id" => 624792859,
 //        "callback_query" => array(
@@ -144,8 +217,8 @@ if ($user->getIdTelegram() != null) {
                             .$lang->ui->giveMeTips." <a href='http://www.orlandoantonio.it'>".$lang->ui->clickingHere."</a> ".Emoticon::smile()
                         ;
                     }
-                    //$menu = array(array("action" => Emoticon::help().$lang->menu->help), array("action" => Emoticon::settings().$lang->menu->settings), array("action" => Emoticon::quit().$lang->menu->quit));
-                    $menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+                    //$menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+                    $menu = array(array("action" => Emoticon::group().$lang->menu->yourGroups, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
                     $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
                     $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);                
                     break;
@@ -196,7 +269,7 @@ if ($user->getIdTelegram() != null) {
                             $user->setLang($user->getMessage());
                             $userController->updateLang($user);
                             $lang = Lang::getLang($user->getLang());
-                            $menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+                            $menu = array(array("action" => Emoticon::group().$lang->menu->yourGroups, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
                             $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
                             $text = (string)$lang->general->languageSet;
                             $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
@@ -245,7 +318,7 @@ if ($user->getIdTelegram() != null) {
                             try {
                                 $user->setCurrentOperation("home");
                                 $userController->updateCurrentOperation($user);
-                                $menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+                                $menu = array(array("action" => Emoticon::group().$lang->menu->yourGroups, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
                                 $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
                                 $text = $lang->general->youAreHere." ".$lang->menu->home;
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
@@ -265,7 +338,7 @@ if ($user->getIdTelegram() != null) {
                             $user->setCurrentOperation("home");
                             $userController->updateCurrentOperation($user);
                             //$menu = array(array("action" => Emoticon::help().$lang->menu->help), array("action" => Emoticon::settings().$lang->menu->settings), array("action" => Emoticon::quit().$lang->menu->quit));
-                            $menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+                            $menu = array(array("action" => Emoticon::group().$lang->menu->yourGroups, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
                             $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
                             $text = "Sei al ".$lang->menu->home;
                             $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
@@ -276,6 +349,10 @@ if ($user->getIdTelegram() != null) {
                         break;
                     
                     case Emoticon::plus().$lang->menu->addBenefactor:
+                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet);
+                        break;
+                    
+                    case Emoticon::group().$lang->menu->yourGroups:
                         $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet);
                         break;
                     
@@ -291,16 +368,120 @@ if ($user->getIdTelegram() != null) {
     // 
     // GROUP CHAT START
             case "group":
-                $text = "anche qui!";
-                $messageManager->sendSimpleMessage($user->getChat()->getId(), $text);
-                $item = array(array("text" => (string)$lang->menu->quitNow, "callback_data" => "yes"), array("text" => (string)$lang->menu->justJoking, "callback_data" => "no"));
-                $text = Emoticon::money().Emoticon::money().Emoticon::money().(string)$lang->menu->makeDonation.Emoticon::money().Emoticon::money().Emoticon::money();
-                $customMenu = $menuController->createCustomInlineMenu($item);
-                $messageManager->sendInline($user->getChat()->getId(), $text, $customMenu);
-                $menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
-                $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
-                $text = "Sei al ".$lang->menu->home;
-                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
+                if ($user->getChatMember() != NULL) {
+                    if ($user->getChatMember()->getType() == "new_chat_member") {
+                        if ($user->getChatMember()->getId() == $me->result->id) {
+                            try {
+                                $groupController->checkGroup($user->getChat()->getId());
+                            }
+                            catch (DatabaseException $ex) {
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                            }
+                            catch (GroupControllerException $ex) {
+                                try {
+                                    $groupController->insert($user->getChat());
+                                }
+                                catch (DatabaseException $ex) {
+                                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                                }
+                                catch (GroupControllerException $ex) {
+                                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                                }
+                            }
+                                $groupController->associateUser($user);
+                                $text = "Ciao a tutti! @".($user->getUsername() != "" ? $user->getUsername() : $user->getName()). " ha il potere.".chr(10)
+                                        ."Per iniziare chiedete a lui.";
+                                $menu = array(array("action" => $lang->menu->start.Emoticon::rocket()));
+                                $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true);
+                        } else {
+                            // E' stato aggiunto un utente al gruppo
+                            // $messageManager->sendSimpleMessage($user->getChat()->getId(), "è quell'altro");
+                        }
+                    } else { // left_chat_member
+                        $groupController->leaveGroup($user->getChat());
+                    }
+                    $i = 9;
+                } else {
+                    switch ($user->getMessage()) {
+                        case $lang->menu->start.Emoticon::rocket():
+                            // Se è admin
+                                $text = $lang->ui->letsGo.chr(10)
+                                .$lang->ui->sayHi
+                                ;
+                                $menu = array(array("action" => "Ciao amico".Emoticon::giveMeFive().""));
+                                $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu);
+                            break;
+                        
+                        case "Ciao amico".Emoticon::giveMeFive()."":
+                            try {
+                                $groupController->checkUser($user);
+                                $text = "Ciao @".($user->getUsername() != "" ? $user->getUsername() : $user->getName()).Emoticon::victory();
+                                $menu = array(array("action" => Emoticon::plus().$lang->menu->chooseBenefactor, "alone" => true), array("action" => Emoticon::lists().$lang->menu->listCompetitors), array("action" => Emoticon::settings().$lang->menu->settings), array("action" => Emoticon::off().$lang->menu->off, "alone" => true));
+                                $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true);
+                            }
+                            catch (DatabaseException $ex) {
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                            }
+                            break;
+                            
+                        case Emoticon::plus().$lang->menu->chooseBenefactor:
+                            $text = "Ok @".($user->getUsername() != "" ? $user->getUsername() : $user->getName())."!".chr(10);
+                            $text .= "Seleziona i nomi dei partecipanti.";
+                            try {
+                                $competitors = $groupController->getCompetitors($user->getChat(), $me);
+                                $i = 0;
+                                foreach ($competitors as $key => $value) {
+                                    $competitors[$key]['text'] = $value['nome'];
+                                    unset($competitors[$key]['nome']);
+                                    $competitors[$key]['callback_data'] = "benefactor".$i++;
+                                }
+                                
+                                $menu = $menuController->createCustomInlineMenu($competitors);
+                                $messageManager->sendInline($user->getChat()->getId(), $text, $menu);
+                            }
+                            catch (DatabaseException $ex) {
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                            }
+                            catch (GroupControllerException $ex) {
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                            }
+                            break;
+                        
+                        case Emoticon::lists().$lang->menu->listCompetitors:
+                            try {
+                                $competitors = $groupController->getCompetitors($user->getChat(), $me);
+                                $text = $groupController->createText($competitors);
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $text, true);
+                            }
+                            catch (DatabaseException $ex) {
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                            }
+                            catch (GroupControllerException $ex) {
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                            }
+                            break;
+                        
+                        case Emoticon::off().$lang->menu->off:
+                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet);
+                            break;
+                        
+                        default:
+                            $text = "Nonono";
+                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $text);
+                            break;
+                    }
+//                    $item = array(array("text" => (string)$lang->menu->quitNow, "callback_data" => "yes"), array("text" => (string)$lang->menu->justJoking, "callback_data" => "no"));
+//                    $text = Emoticon::money().Emoticon::money().Emoticon::money().(string)$lang->menu->makeDonation.Emoticon::money().Emoticon::money().Emoticon::money();
+//                    $customMenu = $menuController->createCustomInlineMenu($item);
+//                    $messageManager->sendInline($user->getChat()->getId(), $text, $customMenu);
+//                    $menu = array(array("action" => Emoticon::plus().$lang->menu->addBenefactor, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+//                    $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
+//                    $text = "Sei al ".$lang->menu->home;
+//                    $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
+                }
                 break;
     // GROUP CHAT END
             default:

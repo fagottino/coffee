@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
     <menu>
+        <start>Start</start>
         <help>Help</help>
         <settings>Settings</settings>
         <quit>Leave</quit>
         <home>Start</home>
         <back>Back</back>
         <offer>Do you like the bot? Give me a coffee!</offer>
-        <addBenefactor>Choose the big hearted</addBenefactor>
+        <chooseBenefactor>Choose the big hearted</chooseBenefactor>
+        <listCompetitors>Competitors list</listCompetitors>
         <quitNow>Yes, quit now.</quitNow>
         <justJoking>No, i'm joking</justJoking>
         <setLanguage>Set language:</setLanguage>
         <makeDonation>Make a donation</makeDonation>
+        <yourGroups>Your groups</yourGroups>
+        <off>Off</off>
+        <on>On</on>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Error while the creation of the custom menu'.</errorWithCreationOfCustomMenu>
@@ -21,6 +26,7 @@
         <noResultsFound>No results found.</noResultsFound>
         <cantGetNameOfUser>Error while reading the names of users.</cantGetNameOfUser>
         <errorWhileUserRegistration>Error while user registration.</errorWhileUserRegistration>
+        <errorWhileGroupRegistration>Error while group registration.</errorWhileGroupRegistration>
         <cantGetLastOperation>Error while current operation reading.</cantGetLastOperation>
         <cantUnderstandMessage>If you write like this I can't understand you. Use the buttons below.</cantUnderstandMessage>
         <notImplementedYet>Not implemented yet</notImplementedYet>
@@ -48,5 +54,7 @@
         <sendSomeButtons>I send you some buttons if you want me to help you with something.</sendSomeButtons>
         <giveMeTips>Suggestions are welcome, if you had someone send me by.</giveMeTips>
         <clickingHere>Clicking here</clickingHere>
+        <letsGo>Ok, let's go!</letsGo>
+        <sayHi>Who wants to participate must say hi to me through the button below.</sayHi>
     </ui>
 </document>

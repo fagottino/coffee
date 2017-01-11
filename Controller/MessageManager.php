@@ -15,7 +15,7 @@ class MessageManager {
     //secondo: testo messaggio
     //terzo: array di array della tastiera da mostrare all'utente
     //quarto: true->disabilita notifica per questo messaggio
-    public function sendReplyMarkup($chatID, $text, $rm = false, $dis = false)
+    public function sendReplyMarkup($chatID, $text, $rm = false, $selective = false, $dis = false)
     {
         if (!$rm) {
             $rmGen = array('hide_keyboard' => true);
@@ -24,6 +24,10 @@ class MessageManager {
             $rmGen = array('keyboard' => $rm,
             'resize_keyboard' => true
             );
+        
+            if ($selective) {
+                $rmGen['selective'] = true;
+            }
             $rm = json_encode($rmGen);
         }
 
@@ -122,7 +126,6 @@ class MessageManager {
                     $errorCurrent = file_get_contents($errorFile);
                     $errorCurrent .= date("d/m/Y H:i:s / ");
                     $errorCurrent .= $data["description"];
-                    $errorCurrent .= $_args["reply_markup"];
                     $errorCurrent .= "\n";
                     file_put_contents($errorFile, $errorCurrent);
                 break;
@@ -130,12 +133,18 @@ class MessageManager {
         }
     }
         
-    function sendSimpleMessage($id, $message) {
-       file_get_contents(API_URL."/sendmessage?chat_id=".$id."&text=".urlencode($message));
+    function sendSimpleMessage($id, $message, $disableNotification = false) {
+       file_get_contents(API_URL."/sendmessage?chat_id=".$id."&text=".urlencode($message).($disableNotification ? "&disable_notification=true" : ""));
+       //file_get_contents(API_URL."/sendmessage?chat_id=".$id."&text=".urlencode($message)."&disable_notification=true");
     }
         
     function answerCallbackQuery($_id, $_message = "", $_showAlert = false) {
        file_get_contents(API_URL."/answerCallbackQuery?callback_query_id=".$_id."&text=".urlencode($_message)."&show_alert=".$_showAlert);
+    }
+        
+    function getMe() {
+       $me = json_decode(file_get_contents(API_URL."/getme"));
+       return $me;
     }
 }
 

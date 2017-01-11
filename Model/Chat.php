@@ -12,28 +12,15 @@ class Chat {
         
     }
 
-//    public static function getChat($_chat) {
-//        $type = $_chat["type"];
-//        switch ($type) {
-//            case "private":
-//                $chat = new ChatPrivate($_chat);
-//                break;
-//            case "group":
-//                $chat = new ChatGroup($_chat);
-//                break;
-//            case "":
-//
-//                break;
-//        }
-//        return $chat;
-//    }
-
     public function getName() {
         return $this->name;
     }
 
     public function getUsername() {
-        return $this->username;
+        if ($this->username != null)
+            return $this->username;
+        else
+            throw new ChatException("");
     }
 
     public function getId() {
@@ -45,6 +32,28 @@ class Chat {
             return $this->type;
         else
             throw new ChatException("");
+    }
+
+    public function getRequestType() {
+        if ($this->requestType != null)
+            return $this->requestType;
+        else
+            throw new ChatException("");
+    }
+
+    public function getFirstname() {
+        if ($this->firstname != null)
+            return $this->firstname;
+        else
+            throw new ChatException("");
+    }
+
+    public function getTitle() {
+        return $this->title;
+    }
+    
+    public function getAmaa() {
+        return $this->amaa;
     }
 }
 

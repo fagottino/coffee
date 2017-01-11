@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
     <menu>
+        <start>Avvia</start>
         <help>Aiuto</help>
         <settings>Impostazioni</settings>
         <quit>Esci dal bot</quit>
         <home>Menù principale</home>
         <back>Indietro</back>
         <offer>Ti piace il bot? Offrimi un caffè</offer>
-        <addBenefactor>Scegliamo il benefattore</addBenefactor>
+        <chooseBenefactor>Scegliamo il benefattore</chooseBenefactor>
+        <listCompetitors>Lista dei concorrenti</listCompetitors>
         <quitNow>Si, esci subito.</quitNow>
         <justJoking>No, ho sbagliato.</justJoking>
         <setLanguage>Setta la lingua:</setLanguage>
         <makeDonation>Fai una donazione</makeDonation>
+        <yourGroups>I tuoi gruppi</yourGroups>
+        <off>Off</off>
+        <on>On</on>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Errore nella creazione del menù custom.</errorWithCreationOfCustomMenu>
@@ -21,6 +26,7 @@
         <noResultsFound>Nessun risultato trovato</noResultsFound>
         <cantGetNameOfUser>Errore durante la lettura dei nomi degli utenti.</cantGetNameOfUser>
         <errorWhileUserRegistration>Errore nella registrazione dell'utente.</errorWhileUserRegistration>
+        <errorWhileGroupRegistration>Errore nella registrazione del gruppo.</errorWhileGroupRegistration>
         <cantGetLastOperation>Errore durante la lettura dell'operazione corrente.</cantGetLastOperation>
         <cantUnderstandMessage>Se scrivi così non riesco a capirti. Usa i tasti in basso.</cantUnderstandMessage>
         <notImplementedYet>Non ancora implementata.</notImplementedYet>
@@ -48,5 +54,7 @@
         <sendSomeButtons>Ti invio alcuni pulsanti se vuoi che ti aiuti su qualcosa di specifico.</sendSomeButtons>
         <giveMeTips>I suggerimenti sono benvenuti, qualora ne avessi inviameli pure</giveMeTips>
         <clickingHere>Cliccando qui</clickingHere>
+        <letsGo>Ok, iniziamo!</letsGo>
+        <sayHi>Chi vuole partecipare deve salutatarmi con il tasto in basso.</sayHi>
     </ui>
 </document>
