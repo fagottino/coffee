@@ -17,6 +17,8 @@
         <yourGroups>Your groups</yourGroups>
         <off>Off</off>
         <on>On</on>
+        <selectParticipants>Select the participants name.</selectParticipants>
+        <nextStep>Next step</nextStep>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Error while the creation of the custom menu'.</errorWithCreationOfCustomMenu>
@@ -27,6 +29,7 @@
         <cantGetNameOfUser>Error while reading the names of users.</cantGetNameOfUser>
         <errorWhileUserRegistration>Error while user registration.</errorWhileUserRegistration>
         <errorWhileGroupRegistration>Error while group registration.</errorWhileGroupRegistration>
+        <errorWhileCoffeeRegistration>Error while coffee registration.</errorWhileCoffeeRegistration>
         <cantGetLastOperation>Error while current operation reading.</cantGetLastOperation>
         <cantUnderstandMessage>If you write like this I can't understand you. Use the buttons below.</cantUnderstandMessage>
         <notImplementedYet>Not implemented yet</notImplementedYet>
@@ -56,5 +59,10 @@
         <clickingHere>Clicking here</clickingHere>
         <letsGo>Ok, let's go!</letsGo>
         <sayHi>Who wants to participate must say hi to me through the button below.</sayHi>
+        <hiFriend>Hello my friend</hiFriend>
+        <hiEverybody>Hello to everybody!</hiEverybody>
+        <hasPower>Has the power.</hasPower>
+        <askHimToStart>Please ask him to get started.</askHimToStart>
+        <ok>Ok</ok>
     </ui>
 </document>

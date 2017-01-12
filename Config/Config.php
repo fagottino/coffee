@@ -16,11 +16,17 @@ define('DEFAULT_LANGUAGE', IT);
 
 define('DB_PREFIX', 'coffee_');
 
-
 // Menu list
-define ("START", '/start');
-define ('HELP', $lang->menu->help);
-define ('BACK', $lang->menu->back);
+define("START", '/start');
+define('HOME', 'home');
+define('HELP', 'help');
+define('SETTINGS', 'settings');
+define('QUIT', 'quit');
+define('CANCEL', 'cancel');
+define('NULL_VALUE', 'nullValue');
+define('CHOOSE_BENEFACTOR', 'chooseBenefactor');
+define('CHOOSE_BENEFACTOR2', 'chooseBenefactor2');
+define('BENEFACTOR_LIST', 'benefactorList');
 
 //class Config {
 //    

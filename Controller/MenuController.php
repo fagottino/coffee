@@ -16,9 +16,9 @@ class MenuController {
         $j = -1;
         while($row = $_itemArray->fetch_assoc()) {
             if ($i % 3 == 0) {
-                $menu[++$j] = array("" . $row["nome"]);
+                $menu[++$j] = array("" . $row["name"]);
             } else {
-                array_push($menu[$j], "" . $row["nome"]);
+                array_push($menu[$j], "" . $row["name"]);
             }
             $i++;
         }
@@ -45,9 +45,9 @@ class MenuController {
         while($row = $_itemArray->fetch_assoc()) {
             if ($i % 3 == 0) {
                 $k = 0;
-                $menu[++$j][$k++] = array("text" => $row["nome"], "callback_data" => "http://www.google.it");
+                $menu[++$j][$k++] = array("text" => $row["name"], "callback_data" => "http://www.google.it");
             } else {
-                array_push($menu[$j], array("text" => $row["nome"], "callback_data" => "http://www.google.it"));
+                array_push($menu[$j], array("text" => $row["name"], "callback_data" => "http://www.google.it"));
             }
             $i++;
         }

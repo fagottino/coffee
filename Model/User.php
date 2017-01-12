@@ -34,10 +34,8 @@ class User {
                     
                     if (isset($_user["message"]["new_chat_member"])) {
                         $this->chatMember = new ChatMember("new_chat_member", $_user["message"]["new_chat_member"]);
-                        //$this->chatMember = array("type" => "new_chat_member", "id" => $_user["message"]["new_chat_member"]["id"], "first_name" => $_user["message"]["new_chat_member"]["first_name"], "username" => $_user["message"]["new_chat_member"]["username"]);
                     } else if (isset($_user["message"]["left_chat_member"])) {
                         $this->chatMember = new ChatMember("left_chat_member", $_user["message"]["left_chat_member"]);
-                        //$this->chatMember = array("type" => "left_chat_member", "id" => $_user["message"]["new_chat_member"]["id"], "first_name" => $_user["message"]["new_chat_member"]["first_name"], "username" => $_user["message"]["new_chat_member"]["username"]);
                     }
                     break;
                 default:
@@ -54,7 +52,7 @@ class User {
                     $this->chat = new ChatPrivate($_user["callback_query"]["message"]["chat"]);
                     break;
                 case "group":
-                    $this->chat = new ChatGroup($_chat);
+                    $this->chat = new ChatGroup($_user["callback_query"]["message"]["chat"]);
                     break;
                 default:
                 break;
@@ -66,7 +64,7 @@ class User {
     }
     
     public function setUserDataFromDb($_user) {
-        $this->currentOperation = $_user['name_operation'];
+        $this->currentOperation = $_user['operation'];
         $this->lang = $_user['name_lang'];
     }
     

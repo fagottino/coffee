@@ -11,7 +11,7 @@ class Emoticon {
     }
     
     public static function error() {
-        return "\xe2\x9c\x96";
+        return "\xE2\x9D\x8C";
     }
     
     public static function back() {
@@ -96,5 +96,13 @@ class Emoticon {
     
     public static function off() {
         return "\xE2\xAD\x95";
+    }
+    
+    public static function right() {
+        return "\xE2\x96\xB6";
+    }
+    
+    public static function left() {
+        return "\xE2\x97\x80";
     }
 }
