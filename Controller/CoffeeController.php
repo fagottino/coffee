@@ -32,8 +32,8 @@ class CoffeeController {
         global $lang;
         try {
             $db = Database::getConnection();
-            
-            $result = $db->query("INSERT INTO ".DB_PREFIX."paid_coffee_people (id_paid_coffee, id_user) VALUES ((SELECT id_paid_coffee FROM coffee_paid_coffee WHERE set_by = '".$_user->getIdTelegram()."' AND powered_by IS NULL), '".$_user->getMessage()."')");
+            $sql = "INSERT INTO ".DB_PREFIX."paid_coffee_people (id_paid_coffee, id_user) VALUES ((SELECT id_paid_coffee FROM coffee_paid_coffee WHERE set_by = '".$_user->getIdTelegram()."' AND powered_by IS NULL), '".$_user->getMessage()."')";
+            $result = $db->query($sql);
             if (!$result) {
                 throw new UserControllerException($lang->error->errorWhileCoffeeRegistration);
             }

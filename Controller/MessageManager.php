@@ -15,7 +15,7 @@ class MessageManager {
     //secondo: testo messaggio
     //terzo: array di array della tastiera da mostrare all'utente
     //quarto: true->disabilita notifica per questo messaggio
-    public function sendReplyMarkup($chatID, $text, $rm = false, $selective = false, $dis = false)
+    public function sendReplyMarkup($_idChat, $text, $rm = false, $selective = false, $_replyToMessage = false, $dis = false)
     {
         if (!$rm) {
             $rmGen = array('hide_keyboard' => true);
@@ -32,17 +32,18 @@ class MessageManager {
         }
 
         $args = array(
-            'chat_id' => $chatID,
+            'chat_id' => $_idChat,
             'text' => $text,
-            'reply_markup' => $rm,
             'parse_mode' => "HTML",
-            'disable_notification' => $dis
+            'disable_notification' => $dis,
+            'reply_to_message_id' => $_replyToMessage,
+            'reply_markup' => $rm
         );
         
         $this->sendMessage("sendMessage", $args);
     }
     
-    public function sendInline($chatID, $text, $_keyboard)
+    public function sendInline($_idChat, $text, $_keyboard)
     {
         global $lang;
         if ($text) {
@@ -51,7 +52,7 @@ class MessageManager {
                 $_keyboard = json_encode($_keyboardGen);
 
             $args = array(
-                'chat_id' => $chatID,
+                'chat_id' => $_idChat,
                 'text' => $text,
                 'reply_markup' => $_keyboard
             );
@@ -65,7 +66,7 @@ class MessageManager {
         }
     }
     
-    public function editInlineMessage($_chatId, $_messageId, $_text, $_keyboard) {
+    public function editInlineMessage($_idChat, $_messageId, $_text, $_keyboard) {
         global $lang;
         if ($_text) {
             if ($_keyboard) {
@@ -73,7 +74,7 @@ class MessageManager {
                     $_keyboard = json_encode($_keyboardGen);
 
                 $args = array(
-                    'chat_id' => $_chatId,
+                    'chat_id' => $_idChat,
                     'message_id' => $_messageId,
                     'text' => $_text,
                     'reply_markup' => $_keyboard
@@ -92,10 +93,14 @@ class MessageManager {
         }
     }
     
-    public function getNumberMemberGroup($_chatID, $_userId)
+    public function replyMessage($_idChat, $_idMessage) {
+        
+    }
+    
+    public function getNumberMemberGroup($_idChat, $_idUser)
     {
         $args = array(
-        'chat_id' => $chatID,
+        'chat_id' => $_idChat,
         'text' => $text,
         'reply_markup' => $rm,
         'disable_notification' => $dis

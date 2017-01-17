@@ -11,6 +11,7 @@ class User {
     private $idTelegram;
     private $name;
     private $username;
+    private $idMessage;
     private $message;
     private $lang;
     private $chat;
@@ -22,8 +23,10 @@ class User {
             $this->idTelegram = $_user["message"]["from"]["id"];
             $this->name = $_user["message"]["from"]["first_name"];
             $this->username = $_user["message"]["from"]["username"];
-            if (isset($_user["message"]["text"]))
+            if (isset($_user["message"]["text"])) {
+                $this->idMessage = $_user["message"]["message_id"];
                 $this->message = $_user["message"]["text"];
+            }
 
             switch ($_user["message"]["chat"]["type"]) {
                 case "private":
@@ -80,11 +83,15 @@ class User {
         return $this->username;
     }
     
+    public function getIdMessage() {
+        return $this->idMessage;
+    }
+    
     public function getMessage() {
         return $this->message;
     }
     
-    public function getMessageId($_array) {
+    public function getMessageIdCallBack($_array) {
         return $_array["callback_query"]["message"]["message_id"];
     }
     
