@@ -138,8 +138,8 @@ class MessageManager {
         }
     }
         
-    function sendSimpleMessage($id, $message, $disableNotification = false) {
-       file_get_contents(API_URL."/sendmessage?chat_id=".$id."&text=".urlencode($message).($disableNotification ? "&disable_notification=true" : ""));
+    function sendSimpleMessage($id, $message, $disableNotification = false, $_replyToMsg = 0) {
+       file_get_contents(API_URL."/sendmessage?chat_id=".$id."&text=".urlencode($message).($disableNotification ? "&disable_notification=true" : "").($_replyToMsg != 0 ? "&reply_to_message_id=".$_replyToMsg : ""));
        //file_get_contents(API_URL."/sendmessage?chat_id=".$id."&text=".urlencode($message)."&disable_notification=true");
     }
         

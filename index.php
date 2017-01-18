@@ -114,46 +114,46 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 //    );
     
 // MESSAGE WITH ANSWER
-    $privateMessage = array(
-        "update_id" => 624793660,
-        "message" => array(
-            "message_id" => 4854,
-            "from" => array(
-                "id" => 19179842,
-                "first_name" => "fagottino",
-                "username" => "fagottino"
-            ),
-             "chat" => array(
-                "id" => -114342037,
-                "title" => "TestGroup",
-                "type" => "group",
-                "all_members_are_administrators" => true
-            ),
-            "date" => 1483905746,
-            "reply_to_message" => array(
-                "message_id" => 4853,
-                "from" => array(
-                    "id" => 186132931,
-                    "first_name" => "Il benefattore del caff\u00e8",
-                    "username" => "IlBenefattoreDelCaffe_Bot"
-                ),
-                 "chat" => array(
-                    "id" => -114342037,
-                    "title" => "TestGroup",
-                    "type" => "group",
-                    "all_members_are_administrators" => true
-                ),
-                "date" => 1483905728,
-                "text" => "Ciao a tutti! @fagottino ha il potere.\nPer iniziare chiedete a lui.",
-                "entities" => array(
-                    "type" => "mention",
-                    "offset" => 14,
-                    "length" => 10
-                )
-                ),
-            "text" => $lang->ui->hiFriend.Emoticon::giveMeFive()
-                )
-            );
+//    $privateMessage = array(
+//        "update_id" => 624793660,
+//        "message" => array(
+//            "message_id" => 4854,
+//            "from" => array(
+//                "id" => 19179842,
+//                "first_name" => "fagottino",
+//                "username" => "fagottino"
+//            ),
+//             "chat" => array(
+//                "id" => -114342037,
+//                "title" => "TestGroup",
+//                "type" => "group",
+//                "all_members_are_administrators" => true
+//            ),
+//            "date" => 1483905746,
+//            "reply_to_message" => array(
+//                "message_id" => 4853,
+//                "from" => array(
+//                    "id" => 186132931,
+//                    "first_name" => "Il benefattore del caff\u00e8",
+//                    "username" => "IlBenefattoreDelCaffe_Bot"
+//                ),
+//                 "chat" => array(
+//                    "id" => -114342037,
+//                    "title" => "TestGroup",
+//                    "type" => "group",
+//                    "all_members_are_administrators" => true
+//                ),
+//                "date" => 1483905728,
+//                "text" => "Ciao a tutti! @fagottino ha il potere.\nPer iniziare chiedete a lui.",
+//                "entities" => array(
+//                    "type" => "mention",
+//                    "offset" => 14,
+//                    "length" => 10
+//                )
+//                ),
+//            "text" => $lang->ui->hiFriend.Emoticon::giveMeFive()
+//                )
+//            );
 
 // MESSAGE WITH ANSWER RICCISHOP
 //    $privateMessage = array(
@@ -224,40 +224,40 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 //        );
         
 // CALLACK GROUP QUERY
-//    $privateMessage = array(
-//        "update_id" => 624794115,
-//        "callback_query" => array(
-//            "id" => "82376794853805130",
-//            "from" => array(
-//                "id" => 19179842,
-//                "first_name" => "fagottino",
-//                "username" => "fagottino"
-//            ),
-//            "message" => array (
-//                "message_id" => 4320,
-//                "from" => array (
-//                    "id" => 186132931,
-//                    "first_name" => "Il benefattore del caff\u00e8",
-//                    "username" => "IlBenefattoreDelCaffe_Bot"
-//                ),
-//                "chat" => array (
-//                    "id" => -114342037,
-//                    "title" => "TestGroup",
-//                    "type" => "group",
-//                    "all_members_are_administrators" => true
-//                ),
-//                "date" => 1484227281,
-//                "text" => "Ok @fagottino!\nSeleziona i nomi dei partecipanti.",
-//                "entities" => array(
-//                        "type" => "mention",
-//                        "offset" => 3,
-//                        "length" => 10
-//                        )
-//                ),
-//            "chat_instance" => "-3971973381224532564",
-//            "data" => "19179842"
-//        )
-//    );
+    $privateMessage = array(
+        "update_id" => 624794115,
+        "callback_query" => array(
+            "id" => "82376794853805130",
+            "from" => array(
+                "id" => 19179842,
+                "first_name" => "fagottino",
+                "username" => "fagottino"
+            ),
+            "message" => array (
+                "message_id" => 4320,
+                "from" => array (
+                    "id" => 186132931,
+                    "first_name" => "Il benefattore del caff\u00e8",
+                    "username" => "IlBenefattoreDelCaffe_Bot"
+                ),
+                "chat" => array (
+                    "id" => -114342037,
+                    "title" => "TestGroup",
+                    "type" => "group",
+                    "all_members_are_administrators" => true
+                ),
+                "date" => 1484227281,
+                "text" => "Ok @fagottino!\nSeleziona i nomi dei partecipanti.",
+                "entities" => array(
+                        "type" => "mention",
+                        "offset" => 3,
+                        "length" => 10
+                        )
+                ),
+            "chat_instance" => "-3971973381224532564",
+            "data" => "49402640"
+        )
+    );
     
     $unreadMessage = $privateMessage;
 }
@@ -316,7 +316,17 @@ if ($user->getIdTelegram() != null) {
                         $user->setCurrentOperation(HELP);
                         $userController->updateCurrentOperation($user);
                         $text = (string)$lang->general->moreInfo;
-                        $menu = array(array("action" => $lang->menu->help."1"), array("action" => $lang->menu->help."2"), array("action" => $lang->menu->help."3"));
+                        $menu = array(
+                            array(
+                                "action" => $lang->menu->help."1"
+                                ),
+                            array(
+                                "action" => $lang->menu->help."2"
+                                ),
+                            array(
+                                "action" => $lang->menu->help."3"
+                                )
+                            );
                         $customMenu = $menuController->createCustomReplyMarkupMenu($menu, true);
                         $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
                     } catch (DatabaseException $dbEx) {
@@ -330,7 +340,16 @@ if ($user->getIdTelegram() != null) {
 //                    $menu = array(array("action" => "Settings 1"), array("action" => "Settings 2"), array("action" => "Settings 3"), array("action" => "Settings 4"), array("action" => "Settings 5"));
 //                    $customMenu = $menuController->createCustomReplyMarkupMenu($menu, true);
                     $text = (string)$lang->menu->setLanguage;
-                    $menu = array(array("text" => Emoticon::it()."Italiano".($user->getLang() == IT ? Emoticon::check() : ""), "callback_data" => "it"), array("text" => Emoticon::en()."English".($user->getLang() == EN ? Emoticon::check() : ""), "callback_data" => "en"));
+                    $menu = array(
+                        array(
+                            "text" => Emoticon::it()."Italiano".($user->getLang() == IT ? Emoticon::check() : ""),
+                            "callback_data" => "it"
+                            ),
+                        array(
+                            "text" => Emoticon::en()."English".($user->getLang() == EN ? Emoticon::check() : ""),
+                            "callback_data" => "en"
+                            )
+                        );
                     $customMenu = $menuController->createCustomInlineMenu($menu);
                     try {
                     $messageManager->sendInline($user->getChat()->getId(), $text, $customMenu);
@@ -345,7 +364,7 @@ if ($user->getIdTelegram() != null) {
 //                        $messageManager->sendInline($user->getChat()->getId(), $text, $customMenu);
 //                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $text);
                     } catch (MessageException $ex) {
-                        $messageManager->sendSimpleMessage($user->getIdTelegram(), "UN ERRORE".$ex);
+                        $messageManager->sendSimpleMessage($user->getIdTelegram(), $ex);
                     }
                     break;
                 
@@ -356,20 +375,48 @@ if ($user->getIdTelegram() != null) {
                             $user->setLang($user->getMessage());
                             $userController->updateLang($user);
                             $lang = Lang::getLang($user->getLang());
-                            $menu = array(array("action" => Emoticon::group().$lang->menu->yourGroups, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+                            $menu = array(
+                                array(
+                                    "action" => Emoticon::group().$lang->menu->yourGroups, 
+                                    "alone" => true
+                                    ),
+                                array(
+                                    "action" => Emoticon::help().$lang->menu->help, 
+                                    "alone" => false
+                                    ), 
+                                array(
+                                    "action" => Emoticon::settings().$lang->menu->settings, 
+                                    "alone" => false
+                                    ), 
+                                array(
+                                    "action" => Emoticon::quit().$lang->menu->quit, 
+                                    "alone" => true
+                                    )
+                                );
                             $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
                             $text = (string)$lang->general->languageSet;
                             $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
                             $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text, true);
 
-                            $menu = array(array(array("text" => Emoticon::it().$lang->general->it.($user->getMessage() == IT ? Emoticon::check() : ""), "callback_data" => "it"), array("text" => Emoticon::en().$lang->general->en.($user->getMessage() == EN ? Emoticon::check() : ""), "callback_data" => "en")));
+                            $menu = array(
+                                array(
+                                    array(
+                                        "text" => Emoticon::it().$lang->general->it.($user->getMessage() == IT ? Emoticon::check() : ""),
+                                        "callback_data" => "it"
+                                        ),
+                                    array(
+                                        "text" => Emoticon::en().$lang->general->en.($user->getMessage() == EN ? Emoticon::check() : ""),
+                                        "callback_data" => "en"
+                                        )
+                                    )
+                                );
                             $customMenu = $menuController->createCustomInlineMenu($menu);
                             $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text, $menu);
                         } else {
                             $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                         }
                     } catch (DatabaseException $ex) {
-                        $messageManager->sendSimpleMessage($ex->getMessage());
+                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
                     }
                     break;
                 
@@ -379,11 +426,21 @@ if ($user->getIdTelegram() != null) {
                         $text = (string)$lang->general->notImplementedYet;
                         $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text, true);
                         
-                        $menu = array(array(array("text" => Emoticon::it().$lang->general->it.($user->getMessage() == IT ? Emoticon::check() : ""), "callback_data" => "it"), array("text" => Emoticon::en().$lang->general->en.($user->getMessage() == EN ? Emoticon::check() : ""), "callback_data" => "en")));
+                        $menu = array(
+                            array(
+                                array(
+                                    "text" => Emoticon::it().$lang->general->it.($user->getMessage() == IT ? Emoticon::check() : ""),
+                                    "callback_data" => "it"
+                                    ),
+                                array("text" => Emoticon::en().$lang->general->en.($user->getMessage() == EN ? Emoticon::check() : ""),
+                                    "callback_data" => "en"
+                                    )
+                                )
+                            );
                         $customMenu = $menuController->createCustomInlineMenu($menu);
 //                        $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageId($unreadMessage), $text, $menu);
                     } catch (DatabaseException $ex) {
-                        $messageManager->sendSimpleMessage($ex->getMessage());
+                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
                     }
                     break;
                 
@@ -391,7 +448,16 @@ if ($user->getIdTelegram() != null) {
                     $user->setCurrentOperation(QUIT);
                     $userController->updateCurrentOperation($user);
                     //$item = array(array("text" => $lang->menu->quitNow, "callback_data" => "yes"), array("text" => $lang->menu->justJoking, "callback_data" => "no"));
-                    $item = array(array("text" => (string)$lang->menu->quitNow, "callback_data" => "yes"), array("text" => (string)$lang->menu->justJoking, "callback_data" => "no"));
+                    $item = array(
+                        array(
+                            "text" => (string)$lang->menu->quitNow, 
+                            "callback_data" => "yes"
+                            ), 
+                        array(
+                            "text" => (string)$lang->menu->justJoking,
+                            "callback_data" => "no"
+                            )
+                        );
                     $customMenu = $menuController->createCustomInlineMenu($item, false, 2, true);
                     $text = (string)$lang->general->disableBot;
                     $messageManager->sendInline($user->getChat()->getId(), $text, $customMenu);
@@ -405,7 +471,24 @@ if ($user->getIdTelegram() != null) {
                             try {
                                 $user->setCurrentOperation(HOME);
                                 $userController->updateCurrentOperation($user);
-                                $menu = array(array("action" => Emoticon::group().$lang->menu->yourGroups, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+                                $menu = array(
+                                    array(
+                                        "action" => Emoticon::group().$lang->menu->yourGroups,
+                                        "alone" => true
+                                        ),
+                                    array(
+                                        "action" => Emoticon::help().$lang->menu->help, 
+                                        "alone" => false
+                                        ), 
+                                    array(
+                                        "action" => Emoticon::settings().$lang->menu->settings,
+                                        "alone" => false
+                                        ), 
+                                    array(
+                                        "action" => Emoticon::quit().$lang->menu->quit,
+                                        "alone" => true
+                                        )
+                                    );
                                 $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
                                 $text = $lang->general->youAreHere." ".$lang->menu->home;
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
@@ -424,7 +507,24 @@ if ($user->getIdTelegram() != null) {
                             $user->setCurrentOperation(HOME);
                             $userController->updateCurrentOperation($user);
                             //$menu = array(array("action" => Emoticon::help().$lang->menu->help), array("action" => Emoticon::settings().$lang->menu->settings), array("action" => Emoticon::quit().$lang->menu->quit));
-                            $menu = array(array("action" => Emoticon::group().$lang->menu->yourGroups, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+                            $menu = array(
+                                array(
+                                    "action" => Emoticon::group().$lang->menu->yourGroups, 
+                                    "alone" => true
+                                    ), 
+                                array(
+                                    "action" => Emoticon::help().$lang->menu->help,
+                                    "alone" => false
+                                    ), 
+                                array(
+                                    "action" => Emoticon::settings().$lang->menu->settings, 
+                                    "alone" => false
+                                    ),
+                                array(
+                                    "action" => Emoticon::quit().$lang->menu->quit,
+                                    "alone" => true
+                                    )
+                                );
                             $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
                             $text = "Sei al ".$lang->menu->home;
                             $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu);
@@ -477,7 +577,11 @@ if ($user->getIdTelegram() != null) {
                                 $groupController->associateUser($user);
                                 $text = $lang->ui->hiEverybody." @".($user->getUsername() != "" ? $user->getUsername() : $user->getName()). " ".$lang->ui->hasPower.chr(10)
                                         .$lang->ui->askHimToStart;
-                                $menu = array(array("action" => $lang->menu->start.Emoticon::rocket()));
+                                $menu = array(
+                                    array(
+                                        "action" => $lang->menu->start.Emoticon::rocket()
+                                        )
+                                    );
                                 $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true);
                         } else {
@@ -493,7 +597,11 @@ if ($user->getIdTelegram() != null) {
                                 $text = $lang->ui->letsGo.chr(10)
                                     .$lang->ui->sayHi
                                 ;
-                                $menu = array(array("action" => $lang->ui->hiFriend.Emoticon::giveMeFive()));
+                                $menu = array(
+                                    array(
+                                        "action" => $lang->ui->hiFriend.Emoticon::giveMeFive()
+                                        )
+                                    );
                                 $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu);
                             break;
@@ -502,7 +610,19 @@ if ($user->getIdTelegram() != null) {
                             try {
                                 $groupController->checkUser($user);
                                 $text = $lang->ui->hi." @".($user->getUsername() != "" ? $user->getUsername() : $user->getName()).Emoticon::victory();
-                                $menu = array(array("action" => Emoticon::plus().$lang->menu->chooseBenefactor, "alone" => true), array("action" => Emoticon::lists().$lang->menu->listCompetitors), array("action" => Emoticon::settings().$lang->menu->settings), array("action" => Emoticon::off().$lang->menu->off, "alone" => true));
+                                $menu = array(
+                                    array(
+                                        "action" => Emoticon::plus().$lang->menu->chooseBenefactor, 
+                                        "alone" => true
+                                        ), 
+                                    array(
+                                        "action" => Emoticon::lists().$lang->menu->listCompetitors
+                                        ),
+                                    array(
+                                        "action" => Emoticon::off().$lang->menu->off,
+                                        "alone" => true
+                                        )
+                                    );
                                 $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true, $user->getIdMessage());
                             }
@@ -528,7 +648,16 @@ if ($user->getIdTelegram() != null) {
                                     }
 
                                     $menu = $menuController->createCustomInlineMenu($competitors);
-                                    array_push($menu, array(array("text" => Emoticon::error()."Annulla", "callback_data" => CANCEL), array("text" => $lang->menu->nextStep." ".Emoticon::right(), "callback_data" => CHOOSE_BENEFACTOR2)));
+                                    array_push($menu, array(
+                                                array(
+                                                    "text" => Emoticon::error()."Annulla", 
+                                                    "callback_data" => CANCEL
+                                                    ), 
+                                                array("text" => $lang->menu->nextStep." ".Emoticon::right(), 
+                                                    "callback_data" => CHOOSE_BENEFACTOR2
+                                                    )
+                                                )
+                                            );
                                     $messageManager->sendInline($user->getChat()->getId(), $text, $menu);
                                 }
                                 catch (DatabaseException $ex) {
@@ -557,7 +686,11 @@ if ($user->getIdTelegram() != null) {
                             break;
                         
                         case Emoticon::off().$lang->menu->off:
-                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet);
+                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet, false, $user->getIdMessage());
+                            break;
+                        
+                        case CHOOSE_BENEFACTOR2:
+                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet, false);
                             break;
                         
                         default:
@@ -566,24 +699,38 @@ if ($user->getIdTelegram() != null) {
                                         $coffeeController->addPeopleToCoffee($user);
                                         $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                                         try {
-                                            $competitors = $groupController->getOtherCompetitors($user, $me);
-                                            foreach ($competitors as $key => $value) {
-                                                $competitors[$key]['text'] = $value['name'];
-                                                unset($competitors[$key]['name']);
-                                                $competitors[$key]['callback_data'] = $value['id_telegram'];
+                                            $item = $groupController->getOtherCompetitors($user, $me);
+                                            foreach ($item as $key => $value) {
+                                                $item[$key]['text'] = $value['name'];
+                                                unset($item[$key]['name']);
+                                                $item[$key]['callback_data'] = $value['id_telegram'];
                                             }
                                             $text = "Yeaaah! Aggiungi gli altri!";
-                                            $menu = $menuController->createCustomInlineMenu($competitors);
                                         }
                                         catch (DatabaseException $ex) {
                                             $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
                                         }
                                         catch (GroupControllerException $ex) {
-                                            $item = array(array("text" => "Ok, finito! ".Emoticon::smile(), "callback_data" => NULL_VALUE));
-                                            $menu = $menuController->createCustomInlineMenu($item);
+                                            $item = array(
+                                                array(
+                                                    "text" => "Ok, finito! ".Emoticon::smile(), 
+                                                    "callback_data" => NULL_VALUE
+                                                    )
+                                                );
                                         
                                         }
-                                        array_push($menu, array(array("text" => Emoticon::error()."Annulla", "callback_data" => CANCEL), array("text" => $lang->menu->nextStep." ".Emoticon::right(), "callback_data" => CHOOSE_BENEFACTOR2)));
+                                        $menu = $menuController->createCustomInlineMenu($item);
+                                        array_push($menu, array(
+                                                    array(
+                                                        "text" => Emoticon::error()."Annulla", 
+                                                        "callback_data" => CANCEL
+                                                        ), 
+                                                    array(
+                                                        "text" => $lang->menu->nextStep." ".Emoticon::right(), 
+                                                        "callback_data" => CHOOSE_BENEFACTOR2
+                                                        )
+                                                    )
+                                                );
                                         $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text, $menu);
                                     break;
                                     
