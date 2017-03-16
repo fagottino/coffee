@@ -14,11 +14,11 @@
         <justJoking>No, i'm joking</justJoking>
         <setLanguage>Set language:</setLanguage>
         <makeDonation>Make a donation</makeDonation>
-        <yourGroups>Your groups</yourGroups>
+        <yourGroups>My groups</yourGroups>
         <off>Off</off>
         <on>On</on>
         <selectParticipants>Select the participants name.</selectParticipants>
-        <nextStep>Next step</nextStep>
+        <nextStep>Next</nextStep>
         <cancel>Cancel</cancel>
         <willNotParticipate>I will not participate</willNotParticipate>
     </menu>
@@ -32,6 +32,7 @@
         <errorWhileUserRegistration>Error while user registration.</errorWhileUserRegistration>
         <errorWhileGroupRegistration>Error while group registration.</errorWhileGroupRegistration>
         <errorWhileCoffeeRegistration>Error while coffee registration.</errorWhileCoffeeRegistration>
+        <errorWhileUserUpdate>Error while user data update.</errorWhileUserUpdate>
         <cantGetLastOperation>Error while current operation reading.</cantGetLastOperation>
         <cantUnderstandMessage>If you write like this I can't understand you. Use the buttons below.</cantUnderstandMessage>
         <notImplementedYet>Not implemented yet</notImplementedYet>

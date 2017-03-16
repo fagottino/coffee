@@ -8,17 +8,17 @@
         <home>Menù principale</home>
         <back>Indietro</back>
         <offer>Ti piace il bot? Offrimi un caffè</offer>
-        <chooseBenefactor>Scegliamo il benefattore</chooseBenefactor>
+        <chooseBenefactor>Scegli il benefattore</chooseBenefactor>
         <listCompetitors>Lista dei concorrenti</listCompetitors>
         <quitNow>Si, esci subito.</quitNow>
         <justJoking>No, ho sbagliato.</justJoking>
         <setLanguage>Setta la lingua:</setLanguage>
         <makeDonation>Fai una donazione</makeDonation>
-        <yourGroups>I tuoi gruppi</yourGroups>
+        <yourGroups>I miei gruppi</yourGroups>
         <off>Off</off>
         <on>On</on>
         <selectParticipants>Seleziona i nomi dei partecipanti.</selectParticipants>
-        <nextStep>Prossimo step</nextStep>
+        <nextStep>Avanti</nextStep>
         <cancel>Annulla</cancel>
         <willNotParticipate>Non voglio partecipare</willNotParticipate>
     </menu>
@@ -32,6 +32,7 @@
         <errorWhileUserRegistration>Errore nella registrazione dell'utente.</errorWhileUserRegistration>
         <errorWhileGroupRegistration>Errore nella registrazione del gruppo.</errorWhileGroupRegistration>
         <errorWhileCoffeeRegistration>Errore nella registrazione del caffè.</errorWhileCoffeeRegistration>
+        <errorWhileUserUpdate>Errore nell'aggiornamento dati dell'utente.</errorWhileUserUpdate>
         <cantGetLastOperation>Errore durante la lettura dell'operazione corrente.</cantGetLastOperation>
         <cantUnderstandMessage>Se scrivi così non riesco a capirti. Usa i tasti in basso.</cantUnderstandMessage>
         <notImplementedYet>Non ancora implementata.</notImplementedYet>

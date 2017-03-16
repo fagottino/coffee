@@ -15,31 +15,49 @@ class MessageManager {
     //secondo: testo messaggio
     //terzo: array di array della tastiera da mostrare all'utente
     //quarto: true->disabilita notifica per questo messaggio
-    public function sendReplyMarkup($_idChat, $text, $rm = false, $selective = false, $_replyToMessage = false, $dis = false)
+    public function sendReplyMarkup($_idChat, $_text, $_replyMarkup, $_selectiveKeyboard = false, $_replyToMessage = false, $_disableNotificationMessage = false)
     {
-        if (!$rm) {
-            $rmGen = array('hide_keyboard' => true);
-            $rm = json_encode($rmGen);
-        } else {
-            $rmGen = array('keyboard' => $rm,
-            'resize_keyboard' => true
-            );
-        
-            if ($selective) {
-                $rmGen['selective'] = true;
-            }
-            $rm = json_encode($rmGen);
-        }
-
         $args = array(
             'chat_id' => $_idChat,
-            'text' => $text,
+            'text' => $_text,
             'parse_mode' => "HTML",
-            'disable_notification' => $dis,
+            'disable_notification' => $_disableNotificationMessage,
             'reply_to_message_id' => $_replyToMessage,
-            'reply_markup' => $rm
         );
         
+        if (is_array($_replyMarkup)) {
+            $keyboard = array('keyboard' => $_replyMarkup,
+                'resize_keyboard' => true
+            );
+        } else if ($_replyMarkup == false) {
+            $keyboard = array('remove_keyboard' => true);
+        } else {
+            
+        }
+
+        if (!is_array($keyboard) && $_selectiveKeyboard)
+            $keyboard = array('selective' => true);
+        else if ($_selectiveKeyboard)
+            $keyboard['selective'] = true;
+        
+        $_replyMarkup = json_encode($keyboard);
+        $args['reply_markup'] = $_replyMarkup;
+        
+//        if (!$_replyMarkup) {
+//            $rmGen = array('hide_keyboard' => true);
+//            $_replyMarkup = json_encode($rmGen);
+//        } else {
+//            $rmGen = array('keyboard' => $_replyMarkup,
+//            'resize_keyboard' => true
+//            );
+//        
+//            if ($_selectiveKeyboard) {
+//                $rmGen['selective'] = true;
+//            }
+//            $_replyMarkup = json_encode($rmGen);
+//            $args['reply_markup'] = $_replyMarkup;
+//        }
+                
         $this->sendMessage("sendMessage", $args);
     }
     
