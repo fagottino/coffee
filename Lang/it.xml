@@ -19,6 +19,8 @@
         <on>On</on>
         <selectParticipants>Seleziona i nomi dei partecipanti.</selectParticipants>
         <nextStep>Prossimo step</nextStep>
+        <cancel>Annulla</cancel>
+        <willNotParticipate>Non voglio partecipare</willNotParticipate>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Errore nella creazione del menù custom.</errorWithCreationOfCustomMenu>

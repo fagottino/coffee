@@ -126,14 +126,15 @@ class GroupController {
 
             $query = $db->query($sql);
             
-            if ($query->num_rows > 0) {
+            //if ($query->num_rows > 0) {
+            if (mysqli_num_rows($query)) {
                 while($tmp = $query->fetch_assoc())
                     $res[] = $tmp;
 
                 $db->close();
                 return $res;
             } else {
-                throw new GroupControllerException($lang->error->noResultsFound."AFASVAFF");
+                throw new GroupControllerException($lang->error->noResultsFound);
             }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());

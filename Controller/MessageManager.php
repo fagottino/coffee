@@ -66,31 +66,55 @@ class MessageManager {
         }
     }
     
-    public function editInlineMessage($_idChat, $_messageId, $_text, $_keyboard) {
+//    public function editInlineMessage($_idChat, $_messageId, $_text, $_keyboard) {
+//        global $lang;
+//        if ($_text) {
+//            if ($_keyboard) {
+//                $_keyboardGen = array('inline_keyboard' => $_keyboard);
+//                $_keyboard = json_encode($_keyboardGen);
+//
+//                $args = array(
+//                    'chat_id' => $_idChat,
+//                    'message_id' => $_messageId,
+//                    'text' => $_text,
+//                    'reply_markup' => $_keyboard
+//                );
+// 
+//                $this->sendMessage("editMessageReplyMarkup", $args);
+//            } else {
+//                throw new MessageException($lang->error->inlineKeyboardIsRequired);
+//            }
+//        } else {
+//            throw new MessageException($lang->error->textIsRequired);
+//        }
+//    }
+    
+    public function editInlineMessage($_idChat, $_messageId, $_keyboard) {
         global $lang;
-        if ($_text) {
-            if ($_keyboard) {
-                    $_keyboardGen = array('inline_keyboard' => $_keyboard);
-                    $_keyboard = json_encode($_keyboardGen);
+        $_keyboardGen = array('inline_keyboard' => $_keyboard);
+        $_keyboards = json_encode($_keyboardGen);
 
-                $args = array(
-                    'chat_id' => $_idChat,
-                    'message_id' => $_messageId,
-                    'text' => $_text,
-                    'reply_markup' => $_keyboard
-                );
+        $args = array(
+            'chat_id' => $_idChat,
+            'message_id' => $_messageId,
+            'reply_markup' => $_keyboards
+        );
 
-                //throw new MessageException($lang->error->inlineKeyboardIsRequired);
-                //https://api.telegram.org/bot186132931:AAHLkdfVXtdWX53wsySA219hABBeUUirgko/editMessageReplyMarkup?chat_id=19179842&message_id=2781&reply_markup={"inline_keyboard":[[{"text":"Italiano","callback_data":"it"},{"text":"English","callback_data":"en"}]]}
-                //https://api.telegram.org/bot186132931:AAHLkdfVXtdWX53wsySA219hABBeUUirgko/editMessageReplyMarkup?chat_id=19179842&message_id=2781&reply_markup={"inline_keyboard":[{"text":"ItalianoAAAAAAAAA","callback_data":"it"},{"text":"English","callback_data":"en"}]}
-                
-            $this->sendMessage("editMessageReplyMarkup", $args);
-            } else {
-                throw new MessageException($lang->error->inlineKeyboardIsRequired);
-            }
-        } else {
-            throw new MessageException($lang->error->textIsRequired);
-        }
+        $this->sendMessage("editMessageReplyMarkup", $args);
+    }
+    
+    public function editReplyMarkup($_idChat, $_messageId, $_keyboard) {
+        global $lang;
+        $_keyboardGen = array('inline_keyboard' => $_keyboard);
+        $_keyboards = json_encode($_keyboardGen);
+
+        $args = array(
+            'chat_id' => $_idChat,
+            'message_id' => $_messageId,
+            'reply_markup' => $_keyboards
+        );
+
+        $this->sendMessage("editMessageReplyMarkup", $args);
     }
     
     public function replyMessage($_idChat, $_idMessage) {

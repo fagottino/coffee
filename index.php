@@ -114,46 +114,46 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 //    );
     
 // MESSAGE WITH ANSWER
-//    $privateMessage = array(
-//        "update_id" => 624793660,
-//        "message" => array(
-//            "message_id" => 4854,
-//            "from" => array(
-//                "id" => 19179842,
-//                "first_name" => "fagottino",
-//                "username" => "fagottino"
-//            ),
-//             "chat" => array(
-//                "id" => -114342037,
-//                "title" => "TestGroup",
-//                "type" => "group",
-//                "all_members_are_administrators" => true
-//            ),
-//            "date" => 1483905746,
-//            "reply_to_message" => array(
-//                "message_id" => 4853,
-//                "from" => array(
-//                    "id" => 186132931,
-//                    "first_name" => "Il benefattore del caff\u00e8",
-//                    "username" => "IlBenefattoreDelCaffe_Bot"
-//                ),
-//                 "chat" => array(
-//                    "id" => -114342037,
-//                    "title" => "TestGroup",
-//                    "type" => "group",
-//                    "all_members_are_administrators" => true
-//                ),
-//                "date" => 1483905728,
-//                "text" => "Ciao a tutti! @fagottino ha il potere.\nPer iniziare chiedete a lui.",
-//                "entities" => array(
-//                    "type" => "mention",
-//                    "offset" => 14,
-//                    "length" => 10
-//                )
-//                ),
-//            "text" => $lang->ui->hiFriend.Emoticon::giveMeFive()
-//                )
-//            );
+    $privateMessage = array(
+        "update_id" => 624793660,
+        "message" => array(
+            "message_id" => 4854,
+            "from" => array(
+                "id" => 19179842,
+                "first_name" => "fagottino",
+                "username" => "fagottino"
+            ),
+             "chat" => array(
+                "id" => -114342037,
+                "title" => "TestGroup",
+                "type" => "group",
+                "all_members_are_administrators" => true
+            ),
+            "date" => 1483905746,
+            "reply_to_message" => array(
+                "message_id" => 4853,
+                "from" => array(
+                    "id" => 186132931,
+                    "first_name" => "Il benefattore del caff\u00e8",
+                    "username" => "IlBenefattoreDelCaffe_Bot"
+                ),
+                 "chat" => array(
+                    "id" => -114342037,
+                    "title" => "TestGroup",
+                    "type" => "group",
+                    "all_members_are_administrators" => true
+                ),
+                "date" => 1483905728,
+                "text" => "Ciao a tutti! @fagottino ha il potere.\nPer iniziare chiedete a lui.",
+                "entities" => array(
+                    "type" => "mention",
+                    "offset" => 14,
+                    "length" => 10
+                )
+                ),
+            "text" => Emoticon::plus().$lang->menu->chooseBenefactor
+                )
+            );
 
 // MESSAGE WITH ANSWER RICCISHOP
 //    $privateMessage = array(
@@ -196,7 +196,7 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 //    $privateMessage = array(
 //        "update_id" => 624792859,
 //        "callback_query" => array(
-//            "id" => "82376795026451405",
+//            "id" => "82376795988365271",
 //            "from" => array(
 //                "id" => 19179842,
 //                "first_name" => "fagottino",
@@ -219,45 +219,77 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 //                "text" => "Setta la linuga:"
 //                ),
 //            "chat_instance" => "-4206174352189128888",
-//            "data" => "fagottino"
+//            "data" => "it"
 //            )
 //        );
         
 // CALLACK GROUP QUERY
-    $privateMessage = array(
-        "update_id" => 624794115,
-        "callback_query" => array(
-            "id" => "82376794853805130",
-            "from" => array(
-                "id" => 19179842,
-                "first_name" => "fagottino",
-                "username" => "fagottino"
-            ),
-            "message" => array (
-                "message_id" => 4320,
-                "from" => array (
-                    "id" => 186132931,
-                    "first_name" => "Il benefattore del caff\u00e8",
-                    "username" => "IlBenefattoreDelCaffe_Bot"
-                ),
-                "chat" => array (
-                    "id" => -114342037,
-                    "title" => "TestGroup",
-                    "type" => "group",
-                    "all_members_are_administrators" => true
-                ),
-                "date" => 1484227281,
-                "text" => "Ok @fagottino!\nSeleziona i nomi dei partecipanti.",
-                "entities" => array(
-                        "type" => "mention",
-                        "offset" => 3,
-                        "length" => 10
-                        )
-                ),
-            "chat_instance" => "-3971973381224532564",
-            "data" => "49402640"
-        )
-    );
+//    $privateMessage = array(
+//        "update_id" => 624794115,
+//        "callback_query" => array(
+//            "id" => "82376794853805130",
+//            "from" => array(
+//                "id" => 19179842,
+//                "first_name" => "fagottino",
+//                "username" => "fagottino"
+//            ),
+//            "message" => array (
+//                "message_id" => 4320,
+//                "from" => array (
+//                    "id" => 186132931,
+//                    "first_name" => "Il benefattore del caff\u00e8",
+//                    "username" => "IlBenefattoreDelCaffe_Bot"
+//                ),
+//                "chat" => array (
+//                    "id" => -114342037,
+//                    "title" => "TestGroup",
+//                    "type" => "group",
+//                    "all_members_are_administrators" => true
+//                ),
+//                "date" => 1484227281,
+//                "text" => "Ok @fagottino!\nSeleziona i nomi dei partecipanti.",
+//                "entities" => array(
+//                        "type" => "mention",
+//                        "offset" => 3,
+//                        "length" => 10
+//                        )
+//                ),
+//            "chat_instance" => "-3971973381224532564",
+//            "data" => "49402640"
+//        )
+//    );
+    
+//    $json = '{
+//    "update_id": 404132122,
+//    "callback_query": {
+//        "id": "82376795988365271",
+//        "from": {
+//            "id": 19179842,
+//            "first_name": "fagottino",
+//            "username": "fagottino"
+//        },
+//        "message": {
+//            "message_id": 5173,
+//            "from": {
+//                "id": 186132931,
+//                "first_name": "Il benefattore del caff\u00e8",
+//                "username": "IlBenefattoreDelCaffe_Bot"
+//            },
+//            "chat": {
+//                "id": 19179842,
+//                "first_name": "fagottino",
+//                "username": "fagottino",
+//                "type": "private"
+//            },
+//            "date": 1489566794,
+//            "text": "Setta la lingua:"
+//        },
+//        "chat_instance": "-4206174352189128888",
+//        "data": "en"
+//    }
+//}';
+//    
+//    $privateMessage = json_decode($json);
     
     $unreadMessage = $privateMessage;
 }
@@ -411,7 +443,7 @@ if ($user->getIdTelegram() != null) {
                                     )
                                 );
                             $customMenu = $menuController->createCustomInlineMenu($menu);
-                            $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text, $menu);
+                            $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $menu);
                         } else {
                             $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                         }
@@ -599,9 +631,13 @@ if ($user->getIdTelegram() != null) {
                                 ;
                                 $menu = array(
                                     array(
-                                        "action" => $lang->ui->hiFriend.Emoticon::giveMeFive()
-                                        )
-                                    );
+                                        "action" => $lang->ui->hiFriend.Emoticon::giveMeFive(),
+                                        "alone" => true
+                                    ),
+                                    array(
+                                        "action" => Emoticon::cancel().$lang->menu->willNotParticipate
+                                    )
+                                );
                                 $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu);
                             break;
@@ -614,15 +650,15 @@ if ($user->getIdTelegram() != null) {
                                     array(
                                         "action" => Emoticon::plus().$lang->menu->chooseBenefactor, 
                                         "alone" => true
-                                        ), 
+                                    ), 
                                     array(
                                         "action" => Emoticon::lists().$lang->menu->listCompetitors
-                                        ),
+                                    ),
                                     array(
                                         "action" => Emoticon::off().$lang->menu->off,
                                         "alone" => true
-                                        )
-                                    );
+                                    )
+                                );
                                 $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true, $user->getIdMessage());
                             }
@@ -633,12 +669,10 @@ if ($user->getIdTelegram() != null) {
                             
                         case Emoticon::plus().$lang->menu->chooseBenefactor:
                             if ($user->getCurrentOperation() != CHOOSE_BENEFACTOR) {
-                                $user->setCurrentOperation(CHOOSE_BENEFACTOR);
-                                $userController->updateCurrentOperation($user);
-                                $coffeeController->setPaidCoffee($user->getChat()->getId(), $user->getIdTelegram());
-                                $text = $lang->ui->ok." @".($user->getUsername() != "" ? $user->getUsername() : $user->getName())."!".chr(10);
-                                $text .= $lang->menu->selectParticipants;
                                 try {
+                                    $coffeeController->setPaidCoffee($user->getChat()->getId(), $user->getIdTelegram());
+                                    $text = $lang->ui->ok." @".($user->getUsername() != "" ? $user->getUsername() : $user->getName())."!".chr(10);
+                                    $text .= $lang->menu->selectParticipants;
                                     $competitors = $groupController->getCompetitors($user->getChat(), $me);
                                     foreach ($competitors as $key => $value) {
                                         $competitors[$key]['text'] = $value['name'];
@@ -647,18 +681,24 @@ if ($user->getIdTelegram() != null) {
                                         unset($competitors[$key]['id_telegram']);
                                     }
 
-                                    $menu = $menuController->createCustomInlineMenu($competitors);
-                                    array_push($menu, array(
-                                                array(
-                                                    "text" => Emoticon::error()."Annulla", 
-                                                    "callback_data" => CANCEL
-                                                    ), 
-                                                array("text" => $lang->menu->nextStep." ".Emoticon::right(), 
-                                                    "callback_data" => CHOOSE_BENEFACTOR2
+                                    if (sizeof($competitors) == 1 && $competitors[0]['callback_data'] == $user->getChat()->getId()) {
+                                        $messageManager->sendSimpleMessage($user->getChat()->getId(), "Ci sei solo tu! Invita qualche altro aspirante benefattore per iniziare.");
+                                    } else {
+                                        $menu = $menuController->createCustomInlineMenu($competitors);
+                                        array_push($menu, array(
+                                                    array(
+                                                        "text" => Emoticon::cancel().$lang->menu->cancel, 
+                                                        "callback_data" => CANCEL
+                                                        ), 
+                                                    array("text" => $lang->menu->nextStep." ".Emoticon::right(), 
+                                                        "callback_data" => CHOOSE_BENEFACTOR2
+                                                        )
                                                     )
-                                                )
-                                            );
-                                    $messageManager->sendInline($user->getChat()->getId(), $text, $menu);
+                                                );
+                                        $user->setCurrentOperation(CHOOSE_BENEFACTOR);
+                                        $userController->updateCurrentOperation($user);
+                                        $messageManager->sendInline($user->getChat()->getId(), $text, $menu);
+                                    }
                                 }
                                 catch (DatabaseException $ex) {
                                     $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
@@ -693,6 +733,11 @@ if ($user->getIdTelegram() != null) {
                             $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet, false);
                             break;
                         
+                        case CANCEL:
+                                $user->setCurrentOperation(HOME);
+                                $userController->updateCurrentOperation($user);
+                            break;
+                        
                         default:
                             switch ($user->getCurrentOperation()) {
                                 case CHOOSE_BENEFACTOR:
@@ -705,7 +750,6 @@ if ($user->getIdTelegram() != null) {
                                                 unset($item[$key]['name']);
                                                 $item[$key]['callback_data'] = $value['id_telegram'];
                                             }
-                                            $text = "Yeaaah! Aggiungi gli altri!";
                                         }
                                         catch (DatabaseException $ex) {
                                             $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
@@ -713,16 +757,17 @@ if ($user->getIdTelegram() != null) {
                                         catch (GroupControllerException $ex) {
                                             $item = array(
                                                 array(
-                                                    "text" => "Ok, finito! ".Emoticon::smile(), 
+                                                    "text" => "Non ci sono più aspiranti benefattori. Vai al prossimo step! ".Emoticon::smile(), 
                                                     "callback_data" => NULL_VALUE
                                                     )
                                                 );
+                                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $text);
                                         
                                         }
                                         $menu = $menuController->createCustomInlineMenu($item);
                                         array_push($menu, array(
                                                     array(
-                                                        "text" => Emoticon::error()."Annulla", 
+                                                        "text" => Emoticon::cancel().$lang->menu->cancel, 
                                                         "callback_data" => CANCEL
                                                         ), 
                                                     array(
@@ -731,7 +776,11 @@ if ($user->getIdTelegram() != null) {
                                                         )
                                                     )
                                                 );
-                                        $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text, $menu);
+                                        $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $menu);
+                                    break;
+                                    
+                                case Emoticon::cancel().$lang->menu->cancel:
+                                    
                                     break;
                                     
                                 case NULL_VALUE:

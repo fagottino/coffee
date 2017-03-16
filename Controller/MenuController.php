@@ -24,7 +24,7 @@ class MenuController {
         }
         
         if (sizeof($menu) == 0)
-            array_push($menu, array(Emoticon::error().$lang->error->errorWithCreationOfCustomMenu), array(Emoticon::retry().$lang->general->retry));
+            array_push($menu, array(Emoticon::cancel().$lang->error->errorWithCreationOfCustomMenu), array(Emoticon::retry().$lang->general->retry));
         
         if ($_backButton) {
             array_push($menu, array(Emoticon::back().$lang->menu->back, Emoticon::home().$lang->menu->home));
@@ -85,7 +85,7 @@ class MenuController {
         }
         
         if (sizeof($menu) == 0)
-            array_push($menu, array(Emoticon::error().$lang->error->errorWithCreationOfCustomMenu), array(Emoticon::retry().$lang->general->retry));
+            array_push($menu, array(Emoticon::cancel().$lang->error->errorWithCreationOfCustomMenu), array(Emoticon::retry().$lang->general->retry));
         
         if ($_backButton) {
             array_push($menu, array(Emoticon::back().$lang->menu->back, Emoticon::home().$lang->menu->home));
@@ -113,7 +113,7 @@ class MenuController {
         }
         
         if (sizeof($menu) == 0 && !$_backButton && !$_offer) {
-            array_push($menu[$j], array(Emoticon::error().$lang->error->errorWithCreationOfCustomMenu, Emoticon::home().$lang->general->retry));
+            array_push($menu[$j], array(Emoticon::cancel().$lang->error->errorWithCreationOfCustomMenu, Emoticon::home().$lang->general->retry));
         }
         
         if ($_backButton) {

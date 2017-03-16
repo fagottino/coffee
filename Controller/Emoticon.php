@@ -10,7 +10,7 @@ class Emoticon {
         
     }
     
-    public static function error() {
+    public static function cancel() {
         return "\xE2\x9D\x8C";
     }
     
