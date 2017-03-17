@@ -779,8 +779,9 @@ if ($user->getIdTelegram() != null) {
                             break;
                                     
                         case Emoticon::cancel().$lang->menu->cancel:
-                            $user->setCurrentOperation(HOME);
-                            $userController->updateCurrentOperation($user);
+                            /*$user->setCurrentOperation(HOME);
+                            $userController->updateCurrentOperation($user);*/
+                            $coffeeController->destroyCoffee($user);
                             $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                             break;
                         
@@ -808,7 +809,6 @@ if ($user->getIdTelegram() != null) {
                                                     )
                                                 );
                                             $messageManager->sendSimpleMessage($user->getChat()->getId(), $text);
-                                        
                                         }
                                         catch (CoffeeControllerException $ex) {
                                             $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
