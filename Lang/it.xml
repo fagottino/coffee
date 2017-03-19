@@ -36,6 +36,8 @@
         <cantGetLastOperation>Errore durante la lettura dell'operazione corrente.</cantGetLastOperation>
         <cantUnderstandMessage>Se scrivi così non riesco a capirti. Usa i tasti in basso.</cantUnderstandMessage>
         <notImplementedYet>Non ancora implementata.</notImplementedYet>
+        <errorWhileSelectionPaidCoffee>Errore durante la selezione del caffè pagato</errorWhileSelectionPaidCoffee>
+        <errorWhileDestroyCoffee>Errore durante la cancellazione del caffè pagato</errorWhileDestroyCoffee>
     </error>
     <general>
         <retry>Riprova.</retry>

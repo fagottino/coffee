@@ -61,7 +61,7 @@ class MessageManager {
         $this->sendMessage("sendMessage", $args);
     }
     
-    public function sendInline($_idChat, $text, $_keyboard)
+    public function sendInline($_idChat, $text, $_keyboard, $_replyTo)
     {
         global $lang;
         if ($text) {
@@ -72,7 +72,8 @@ class MessageManager {
             $args = array(
                 'chat_id' => $_idChat,
                 'text' => $text,
-                'reply_markup' => $_keyboard
+                'reply_markup' => $_keyboard,
+                "reply_to_message_id" => $_replyTo
             );
 
             $this->sendMessage("sendMessage", $args);
@@ -121,18 +122,16 @@ class MessageManager {
         $this->sendMessage("editMessageReplyMarkup", $args);
     }
     
-    public function editReplyMarkup($_idChat, $_messageId, $_keyboard) {
+    public function editMessageText($_idChat, $_messageId, $_text) {
         global $lang;
-        $_keyboardGen = array('inline_keyboard' => $_keyboard);
-        $_keyboards = json_encode($_keyboardGen);
-
+        
         $args = array(
             'chat_id' => $_idChat,
             'message_id' => $_messageId,
-            'reply_markup' => $_keyboards
+            'text' => $_text
         );
 
-        $this->sendMessage("editMessageReplyMarkup", $args);
+        $this->sendMessage("editMessageText", $args);
     }
     
     public function replyMessage($_idChat, $_idMessage) {

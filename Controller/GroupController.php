@@ -110,7 +110,7 @@ class GroupController {
             $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user WHERE ".DB_PREFIX."user_group.id_group = '".$_chat->getId()."' AND ".DB_PREFIX."user_group.active = '1' AND ".DB_PREFIX."user_group.partecipate = '1' AND ".DB_PREFIX."user_group.leaves = '0'";
             $query = $db->query($sql);
             
-            if ($query->num_rows > 0) {
+            if (mysqli_num_rows($query) > 0) {
                 while($tmp = $query->fetch_assoc())
                     $res[] = $tmp;
 
@@ -124,7 +124,7 @@ class GroupController {
         }
     }
     
-    public function getOtherCompetitors(User $_user, $_me) {
+    public function getOtherCompetitors(User $_user) {
         global $lang;
         try {
             $db = Database::getConnection();
@@ -148,12 +148,14 @@ class GroupController {
                     JOIN ".DB_PREFIX."paid_coffee ON ".DB_PREFIX."user_group.id_group = ".DB_PREFIX."paid_coffee.id_group
                     WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
                     AND ".DB_PREFIX."user_group.leaves = '0'
+                    AND ".DB_PREFIX."user_group.active = '1'
                     AND ".DB_PREFIX."user_group.partecipate = '1'
                     AND ".DB_PREFIX."user.id_telegram NOT IN
                     (SELECT ".DB_PREFIX."paid_coffee_people.id_user FROM ".DB_PREFIX."paid_coffee
                     JOIN ".DB_PREFIX."paid_coffee_people ON ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
                     WHERE ".DB_PREFIX."paid_coffee.set_by = '".$_user->getIdTelegram()."'
                     AND ".DB_PREFIX."user_group.leaves = '0'
+                    AND ".DB_PREFIX."user_group.active = '1'
                     AND ".DB_PREFIX."user_group.partecipate = '1'
                     AND ".DB_PREFIX."paid_coffee.powered_by IS NULL
                     )";
@@ -183,6 +185,23 @@ class GroupController {
             } else {
                 throw new GroupControllerException($lang->error->noResultsFound);
             }
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function getAllCompetitors(User $_user) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $sql = "SELECT COUNT(".DB_PREFIX."paid_coffee_people.id_paid_coffee_people) FROM ".DB_PREFIX."paid_coffee_people
+                    JOIN ".DB_PREFIX."paid_coffee ON ".DB_PREFIX."paid_coffee_people.id_paid_coffee = ".DB_PREFIX."paid_coffee.id_paid_coffee
+                    WHERE ".DB_PREFIX."paid_coffee.set_by = 19179842
+                    AND ".DB_PREFIX."paid_coffee.powered_by IS NULL";
+            $result = $db->query($sql);
+            
+            return $result->fetch_array();
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }

@@ -22,7 +22,7 @@ define('HOME', 'home');
 define('HELP', 'help');
 define('SETTINGS', 'settings');
 define('QUIT', 'quit');
-define('CANCEL', 'cancel');
+define('CANCEL_COFFEE', 'cancel');
 define('NULL_VALUE', 'nullValue');
 define('CHOOSE_BENEFACTOR', 'chooseBenefactor');
 define('CHOOSE_BENEFACTOR2', 'chooseBenefactor2');

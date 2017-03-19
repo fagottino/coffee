@@ -36,6 +36,8 @@
         <cantGetLastOperation>Error while current operation reading.</cantGetLastOperation>
         <cantUnderstandMessage>If you write like this I can't understand you. Use the buttons below.</cantUnderstandMessage>
         <notImplementedYet>Not implemented yet</notImplementedYet>
+        <errorWhileSelectionPaidCoffee>Error while selection paid coffee</errorWhileSelectionPaidCoffee>
+        <errorWhileDestroyCoffee>Error while deleting of paid coffee</errorWhileDestroyCoffee>
     </error>
     <general>
         <retry>Retry.</retry>

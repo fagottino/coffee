@@ -49,14 +49,16 @@ class CoffeeController {
             $idToDelete = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE set_by = '".$_user->getIdTelegram()."' AND powered_by IS NULL";
             $result = $db->query($idToDelete);
             if (!$result) {
-                throw new CoffeeControllerException($lang->error->errorWhileCoffeeRegistration);
+                throw new CoffeeControllerException($lang->error->errorWhileSelectionPaidCoffee);
             }
             $id = $result->fetch_assoc();
             //$delete = "DELETE FROM ".DB_PREFIX."paid_coffee WHERE ".DB_PREFIX."paid_coffee.id_paid_coffee = '".$result[0]."'";
             $delete = "DELETE ".DB_PREFIX."paid_coffee, ".DB_PREFIX."paid_coffee_people FROM ".DB_PREFIX."paid_coffee INNER JOIN ".DB_PREFIX."paid_coffee_people WHERE ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee AND ".DB_PREFIX."paid_coffee.id_paid_coffee = '".$id["id_paid_coffee"]."'";
             $result = $db->query($delete);
+            $delete = "DELETE FROM ".DB_PREFIX."paid_coffee WHERE ".DB_PREFIX."paid_coffee.id_paid_coffee = '".$id["id_paid_coffee"]."'";
+            $result = $db->query($delete);
             if (!$result) {
-                throw new CoffeeControllerException($lang->error->errorWhileCoffeeRegistration);
+                throw new CoffeeControllerException($lang->error->errorWhileDestroyCoffee);
             }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
