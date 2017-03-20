@@ -18,8 +18,9 @@ class CoffeeController {
         try {
             $db = Database::getConnection();
             
-            $result = $db->query("INSERT INTO ".DB_PREFIX."paid_coffee (id_group, set_by, date, time) VALUES('".$_idChat."', '".$_idUser."', '".date("Y-m-d")."', '".date("H:i:s")."')");
-            $sql = "INSERT INTO ".DB_PREFIX."paid_coffee (id_group, set_by, date, time) VALUES('".$_idUser."', '".date("Y-m-d")."', '".date("H:i:s")."'";
+            $sql = "INSERT INTO ".DB_PREFIX."paid_coffee (id_group, set_by, date, time) VALUES('".$_idChat."', '".$_idUser."', '".date("Y-m-d")."', '".date("H:i:s")."')";
+            $result = $db->query($sql);
+            //$sql = "INSERT INTO ".DB_PREFIX."paid_coffee (id_group, set_by, date, time) VALUES('".$_idUser."', '".date("Y-m-d")."', '".date("H:i:s")."'";
             if (!$result) {
                 throw new CoffeeControllerException($lang->error->errorWhileCoffeeRegistration);
             }
@@ -60,6 +61,42 @@ class CoffeeController {
             if (!$result) {
                 throw new CoffeeControllerException($lang->error->errorWhileDestroyCoffee);
             }
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function countOfferCoffee(User $_user) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            //$allCompetitors = "SELECT DISTINCT ".DB_PREFIX."paid_coffee.powered_by FROM ".DB_PREFIX."paid_coffee WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."' AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL";
+            $allCompetitors = "SELECT DISTINCT ".DB_PREFIX."paid_coffee.powered_by, ".DB_PREFIX."user.name FROM ".DB_PREFIX."paid_coffee
+                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
+                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
+                    AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL";
+            $result = $db->query($allCompetitors);
+            if (!$result) {
+                throw new CoffeeControllerException($lang->error->errorWhileSelectionPaidCoffee);
+            }
+            $i = 0;
+            $query = "SELECT ";
+            while ($value = $result->fetch_assoc()) {
+                if (mysqli_num_rows($result) > ($i + 1)) {
+                //$countCoffee = "SELECT SUM(powered_by = 1) AS user1, SUM(powered_by = 2) AS user2, SUM(powered_by = 3) AS user3 FROM coffee_paid_coffee WHERE id_group = -1 AND powered_by IS NOT NULL";
+                    $query .= "SUM(".DB_PREFIX."paid_coffee.powered_by = ".$value["powered_by"].") AS ".$value["name"].", ";
+                } else {
+                    $query .= "SUM(".DB_PREFIX."paid_coffee.powered_by = ".$value["powered_by"].") AS ".$value["name"]." ";
+                }
+                $i++;
+            }
+            $query .= "FROM ".DB_PREFIX."paid_coffee WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."' AND powered_by IS NOT NULL";
+            $result = $db->query($query);
+            if (!$result) {
+                throw new CoffeeControllerException($lang->error->errorWhileSelectionPaidCoffee);
+            }
+            $id = $result->fetch_assoc();
+            return $id;
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
