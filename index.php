@@ -37,30 +37,30 @@ file_put_contents($requestFile, $requestCurrent);
 $whitelist = array('127.0.0.1', "::1");
 // PRIVATE
 if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
-//    $privateMessage = array(
-//        "update_id" => 624792369,
-//        "message" => array(
-//            "message_id" => 1270,
-//            "from" => array(
-//                "id" => 19179842,
-//                "first_name" => "fagottino",
-//                "username" => "fagottino"
-//            ),
-//             "chat" => array(
-//                "id" => 19179842,
-//                 "first_name" => "fagottino",
-//                 "username" => "fagottino",
-//                 "type" => "private"
-//            ),
-//            "date" => 1482502325,
-//            "text" => Emoticon::help().$lang->menu->help,
-//            "entities" => array(
-//                "type" => "bot_command",
-//                "offset" => 0,
-//                "length" => 9
-//            )
-//        )
-//    );
+    $privateMessage = array(
+        "update_id" => 624792369,
+        "message" => array(
+            "message_id" => 1270,
+            "from" => array(
+                "id" => 19179842,
+                "first_name" => "fagottino",
+                "username" => "fagottino"
+            ),
+             "chat" => array(
+                "id" => 19179842,
+                 "first_name" => "fagottino",
+                 "username" => "fagottino",
+                 "type" => "private"
+            ),
+            "date" => 1482502325,
+            "text" => Emoticon::group().$lang->menu->yourGroups,
+            "entities" => array(
+                "type" => "bot_command",
+                "offset" => 0,
+                "length" => 9
+            )
+        )
+    );
     
 // GROUP
 //    $privateMessage = array(
@@ -224,40 +224,40 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 //        );
         
 // CALLACK GROUP QUERY
-    $privateMessage = array(
-        "update_id" => 404132637,
-        "callback_query" => array(
-            "id" => "82376795781791020",
-            "from" => array(
-                "id" => 19179842,
-                "first_name" => "fagottino",
-                "username" => "fagottino"
-            ),
-            "message" => array (
-                "message_id" => 5938,
-                "from" => array (
-                    "id" => 186132931,
-                    "first_name" => "Il benefattore del caff\u00e8",
-                    "username" => "IlBenefattoreDelCaffe_Bot"
-                ),
-                "chat" => array (
-                    "id" => -114342037,
-                    "title" => "TestGroup",
-                    "type" => "group",
-                    "all_members_are_administrators" => true
-                ),
-                "date" => 1484227281,
-                "text" => "Ok @fagottino!\nSeleziona i nomi dei partecipanti.",
-                "entities" => array(
-                        "type" => "mention",
-                        "offset" => 3,
-                        "length" => 10
-                        )
-                ),
-            "chat_instance" => "-3971973381224532564",
-            "data" => CHOOSE_BENEFACTOR2
-        )
-    );
+//    $privateMessage = array(
+//        "update_id" => 404132637,
+//        "callback_query" => array(
+//            "id" => "82376795781791020",
+//            "from" => array(
+//                "id" => 19179842,
+//                "first_name" => "fagottino",
+//                "username" => "fagottino"
+//            ),
+//            "message" => array (
+//                "message_id" => 5938,
+//                "from" => array (
+//                    "id" => 186132931,
+//                    "first_name" => "Il benefattore del caff\u00e8",
+//                    "username" => "IlBenefattoreDelCaffe_Bot"
+//                ),
+//                "chat" => array (
+//                    "id" => -114342037,
+//                    "title" => "TestGroup",
+//                    "type" => "group",
+//                    "all_members_are_administrators" => true
+//                ),
+//                "date" => 1484227281,
+//                "text" => "Ok @fagottino!\nSeleziona i nomi dei partecipanti.",
+//                "entities" => array(
+//                        "type" => "mention",
+//                        "offset" => 3,
+//                        "length" => 10
+//                        )
+//                ),
+//            "chat_instance" => "-3971973381224532564",
+//            "data" => CHOOSE_BENEFACTOR2
+//        )
+//    );
     
 //    $json = '{
 //    "update_id": 404132244,
@@ -376,7 +376,8 @@ if ($user->getIdTelegram() != null) {
                     $userController->updateCurrentOperation($user);
 //                    $menu = array(array("action" => "Settings 1"), array("action" => "Settings 2"), array("action" => "Settings 3"), array("action" => "Settings 4"), array("action" => "Settings 5"));
 //                    $customMenu = $menuController->createCustomReplyMarkupMenu($menu, true);
-                    $text = (string)$lang->menu->setLanguage;
+                    //$text = (string)$lang->menu->setLanguage;
+                    $text = "".$lang->menu->setLanguage;
                     $menu = array(
                         array(
                             "text" => Emoticon::it()."Italiano".($user->getLang() == IT ? Emoticon::check() : ""),
@@ -571,13 +572,41 @@ if ($user->getIdTelegram() != null) {
                     }
                     break;
 
-                case Emoticon::plus().$lang->menu->addBenefactor:
-                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet);
-                    break;
-
                 case Emoticon::group().$lang->menu->yourGroups:
-                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet);
-                        break;
+                    try {
+                        $myGroup = $groupController->getMyGroup($user);
+                        $menu = array();
+                        $i = 0;
+                        foreach ($myGroup as $key) {
+                            if ($key["partecipate"] === 0)
+                                $menu[$i]["text"] = $key["title"].Emoticon::checkNegative();
+                            else
+                                $menu[$i]["text"] = $key["title"].Emoticon::checkPositive();
+                            $menu[$i]["callback_data"] = $key["id_group"];
+                            $i++;
+                        }
+//                    $menu = array(
+//                        array(
+//                            "text" => Emoticon::it()."Italiano".($user->getLang() == IT ? Emoticon::check() : ""),
+//                            "callback_data" => "it"
+//                            ),
+//                        array(
+//                            "text" => Emoticon::en()."English".($user->getLang() == EN ? Emoticon::check() : ""),
+//                            "callback_data" => "en"
+//                            )
+//                        );
+                        $text = "Ecco la lista dei tuoi gruppi";
+                    $customMenu = $menuController->createCustomInlineMenu($menu, false, 2);
+                    $messageManager->sendInline($user->getChat()->getId(), $text, $customMenu, $user->getIdMessage());
+                    //$messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu, false, $user->getIdMessage());
+                    }
+                    catch (GroupControllerException $ex) {
+                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                    }
+                    catch (MessageException $ex) {
+                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                    }
+                    break;
                     
                 default:
                     $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->cantUnderstandMessage);
@@ -625,7 +654,7 @@ if ($user->getIdTelegram() != null) {
                                     )
                                 );
                             $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
-                            $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true);
+                            $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true, $user->getIdMessage());
                         } else {
                             // E' stato aggiunto un utente al gruppo
                         }
@@ -673,7 +702,7 @@ if ($user->getIdTelegram() != null) {
                                         "action" => Emoticon::lists().$lang->menu->listCompetitors
                                     ),
                                     array(
-                                        "action" => Emoticon::off().$lang->menu->off,
+                                        "action" => Emoticon::off()." ".$lang->menu->exitToTheGame,
                                         "alone" => true
                                     )
                                 );
@@ -700,7 +729,7 @@ if ($user->getIdTelegram() != null) {
                                                 "action" => Emoticon::lists().$lang->menu->listCompetitors
                                             ),
                                             array(
-                                                "action" => Emoticon::off().$lang->menu->off,
+                                                "action" => Emoticon::off()." ".$lang->menu->exitToTheGame,
                                                 "alone" => true
                                             )
                                         );
@@ -765,7 +794,7 @@ if ($user->getIdTelegram() != null) {
                                         "action" => Emoticon::lists().$lang->menu->listCompetitors
                                     ),
                                     array(
-                                        "action" => Emoticon::off().$lang->menu->off,
+                                        "action" => Emoticon::off()." ".$lang->menu->exitToTheGame,
                                         "alone" => true
                                     )
                                 );
@@ -779,10 +808,6 @@ if ($user->getIdTelegram() != null) {
                             catch (GroupControllerException $ex) {
                                 $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
                             }
-                            break;
-                        
-                        case Emoticon::off().$lang->menu->off:
-                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet, false, $user->getIdMessage());
                             break;
                         
                         case CHOOSE_BENEFACTOR2:
@@ -805,7 +830,7 @@ if ($user->getIdTelegram() != null) {
                                         "action" => Emoticon::lists().$lang->menu->listCompetitors
                                     ),
                                     array(
-                                        "action" => Emoticon::off().$lang->menu->off,
+                                        "action" => Emoticon::off().$lang->menu->exitToTheGame,
                                         "alone" => true
                                     )
                                 );
@@ -842,6 +867,7 @@ if ($user->getIdTelegram() != null) {
                             $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                             break;
                         
+                        case Emoticon::off()." ".$lang->menu->exitToTheGame:
                         case Emoticon::cancel().$lang->menu->willNotParticipate:
                             try {
                                 $groupController->addUser($user, 0);

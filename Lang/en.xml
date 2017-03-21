@@ -21,6 +21,7 @@
         <nextStep>Next</nextStep>
         <cancel>Cancel</cancel>
         <willNotParticipate>I will not participate</willNotParticipate>
+        <exitToTheGame>Quit to the game</exitToTheGame>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Error while the creation of the custom menu'.</errorWithCreationOfCustomMenu>

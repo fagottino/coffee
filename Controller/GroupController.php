@@ -101,7 +101,8 @@ class GroupController {
         }
     }
     
-    public function getCompetitors(Chat $_chat, $_me) {
+    //public function getCompetitors(Chat $_chat, $_me) {
+    public function getCompetitors(Chat $_chat) {
         global $lang;
         try {
             $db = Database::getConnection();
@@ -211,7 +212,7 @@ class GroupController {
             
             $sql = "SELECT COUNT(".DB_PREFIX."paid_coffee_people.id_paid_coffee_people) FROM ".DB_PREFIX."paid_coffee_people
                     JOIN ".DB_PREFIX."paid_coffee ON ".DB_PREFIX."paid_coffee_people.id_paid_coffee = ".DB_PREFIX."paid_coffee.id_paid_coffee
-                    WHERE ".DB_PREFIX."paid_coffee.set_by = 19179842
+                    WHERE ".DB_PREFIX."paid_coffee.set_by = '".$_user->getChat()->getId()."'
                     AND ".DB_PREFIX."paid_coffee.powered_by IS NULL";
             $result = $db->query($sql);
             
@@ -258,6 +259,36 @@ class GroupController {
         // QUERY FUNZIONANTE. CONTROLLARE SE CI SONO ALTRI UTENTI NELLO STESSO GRUPPO CHE STANNO GIÀ AGGIUNGENDO UN PAGAMENTO DI CAFFÈ
         // 
         //SELECT operation FROM coffee_user WHERE id_telegram IN (SELECT id_user FROM coffee_user_group WHERE id_group = '-114342037' AND active = '1')
+    }
+    
+    public function getMyGroup(User $_user) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $sql = "SELECT ".DB_PREFIX."group.id_group, ".DB_PREFIX."group.title, ".DB_PREFIX."user_group.partecipate FROM ".DB_PREFIX."user_group
+                    JOIN ".DB_PREFIX."group ON ".DB_PREFIX."user_group.id_group = ".DB_PREFIX."group.id_group
+                    WHERE ".DB_PREFIX."user_group.id_user = '".$_user->getIdTelegram()."'
+                    AND  ".DB_PREFIX."user_group.active = '1'
+                    AND ".DB_PREFIX."user_group.leaves = '0'
+                    ";
+
+            $query = $db->query($sql);
+            
+            //if ($query->num_rows > 0) {
+            if (mysqli_num_rows($query) > 0) {
+                while($tmp = $query->fetch_assoc()) {
+                    $res[] = $tmp;
+                }
+
+                $db->close();
+                return $res;
+            } else {
+                throw new GroupControllerException($lang->error->noResultsFound);
+            }
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
     }
 }
 

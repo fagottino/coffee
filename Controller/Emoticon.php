@@ -105,4 +105,12 @@ class Emoticon {
     public static function left() {
         return "\xE2\x97\x80";
     }
+    
+    public static function checkPositive() {
+        return "\xE2\x9C\x85";
+    }
+    
+    public static function checkNegative() {
+        return "\xE2\x9D\x8E";
+    }
 }
