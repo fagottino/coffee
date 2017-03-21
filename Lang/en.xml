@@ -38,6 +38,8 @@
         <notImplementedYet>Not implemented yet</notImplementedYet>
         <errorWhileSelectionPaidCoffee>Error while selection paid coffee</errorWhileSelectionPaidCoffee>
         <errorWhileDestroyCoffee>Error while deleting of paid coffee</errorWhileDestroyCoffee>
+        <errorWhileGettingName>Error while getting list of benefactor</errorWhileGettingName>
+        <errorWhileCountingCoffee>Error while counting paid coffee</errorWhileCountingCoffee>
     </error>
     <general>
         <retry>Retry.</retry>

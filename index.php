@@ -693,9 +693,21 @@ if ($user->getIdTelegram() != null) {
                                     if (sizeof($competitors) == 1 && $competitors[0]['id_telegram'] == $user->getIdTelegram()) {
                                         $messageManager->sendSimpleMessage($user->getChat()->getId(), "Ci sei solo tu! Non puoi registrare un caffe offerto a te stesso.");
                                     } else {
-                                        $coffeeController->setPaidCoffee($user->getChat()->getId(), $user->getIdTelegram());
+                                        $coffeeController->newPaidCoffee($user->getChat()->getId(), $user->getIdTelegram());
                                         $text = $lang->ui->ok." @".($user->getUsername() != "" ? $user->getUsername() : $user->getName())."!".chr(10);
-                                        $text .= $lang->menu->selectParticipants;
+                                        $menu = array(
+                                            array(
+                                                "action" => Emoticon::lists().$lang->menu->listCompetitors
+                                            ),
+                                            array(
+                                                "action" => Emoticon::off().$lang->menu->off,
+                                                "alone" => true
+                                            )
+                                        );
+                                        $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                                        $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, false, $user->getIdMessage());
+                                        
+                                        $text = "".$lang->menu->selectParticipants;
                                         foreach ($competitors as $key => $value) {
                                             $competitors[$key]['text'] = $value['name'];
                                             $competitors[$key]['callback_data'] = $value['id_telegram'];
@@ -744,7 +756,22 @@ if ($user->getIdTelegram() != null) {
                                 $userController->updateCurrentOperation($user);
                                 $competitors = $groupController->getCompetitors($user->getChat(), $me);
                                 $text = $groupController->createText($competitors);
-                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $text, false, $user->getIdMessage());
+                                $menu = array(
+                                    array(
+                                        "action" => Emoticon::plus().$lang->menu->chooseBenefactor, 
+                                        "alone" => true
+                                    ), 
+                                    array(
+                                        "action" => Emoticon::lists().$lang->menu->listCompetitors
+                                    ),
+                                    array(
+                                        "action" => Emoticon::off().$lang->menu->off,
+                                        "alone" => true
+                                    )
+                                );
+                                $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, false, $user->getIdMessage());
+                                //$messageManager->sendSimpleMessage($user->getChat()->getId(), $text, false, $user->getIdMessage());
                             }
                             catch (DatabaseException $ex) {
                                 $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
@@ -759,19 +786,35 @@ if ($user->getIdTelegram() != null) {
                             break;
                         
                         case CHOOSE_BENEFACTOR2:
-                            $numberOfferCoffee = $coffeeController->countOfferCoffee($user);
-                            $numberPaidCoffee;
-                            $numberAbsences;
-//                            $text = "bbravoh! Il caffè di oggi è offerto da: ";
-//                            $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
-//                            $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
-                            break;
-                        
-                        case CANCEL_COFFEE:
                             try {
-                                $coffeeController->destroyCoffee($user);
+                                $whoOfferCoffee = $coffeeController->countOfferCoffee($user);
+                                //$whoPaidCoffee = $coffeeController->countPaidCoffee($user);
+                                //$numberAbsences;
+                                $benefactor = $coffeeController->setPaid($user, 49402640);
+                                
                                 $user->setCurrentOperation(HOME);
                                 $userController->updateCurrentOperation($user);
+                                $text = "It's ok! Il benefattore del momento è ----";
+                                $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
+                                $menu = array(
+                                    array(
+                                        "action" => Emoticon::plus().$lang->menu->chooseBenefactor, 
+                                        "alone" => true
+                                    ), 
+                                    array(
+                                        "action" => Emoticon::lists().$lang->menu->listCompetitors
+                                    ),
+                                    array(
+                                        "action" => Emoticon::off().$lang->menu->off,
+                                        "alone" => true
+                                    )
+                                );
+                                $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                                $text = "enjoy!";
+                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, false, $user->getIdMessage());
+    //                            $text = "bbravoh! Il caffè di oggi è offerto da: ";
+    //                            $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
+    //                            $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                             }
                             catch (CoffeeControllerException $ex) {
                                 $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
@@ -779,8 +822,23 @@ if ($user->getIdTelegram() != null) {
                             catch (DatabaseException $ex) {
                                 $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
                             }
-                            $text = "Operazione annullata correttamente.";
-                            $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
+                            $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
+                            break;
+                        
+                        case CANCEL_COFFEE:
+                            try {
+                                $coffeeController->destroyCoffee($user);
+                                $user->setCurrentOperation(HOME);
+                                $userController->updateCurrentOperation($user);
+                                $text = "Operazione annullata correttamente.";
+                                $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
+                            }
+                            catch (CoffeeControllerException $ex) {
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                            }
+                            catch (DatabaseException $ex) {
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                            }
                             $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                             break;
                         
@@ -851,8 +909,8 @@ if ($user->getIdTelegram() != null) {
                                             }
                                             
                                             $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $menu);
-                                            $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                                         }
+                                        $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                                     break;
                                     
                                 case NULL_VALUE:

@@ -143,22 +143,6 @@ class GroupController {
                     AND ".DB_PREFIX."paid_coffee.powered_by IS NULL
                     )";
              */
-            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user
-                    JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
-                    JOIN ".DB_PREFIX."paid_coffee ON ".DB_PREFIX."user_group.id_group = ".DB_PREFIX."paid_coffee.id_group
-                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
-                    AND ".DB_PREFIX."user_group.leaves = '0'
-                    AND ".DB_PREFIX."user_group.active = '1'
-                    AND ".DB_PREFIX."user_group.partecipate = '1'
-                    AND ".DB_PREFIX."user.id_telegram NOT IN
-                    (SELECT ".DB_PREFIX."paid_coffee_people.id_user FROM ".DB_PREFIX."paid_coffee
-                    JOIN ".DB_PREFIX."paid_coffee_people ON ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
-                    WHERE ".DB_PREFIX."paid_coffee.set_by = '".$_user->getIdTelegram()."'
-                    AND ".DB_PREFIX."user_group.leaves = '0'
-                    AND ".DB_PREFIX."user_group.active = '1'
-                    AND ".DB_PREFIX."user_group.partecipate = '1'
-                    AND ".DB_PREFIX."paid_coffee.powered_by IS NULL
-                    )";
             
             /*$sql = "SELECT coffee_user.id_telegram, coffee_user.name FROM coffee_user
                     JOIN coffee_user_group ON coffee_user.id_telegram = coffee_user_group.id_user
@@ -171,6 +155,36 @@ class GroupController {
                     WHERE coffee_paid_coffee.set_by = '19179842'
                     AND coffee_paid_coffee.powered_by IS NULL
                     )";*/
+            
+//            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user
+//                    JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
+//                    JOIN ".DB_PREFIX."paid_coffee ON ".DB_PREFIX."user_group.id_group = ".DB_PREFIX."paid_coffee.id_group
+//                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
+//                    AND ".DB_PREFIX."user_group.leaves = '0'
+//                    AND ".DB_PREFIX."user_group.active = '1'
+//                    AND ".DB_PREFIX."user_group.partecipate = '1'
+//                    AND ".DB_PREFIX."user.id_telegram NOT IN
+//                    (SELECT ".DB_PREFIX."paid_coffee_people.id_user FROM ".DB_PREFIX."paid_coffee
+//                    JOIN ".DB_PREFIX."paid_coffee_people ON ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
+//                    WHERE ".DB_PREFIX."paid_coffee.set_by = '".$_user->getIdTelegram()."'
+//                    AND ".DB_PREFIX."user_group.leaves = '0'
+//                    AND ".DB_PREFIX."user_group.active = '1'
+//                    AND ".DB_PREFIX."user_group.partecipate = '1'
+//                    AND ".DB_PREFIX."paid_coffee.powered_by IS NULL
+//                    )";
+            
+            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user
+                    JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
+                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
+                    AND coffee_user_group.leaves = '0'
+                    AND coffee_user_group.active = '1'
+                    AND coffee_user_group.partecipate = '1'
+                    AND ".DB_PREFIX."user.id_telegram NOT IN
+                    (SELECT ".DB_PREFIX."paid_coffee_people.id_user FROM ".DB_PREFIX."paid_coffee
+                    JOIN ".DB_PREFIX."paid_coffee_people ON ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
+                    WHERE ".DB_PREFIX."paid_coffee.set_by = '".$_user->getIdTelegram()."'
+                    AND ".DB_PREFIX."paid_coffee.powered_by IS NULL)
+                    ";
 
             $query = $db->query($sql);
             

@@ -38,6 +38,8 @@
         <notImplementedYet>Non ancora implementata.</notImplementedYet>
         <errorWhileSelectionPaidCoffee>Errore durante la selezione del caffè pagato</errorWhileSelectionPaidCoffee>
         <errorWhileDestroyCoffee>Errore durante la cancellazione del caffè pagato</errorWhileDestroyCoffee>
+        <errorWhileGettingName>Errore durante il recupero la lista dei benefattori</errorWhileGettingName>
+        <errorWhileCountingCoffee>Errore durante il conteggio dei caffè pagati</errorWhileCountingCoffee>
     </error>
     <general>
         <retry>Riprova.</retry>
