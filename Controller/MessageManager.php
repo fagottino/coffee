@@ -73,6 +73,7 @@ class MessageManager {
                 'chat_id' => $_idChat,
                 'text' => $text,
                 'reply_markup' => $_keyboard,
+                "parse_mode" => "HTML",
                 "reply_to_message_id" => $_replyTo
             );
 
