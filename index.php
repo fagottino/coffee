@@ -600,20 +600,52 @@ if ($user->getIdTelegram() != null) {
                     $messageManager->sendInline($user->getChat()->getId(), $text, $customMenu, $user->getIdMessage());
                     //$messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $customMenu, false, $user->getIdMessage());
                     }
+                    catch (DatabaseException $ex) {
+                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                    }
                     catch (GroupControllerException $ex) {
                         $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
                     }
-                    catch (MessageException $ex) {
-                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
-                    }
+                    $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text, true);
                     break;
                     
                 case (strpos($user->getMessage(), 'myGroups') !== false):
+                    $idGroup = explode("~", $user->getMessage());
+                    
+                    try {
+                        $groupController->joinTheGame($user, $idGroup[1]);
+                        $myGroup = $groupController->getMyGroup($user);
+                        $menu = array();
+                        $i = 0;
+                        foreach ($myGroup as $key) {
+                            if ($key["partecipate"] == 0) {
+                                    $menu[$i]["text"] = $key["title"].Emoticon::cancel();
+                                } else {
+                                    $menu[$i]["text"] = $key["title"].Emoticon::checkPositive();
+                                }
 
+                                $menu[$i]["callback_data"] = "myGroups~".$key["id_group"];
+                            $i++;
+                        }
+                        $text = "Ecco la lista dei tuoi gruppiIIIIIIIIIIIIIIIIIIIIIIIIIIIII".chr(10).chr(10)
+                                .Emoticon::lists()." Leggenda:".chr(10).chr(10)
+                                .Emoticon::cancel()." <b>NON</b> stai partecipando al gioco".chr(10)
+                                .Emoticon::checkPositive()." <b>STAI</b> partecipando al gioco".chr(10).chr(10)
+                                ."Tappa su un gruppo per cambiare lo stato ed aggiungerti ai giochi / abbandonare i giochi ".Emoticon::smile();
+                        $customMenu = $menuController->createCustomInlineMenu($menu, false, 2);
+                        $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $customMenu);
+                        $message = "Attenzione!".chr(10)
+                                .$user->getName()." si è appena unito ai giochi!";
+                        $messageManager->sendSimpleMessage($idGroup[1], $message);
+                    }
+                    catch (DatabaseException $ex) {
+                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                    }
+                    
                     break;
                     
                 default:
-                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->cantUnderstandMessage);
+                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->cantUnderstandMessage);
                     break;
                 }
                 break;
@@ -659,11 +691,15 @@ if ($user->getIdTelegram() != null) {
                                 );
                             $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
                             $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true, $user->getIdMessage());
-                        } else {
+                        } else  {
                             // E' stato aggiunto un utente al gruppo
                         }
                     } else { // left_chat_member
-                        $groupController->leaveGroup($user->getChat());
+                        if ($user->getChatMember()->getId() == $me->result->id) { // il bot è uscito dal gruppo
+                            $groupController->leaveGroup($user->getChat());
+                        } else {
+                            // qualcuno è uscito dal gruppo
+                        }
                     }
                 } else {
                     switch ($user->getMessage()) {

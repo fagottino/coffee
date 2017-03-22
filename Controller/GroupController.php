@@ -51,10 +51,7 @@ class GroupController {
         try {
             $db = Database::getConnection();
             
-            //$result = $db->query("INSERT INTO ".DB_PREFIX."user_group (id_user, id_group) VALUES('".$_user->getChatMember()->getId()."', '".$_user->getChat()->getId()."')");
-            //$insertMe = $db->query("INSERT INTO ".DB_PREFIX."user_group (id_user, id_group) VALUES('".$_user->getChatMember()->getId()."', '".$_user->getChat()->getId()."')");
             $insertUser = $db->query("INSERT INTO ".DB_PREFIX."user_group (id_user, id_group, bot_owner) VALUES('".$_user->getIdTelegram()."', '".$_user->getChat()->getId()."', '1')");
-            //if (!$insertMe || !$insertUser) {
             if (!$insertUser) {
                 throw new GroupControllerException($lang->error->errorWhileUserRegistration);
             }
@@ -286,6 +283,28 @@ class GroupController {
             } else {
                 throw new GroupControllerException($lang->error->noResultsFound);
             }
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function joinTheGame(User $_user, $_idGroup) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $sql = "SELECT partecipate FROM ".DB_PREFIX."user_group WHERE id_group = ".$_idGroup." AND id_user = ".$_user->getIdTelegram();
+            $result = $db->query($sql);
+            $group = $result->fetch_assoc();
+            if ($group["partecipate"] == 1) {
+                $value = 0;
+            } else {
+                $value = 1;
+            }
+            
+            $sql = "UPDATE ".DB_PREFIX."user_group SET partecipate = ".$value." WHERE id_group = ".$_idGroup." AND id_user = ".$_user->getIdTelegram();
+            $db->query($sql);
+            
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
