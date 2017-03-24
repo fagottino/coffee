@@ -128,14 +128,21 @@ class MessageManager {
         $this->sendMessage("editMessageReplyMarkup", $args);
     }
     
-    public function editMessageText($_idChat, $_messageId, $_text) {
+    public function editMessageText($_idChat, $_messageId, $_text, $_keyboard = NULL) {
         global $lang;
         
         $args = array(
             'chat_id' => $_idChat,
             'message_id' => $_messageId,
-            'text' => $_text
+            'text' => $_text,
+            "parse_mode" => "HTML"
         );
+        
+        if ($_keyboard != NULL) {
+            $_keyboardGen = array('inline_keyboard' => $_keyboard);
+            $_keyboards = json_encode($_keyboardGen);
+            $args['reply_markup'] = $_keyboards;
+        }
 
         $this->sendMessage("editMessageText", $args);
     }

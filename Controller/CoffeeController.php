@@ -47,7 +47,7 @@ class CoffeeController {
         global $lang;
         try {
             $db = Database::getConnection();
-            $sql = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE set_by = '".$_user->getIdTelegram()."' AND powered_by IS NULL";
+            $sql = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE set_by = '".$_user->getIdTelegram()."' AND id_group =  '".$_user->getChat()->getId()."' AND powered_by IS NULL";
             $result = $db->query($sql);
             if (!$result || mysqli_num_rows($result) == 0) {
                 throw new CoffeeControllerException($lang->error->errorWhileSelectionPaidCoffee);
@@ -147,6 +147,20 @@ class CoffeeController {
             $result = $db->query($sql);
             if (!$result) {
                 throw new CoffeeControllerException($lang->error->errorWhileCoffeeRegistration);
+            }
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function checkCoffee(User $_user) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            $sql = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE set_by = '".$_user->getIdTelegram()."' AND id_group =  '".$_user->getChat()->getId()."' AND powered_by IS NULL";
+            $result = $db->query($sql);
+            if (!$result || mysqli_num_rows($result) == 0) {
+                throw new CoffeeControllerException($lang->error->cantAddBenefactor);
             }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());

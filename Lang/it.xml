@@ -44,6 +44,7 @@
         <errorWhileDestroyCoffee>Errore durante la cancellazione del caffè pagato</errorWhileDestroyCoffee>
         <errorWhileGettingName>Errore durante il recupero la lista dei benefattori</errorWhileGettingName>
         <errorWhileCountingCoffee>Errore durante il conteggio dei caffè pagati</errorWhileCountingCoffee>
+        <cantAddBenefactor>Non puoi aggiungere papabili benefattori sul caffè che settato da altri.</cantAddBenefactor>s
     </error>
     <general>
         <retry>Riprova.</retry>

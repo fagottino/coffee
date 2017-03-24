@@ -123,7 +123,8 @@ class UserController {
         try {
             $db = Database::getConnection();
             
-            $result = $db->query ("SELECT operation FROM ".DB_PREFIX."user_group WHERE id_user = ".$_user->getIdTelegram()." AND id_group =  ".$_user->getChat()->getId()."");
+            $sql = "SELECT operation FROM ".DB_PREFIX."user_group WHERE id_user = ".$_user->getIdTelegram()." AND id_group =  ".$_user->getChat()->getId()."";
+            $result = $db->query ($sql);
             if ($result && $result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $result->free();

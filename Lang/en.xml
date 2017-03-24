@@ -44,6 +44,8 @@
         <errorWhileDestroyCoffee>Error while deleting of paid coffee</errorWhileDestroyCoffee>
         <errorWhileGettingName>Error while getting list of benefactor</errorWhileGettingName>
         <errorWhileCountingCoffee>Error while counting paid coffee</errorWhileCountingCoffee>
+        <cantAddBenefactor>Errore durante il conteggio dei caffè pagati</cantAddBenefactor>
+        <cantAddBenefactor>You can't add benefactor on coffee that are setting from others.</cantAddBenefactor>
     </error>
     <general>
         <retry>Retry.</retry>
