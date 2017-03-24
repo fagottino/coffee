@@ -7,6 +7,9 @@ $lang = Lang::getLang();
  * @author fagottino
  */
 class MessageManager {
+    
+    public $answerFromHttpRequest;
+    
 //    public function __construct() {
 //        
 //    }
@@ -15,7 +18,7 @@ class MessageManager {
     //secondo: testo messaggio
     //terzo: array di array della tastiera da mostrare all'utente
     //quarto: true->disabilita notifica per questo messaggio
-    public function sendReplyMarkup($_idChat, $_text, $_replyMarkup, $_selectiveKeyboard = false, $_replyToMessage = false, $_disableNotificationMessage = false)
+    public function sendReplyMarkup($_idChat, $_text, $_replyMarkup, $_selectiveKeyboard = false, $_replyToMessage = false, $_disableNotificationMessage = false, $_oneTimeKeyboard = false)
     {
         $args = array(
             'chat_id' => $_idChat,
@@ -29,6 +32,8 @@ class MessageManager {
             $keyboard = array('keyboard' => $_replyMarkup,
                 'resize_keyboard' => true
             );
+            if ($_oneTimeKeyboard)
+                $keyboard['one_time_keyboard'] = true;
         } else if ($_replyMarkup == false) {
             $keyboard = array('remove_keyboard' => true);
         } else {
@@ -177,11 +182,14 @@ class MessageManager {
                     file_put_contents($errorFile, $errorCurrent);
                 break;
             }
+        } else {
+            $this->answerFromHttpRequest = $data["result"];
         }
     }
         
-    function sendSimpleMessage($id, $message, $disableNotification = false, $_replyToMsg = 0) {
-       file_get_contents(API_URL."/sendmessage?chat_id=".$id."&text=".urlencode($message).($disableNotification ? "&disable_notification=true" : "").($_replyToMsg != 0 ? "&reply_to_message_id=".$_replyToMsg : ""));
+    function sendSimpleMessage($id, $message, $disableNotification = false, $_replyToMsg = 0, $_selective = false) {
+        $url = "/sendmessage?chat_id=".$id."&text=".urlencode($message).($disableNotification ? "&disable_notification=true" : "").($_replyToMsg != 0 ? "&reply_to_message_id=".$_replyToMsg : "").($_selective != 0 ? "&selective=true" : "");
+       file_get_contents(API_URL.$url);
        //file_get_contents(API_URL."/sendmessage?chat_id=".$id."&text=".urlencode($message)."&disable_notification=true");
     }
         

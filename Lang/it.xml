@@ -10,6 +10,7 @@
         <offer>Ti piace il bot? Offrimi un caffè</offer>
         <chooseBenefactor>Scegli il benefattore</chooseBenefactor>
         <listCompetitors>Lista dei concorrenti</listCompetitors>
+        <stats>Statistiche</stats>
         <quitNow>Si, esci subito.</quitNow>
         <justJoking>No, ho sbagliato.</justJoking>
         <setLanguage>Setta la lingua:</setLanguage>
@@ -27,6 +28,7 @@
         <errorWithCreationOfCustomMenu>Errore nella creazione del menù custom.</errorWithCreationOfCustomMenu>
         <inlineKeyboardIsRequired>Devi specificare una tastiera inline da inviare.</inlineKeyboardIsRequired>
         <cantUnderstandTypeOfChat>Non riesco a riconoscere il tipo di chat.</cantUnderstandTypeOfChat>
+        <cantUnderstandExplainBetter>Non riesco a capirti. Spiegati meglio per favore.</cantUnderstandExplainBetter>
         <textIsRequired>Il messaggio da inviare è obbligatorio.</textIsRequired>
         <noResultsFound>Nessun risultato trovato</noResultsFound>
         <cantGetNameOfUser>Errore durante la lettura dei nomi degli utenti.</cantGetNameOfUser>
@@ -35,6 +37,7 @@
         <errorWhileCoffeeRegistration>Errore nella registrazione del caffè.</errorWhileCoffeeRegistration>
         <errorWhileUserUpdate>Errore nell'aggiornamento dati dell'utente.</errorWhileUserUpdate>
         <cantGetLastOperation>Errore durante la lettura dell'operazione corrente.</cantGetLastOperation>
+        <cantGetGroupOperation>Errore durante la lettura dell'operazione nel gruppo.</cantGetGroupOperation>
         <cantUnderstandMessage>Se scrivi così non riesco a capirti. Usa i tasti in basso.</cantUnderstandMessage>
         <notImplementedYet>Non ancora implementata.</notImplementedYet>
         <errorWhileSelectionPaidCoffee>Errore durante la selezione del caffè pagato</errorWhileSelectionPaidCoffee>

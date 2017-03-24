@@ -209,7 +209,8 @@ class GroupController {
             
             $sql = "SELECT COUNT(".DB_PREFIX."paid_coffee_people.id_paid_coffee_people) FROM ".DB_PREFIX."paid_coffee_people
                     JOIN ".DB_PREFIX."paid_coffee ON ".DB_PREFIX."paid_coffee_people.id_paid_coffee = ".DB_PREFIX."paid_coffee.id_paid_coffee
-                    WHERE ".DB_PREFIX."paid_coffee.set_by = '".$_user->getChat()->getId()."'
+                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
+                    AND ".DB_PREFIX."paid_coffee.set_by = '".$_user->getIdTelegram()."'
                     AND ".DB_PREFIX."paid_coffee.powered_by IS NULL";
             $result = $db->query($sql);
             

@@ -55,6 +55,10 @@ class Chat {
     public function getAmaa() {
         return $this->amaa;
     }
+    
+    public function getOperation() {
+        return $this->operation;
+    }
 }
 
 class ChatException extends Exception { }

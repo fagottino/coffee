@@ -17,6 +17,7 @@ class User {
     private $chat;
     private $chatMember;
     private $currentOperation;
+    private $groupOperation;
     
     public function getUserData($_user) {
         if (isset($_user["message"])) {
@@ -121,5 +122,13 @@ class User {
     
     public function setCurrentOperation($_operation) {
         $this->currentOperation = $_operation;
+    }
+    
+    public function getGroupOperation() {
+        return $this->groupOperation;
+    }
+    
+    public function setGroupOperation($_groupOperation) {
+        $this->groupOperation = $_groupOperation;
     }
 }

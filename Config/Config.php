@@ -19,9 +19,11 @@ define('DB_PREFIX', 'coffee_');
 // Menu list
 define("START", '/start');
 define('HOME', 'home');
-define('HELP', 'help');
+define('HELP', '/help');
+define('INFO', '/info');
+define("KEYBOARD", "/keyboard");
 define('SETTINGS', 'settings');
-define('QUIT', 'quit');
+define('EXIT', '/exit');
 define('CANCEL_COFFEE', 'cancel');
 define('NULL_VALUE', 'nullValue');
 define('CHOOSE_BENEFACTOR', 'chooseBenefactor');

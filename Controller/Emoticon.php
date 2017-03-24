@@ -109,4 +109,8 @@ class Emoticon {
     public static function checkPositive() {
         return "\xE2\x9C\x85";
     }
+    
+    public static function stats() {
+        return "\xF0\x9F\x93\x8A";
+    }
 }
