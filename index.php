@@ -665,7 +665,8 @@ if($user->getChat()->getType() != "") {
                 if ($user->getChatMember()->getType() == "new_chat_member") {
                     if ($user->getChatMember()->getId() == $me->result->id) {
                         try {
-                            $groupController->checkGroup($user->getChat()->getId());
+                            $group = $groupController->checkGroup($user->getChat()->getId());
+                            $groupController->activateGroup($user->getChat());
                         }
                         catch (DatabaseException $ex) {
                             $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());

@@ -18,7 +18,8 @@ class GroupController {
         global $lang;
         try {
             $db = Database::getConnection();
-            $result = $db->query("SELECT * FROM ".DB_PREFIX."group WHERE ".DB_PREFIX."group.id_group = '".$_idGroup."'");
+            $sql = "SELECT * FROM ".DB_PREFIX."group WHERE ".DB_PREFIX."group.id_group = '".$_idGroup."'";
+            $result = $db->query($sql);
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $result->free();
@@ -36,7 +37,8 @@ class GroupController {
         try {
             $db = Database::getConnection();
             
-            $result = $db->query("INSERT INTO ".DB_PREFIX."group (id_group, title, amaa) VALUES('".$_chat->getId()."', '".$_chat->getTitle()."', '".$_chat->getAmaa()."')");
+            $sql = "INSERT INTO ".DB_PREFIX."group (id_group, title, amaa) VALUES('".$_chat->getId()."', '".$_chat->getTitle()."', '".$_chat->getAmaa()."')";
+            $result = $db->query($sql);
             
             if (!$result) {
                 throw new GroupControllerException($lang->error->errorWhileUserRegistration);
@@ -70,12 +72,15 @@ class GroupController {
             //if ($result->num_rows == 0) {
             if (mysqli_num_rows($result) == 0) {
                 
-                if (!$db->query("INSERT INTO ".DB_PREFIX."user_group (id_user, id_group, partecipate) VALUES('".$_user->getIdTelegram()."', '".$_user->getChat()->getId()."', '".$_partecipate."')"))
+                $sql = "INSERT INTO ".DB_PREFIX."user_group (id_user, id_group, partecipate) VALUES('".$_user->getIdTelegram()."', '".$_user->getChat()->getId()."', '".$_partecipate."')";
+                if (!$db->query($sql)) {
                     throw new GroupControllerException($lang->error->errorWhileUserRegistration);
+                }
             } else {
                 $sql = "UPDATE ".DB_PREFIX."user_group SET partecipate = ".$_partecipate." WHERE id_user = '".$_user->getIdTelegram()."' AND id_group = '".$_user->getChat()->getId()."' AND active = 1";
-                if (!$db->query($sql))
+                if (!$db->query($sql)) {
                     throw new GroupControllerException($lang->error->errorWhileUserRegistration);
+                }
             }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
@@ -225,7 +230,7 @@ class GroupController {
         try {
             $db = Database::getConnection();
             
-            $db->query("UPDATE ".DB_PREFIX."user_group SET active = 1 WHERE id_group = ".$_chat->getId());
+            $db->query("UPDATE ".DB_PREFIX."user_group SET leaves = 0 WHERE id_group = ".$_chat->getId());
             
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
