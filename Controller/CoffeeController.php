@@ -166,6 +166,20 @@ class CoffeeController {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
     }
+    
+    public function checkCoffeeInSpecificGroup(Chat $_chat) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            $sql = "SELECT COUNT(id_paid_coffee) FROM ".DB_PREFIX."paid_coffee WHERE id_group =  '".$_chat->getId()."' AND powered_by IS NULL";
+            $result = $db->query($sql);
+            if (!$result || mysqli_num_rows($result) == 0) {
+                throw new CoffeeControllerException($lang->error->cantAddBenefactor);
+            }
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
 }
 
 class CoffeeControllerException extends Exception { }

@@ -23,6 +23,8 @@
         <cancel>Cancel</cancel>
         <willNotParticipate>I will not participate</willNotParticipate>
         <exitToTheGame>Quit to the game</exitToTheGame>
+        <keepOlderConfiguration>Keep the older configuration</keepOlderConfiguration>
+        <resetOlderConfiguration>Reset the older configuration</resetOlderConfiguration>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Error while the creation of the custom menu'.</errorWithCreationOfCustomMenu>
@@ -44,8 +46,8 @@
         <errorWhileDestroyCoffee>Error while deleting of paid coffee</errorWhileDestroyCoffee>
         <errorWhileGettingName>Error while getting list of benefactor</errorWhileGettingName>
         <errorWhileCountingCoffee>Error while counting paid coffee</errorWhileCountingCoffee>
-        <cantAddBenefactor>Errore durante il conteggio dei caffè pagati</cantAddBenefactor>
         <cantAddBenefactor>You can't add benefactor on coffee that are setting from others.</cantAddBenefactor>
+        <cantAddCoffeeToYourself>You're alone! You can't register a coffee to yourself</cantAddCoffeeToYourself>
     </error>
     <general>
         <retry>Retry.</retry>
@@ -57,6 +59,21 @@
         <it>Italian</it>
         <en>English</en>
         <youAreHere>You are here:</youAreHere>
+        <listsOfYourGroup>This is the list of your groups</listsOfYourGroup>
+        <legend>Legend</legend>
+        <notParticipatingToGame>You <b>aren't participating</b> in the game</notParticipatingToGame>
+        <participatingToGame>You <b>are participating</b> in the game</participatingToGame>
+        <changeGroupState>Tap on group to change his state and join the game / leave the game.</changeGroupState>
+        <serviceCommunication>Service communication:</serviceCommunication>
+        <hasJustLeftTheGame>has just left the game.</hasJustLeftTheGame>
+        <hasJustJoinTheGame>has just join the game!</hasJustJoinTheGame>
+        <excludeFromChooseBenefactor>From this moment you will no longer included during the extraction of benefactor</excludeFromChooseBenefactor>
+        <youChoseToLeaveGame>You've chose to leave the game in the group</youChoseToLeaveGame>
+        <thereAreActiveUsers>I think that there are already active users.</thereAreActiveUsers>
+        <whatDoYouWantToDoWithOlderConfiguration>What do you want to do with the older configuration?</whatDoYouWantToDoWithOlderConfiguration>
+        <keepOlderConfiguration> => The older active users must confirm again their willingness to participate to the game</keepOlderConfiguration>
+        <resetOlderConfiguration> => All the participants will be deleted. Each participant in the group will have to subscribe again his willingness to join in the game.</resetOlderConfiguration>
+        <operationCanceled>Operation successfully canceled.</operationCanceled>
     </general>
     <ui>
         <hi>Hi</hi>
@@ -77,5 +94,10 @@
         <hasPower>Has the power.</hasPower>
         <askHimToStart>Please ask him to get started.</askHimToStart>
         <ok>Ok</ok>
+        <hereComesAgain>Here comes again</hereComesAgain>
+        <haveYouBackWithUs>what a plaseure to have you back again with us!</haveYouBackWithUs>
+        <aspiringBenefactorsAreTerminated>The aspiring benefactors are terminated</aspiringBenefactorsAreTerminated>
+        <tap>Tap</tap>
+        <toDiscoverTheBenefactor>to discover the <b>benefactor</b>!</toDiscoverTheBenefactor>
     </ui>
 </document>

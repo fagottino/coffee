@@ -20,7 +20,7 @@ class GroupController {
             $db = Database::getConnection();
             $sql = "SELECT * FROM ".DB_PREFIX."group WHERE ".DB_PREFIX."group.id_group = '".$_idGroup."'";
             $result = $db->query($sql);
-            if ($result->num_rows > 0) {
+            if (mysqli_num_rows($result) > 0) {
                 $row = $result->fetch_assoc();
                 $result->free();
                 return $row;
@@ -103,12 +103,10 @@ class GroupController {
         }
     }
     
-    //public function getCompetitors(Chat $_chat, $_me) {
     public function getCompetitors(Chat $_chat) {
         global $lang;
         try {
             $db = Database::getConnection();
-            //$sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user WHERE ".DB_PREFIX."user_group.id_group = '".$_chat->getId()."' AND ".DB_PREFIX."user_group.id_user != '".$_me->result->id."' AND ".DB_PREFIX."user_group.active = '1'";
             
             $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user WHERE ".DB_PREFIX."user_group.id_group = '".$_chat->getId()."' AND ".DB_PREFIX."user_group.active = '1' AND ".DB_PREFIX."user_group.partecipate = '1' AND ".DB_PREFIX."user_group.leaves = '0'";
             $query = $db->query($sql);
@@ -132,50 +130,6 @@ class GroupController {
         try {
             $db = Database::getConnection();
             
-            /*$sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user
-                    JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
-                    JOIN ".DB_PREFIX."paid_coffee ON ".DB_PREFIX."user_group.id_group = ".DB_PREFIX."paid_coffee.id_group
-                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
-                    AND ".DB_PREFIX."user_group.active = '1'
-                    AND ".DB_PREFIX."user_group.id_user != '".$_me->result->id."'
-                    AND ".DB_PREFIX."user.id_telegram NOT IN
-                    (SELECT ".DB_PREFIX."paid_coffee_people.id_user FROM ".DB_PREFIX."paid_coffee
-                    JOIN ".DB_PREFIX."paid_coffee_people ON ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
-                    WHERE ".DB_PREFIX."user_group.id_user != '".$_me->result->id."'
-                    AND ".DB_PREFIX."paid_coffee.set_by = '".$_user->getIdTelegram()."'
-                    AND ".DB_PREFIX."paid_coffee.powered_by IS NULL
-                    )";
-             */
-            
-            /*$sql = "SELECT coffee_user.id_telegram, coffee_user.name FROM coffee_user
-                    JOIN coffee_user_group ON coffee_user.id_telegram = coffee_user_group.id_user
-                    JOIN coffee_paid_coffee ON coffee_user_group.id_group = coffee_paid_coffee.id_group
-                    WHERE coffee_user_group.id_group = '-114342037'
-                    AND coffee_user_group.leaves = '0'
-                    AND coffee_user.id_telegram NOT IN
-                    (SELECT coffee_paid_coffee_people.id_user FROM coffee_paid_coffee
-                    JOIN coffee_paid_coffee_people ON coffee_paid_coffee.id_paid_coffee = coffee_paid_coffee_people.id_paid_coffee
-                    WHERE coffee_paid_coffee.set_by = '19179842'
-                    AND coffee_paid_coffee.powered_by IS NULL
-                    )";*/
-            
-//            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user
-//                    JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
-//                    JOIN ".DB_PREFIX."paid_coffee ON ".DB_PREFIX."user_group.id_group = ".DB_PREFIX."paid_coffee.id_group
-//                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
-//                    AND ".DB_PREFIX."user_group.leaves = '0'
-//                    AND ".DB_PREFIX."user_group.active = '1'
-//                    AND ".DB_PREFIX."user_group.partecipate = '1'
-//                    AND ".DB_PREFIX."user.id_telegram NOT IN
-//                    (SELECT ".DB_PREFIX."paid_coffee_people.id_user FROM ".DB_PREFIX."paid_coffee
-//                    JOIN ".DB_PREFIX."paid_coffee_people ON ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
-//                    WHERE ".DB_PREFIX."paid_coffee.set_by = '".$_user->getIdTelegram()."'
-//                    AND ".DB_PREFIX."user_group.leaves = '0'
-//                    AND ".DB_PREFIX."user_group.active = '1'
-//                    AND ".DB_PREFIX."user_group.partecipate = '1'
-//                    AND ".DB_PREFIX."paid_coffee.powered_by IS NULL
-//                    )";
-            
             $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user
                     JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
                     WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
@@ -191,7 +145,6 @@ class GroupController {
 
             $query = $db->query($sql);
             
-            //if ($query->num_rows > 0) {
             if (mysqli_num_rows($query) > 0) {
                 while($tmp = $query->fetch_assoc()) {
                     $res[] = $tmp;
@@ -311,6 +264,27 @@ class GroupController {
             $sql = "UPDATE ".DB_PREFIX."user_group SET partecipate = ".$value." WHERE id_group = ".$_idGroup." AND id_user = ".$_user->getIdTelegram();
             $db->query($sql);
             
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function getOlderMember(User $_user) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user_group JOIN ".DB_PREFIX."user ON ".DB_PREFIX."user_group.id_user = ".DB_PREFIX."user.id_telegram WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."' AND ".DB_PREFIX."user_group.active = '1'  AND ".DB_PREFIX."user_group.partecipate = '1' AND ".DB_PREFIX."user_group.leaves = '0'";
+            $result = $db->query($sql);
+            while ($singleUser = $result->fetch_assoc()) {
+                $user[] = $singleUser; 
+            }
+            
+            if (mysqli_num_rows($result) > 0) {
+                return $user;
+            } else {
+                throw new GroupControllerException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+            }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
