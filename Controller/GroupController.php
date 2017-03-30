@@ -62,7 +62,7 @@ class GroupController {
         }
     }
     
-    public function addUser(User $_user, $_partecipate) {
+    public function setParticipate(User $_user, $_partecipate) {
         global $lang;
         try {
             $db = Database::getConnection();
@@ -263,6 +263,7 @@ class GroupController {
             
             $sql = "UPDATE ".DB_PREFIX."user_group SET partecipate = ".$value." WHERE id_group = ".$_idGroup." AND id_user = ".$_user->getIdTelegram();
             $db->query($sql);
+            return $value;
             
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());

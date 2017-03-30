@@ -25,6 +25,7 @@
         <exitToTheGame>Esci dal gioco</exitToTheGame>
         <keepOlderConfiguration>Tieni la vecchia configurazione</keepOlderConfiguration>
         <resetOlderConfiguration>Resetta i settaggi del gruppo</resetOlderConfiguration>
+        <continueParticipating>Voglio continuare a partecipare</continueParticipating>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Errore nella creazione del menù custom.</errorWithCreationOfCustomMenu>
@@ -61,8 +62,8 @@
         <youAreHere>Sei qui:</youAreHere>
         <listsOfYourGroup>Ecco la lista dei tuoi gruppi</listsOfYourGroup>
         <legend>Legenda</legend>
-        <notParticipatingToGame><b>NON</b> stai partecipando al gioco</notParticipatingToGame>
-        <participatingToGame><b>STAI</b> partecipando al gioco</participatingToGame>
+        <notParticipatingToGame>&lt;b&gt;NON STAI&lt;/b&gt; partecipando al gioco</notParticipatingToGame>
+        <participatingToGame>&lt;b&gt;STAI&lt;/b&gt; partecipando al gioco</participatingToGame>
         <changeGroupState>Tappa su un gruppo per cambiare lo stato ed aggiungerti ai giochi / abbandonare i giochi</changeGroupState>
         <serviceCommunication>Comunicazione di servizio:</serviceCommunication>
         <hasJustLeftTheGame>si è appena ritirato dai giochi.</hasJustLeftTheGame>
@@ -98,6 +99,7 @@
         <haveYouBackWithUs>che piacere riaverti tra noi!</haveYouBackWithUs>
         <aspiringBenefactorsAreTerminated>Gli aspiranti benefattori sono terminati</aspiringBenefactorsAreTerminated>
         <tap>Tappa</tap>
-        <toDiscoverTheBenefactor>per scoprire il <b>benefattore</b>!</toDiscoverTheBenefactor>
+        <toDiscoverTheBenefactor>per scoprire il &lt;b&gt;benefattore&lt;/b&gt;!</toDiscoverTheBenefactor>
+        <welcomeBack>Bentornato</welcomeBack>
     </ui>
 </document>

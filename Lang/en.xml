@@ -25,6 +25,7 @@
         <exitToTheGame>Quit to the game</exitToTheGame>
         <keepOlderConfiguration>Keep the older configuration</keepOlderConfiguration>
         <resetOlderConfiguration>Reset the older configuration</resetOlderConfiguration>
+        <continueParticipating>I want to continue to participate</continueParticipating>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Error while the creation of the custom menu'.</errorWithCreationOfCustomMenu>
@@ -99,5 +100,6 @@
         <aspiringBenefactorsAreTerminated>The aspiring benefactors are terminated</aspiringBenefactorsAreTerminated>
         <tap>Tap</tap>
         <toDiscoverTheBenefactor>to discover the <b>benefactor</b>!</toDiscoverTheBenefactor>
+        <welcomeBack>Welcome back</welcomeBack>
     </ui>
 </document>

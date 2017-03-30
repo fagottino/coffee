@@ -113,4 +113,12 @@ class Emoticon {
     public static function stats() {
         return "\xF0\x9F\x93\x8A";
     }
+    
+    public static function neww() {
+        return "\xF0\x9F\x86\x95";
+    }
+    
+    public static function older() {
+        return "\xF0\x9F\x94\x81";
+    }
 }

@@ -151,7 +151,7 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
                     "length" => 10
                 )
                 ),
-            "text" => $lang->menu->start.Emoticon::rocket()
+            "text" => Emoticon::older().$lang->menu->keepOlderConfiguration
                 )
             );
 
@@ -736,23 +736,22 @@ if($user->getChat()->getType() != "") {
                                 // Propongo quelli
                                 $coffeeController->checkCoffeeInSpecificGroup($user->getChat());
                                 $groupController->getOlderMember($user);
-                                $text = $lang->general->thereAreActiveUsers.chr()
+                                $text = $lang->general->thereAreActiveUsers.chr(10)
                                         .$lang->general->whatDoYouWantToDoWithOlderConfiguration.chr(10).chr(10)
-                                        .$lang->menu->keepOlderConfiguration.$lang->general->keepOlderConfiguration.chr(10)
-                                        .$lang->menu->resetOlderConfiguration.$lang->general->resetOlderConfiguration;
-                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $text);
+                                        .Emoticon::older()." ".$lang->menu->keepOlderConfiguration.$lang->general->keepOlderConfiguration.chr(10).chr(10)
+                                        .Emoticon::neww()." ".$lang->menu->resetOlderConfiguration.$lang->general->resetOlderConfiguration;
                                 
                                 $menu = array(
                                     array(
-                                        "action" => "".$lang->menu->keepOlderConfiguration,
+                                        "action" => Emoticon::older().$lang->menu->keepOlderConfiguration,
                                         "alone" => true
                                     ),
                                     array(
-                                        "action" => "".$lang->menu->resetOlderConfiguration
+                                        "action" => Emoticon::neww().$lang->menu->resetOlderConfiguration
                                     )
                                 );
                                 $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
-                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, false, $user->getIdMessage());
+                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true, $user->getIdMessage());
                             }
                             catch (CoffeeControllerException $ex) {
                                 // Altrimenti chiedo ai partecipanti del gruppo di avviare una nuova sessione
@@ -787,7 +786,7 @@ if($user->getChat()->getType() != "") {
 
                         case $lang->ui->hiFriend.Emoticon::giveMeFive():
                             try {
-                                $groupController->addUser($user, 1);
+                                $groupController->setParticipate($user, 1);
                                 $text = $lang->ui->hi." @".($user->getUsername() != "" ? $user->getUsername() : $user->getName()).Emoticon::victory();
                                 $menu = array(
                                     array(
@@ -864,9 +863,9 @@ if($user->getChat()->getType() != "") {
                                     catch (CoffeeControllerException $ex) {
                                         $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
                                     }
-                            catch (DatabaseException $ex) {
-                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
-                            }        
+                                catch (DatabaseException $ex) {
+                                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                                }
                             }
                             break;
 
@@ -949,7 +948,7 @@ if($user->getChat()->getType() != "") {
                         case Emoticon::off()." ".$lang->menu->exitToTheGame:
                         case Emoticon::cancel().$lang->menu->willNotParticipate:
                             try {
-                                $groupController->addUser($user, 0);
+                                $groupController->setParticipate($user, 0);
                                 $text = $user->getName()." ricorda che puoi sempre scegliere di partecipare al gioco abilitando il gruppo tramite il tasto in basso ".Emoticon::group()."<b>I miei gruppi</b>";
                                 $menu = array(array("action" => Emoticon::group().$lang->menu->yourGroups, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
                                 $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
@@ -986,26 +985,87 @@ if($user->getChat()->getType() != "") {
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true, $user->getIdMessage());
                             break;
                         
-                        case "ajdvnsdvs":
-                                $text = $lang->ui->hi."Bentornato @".($user->getUsername() != "" ? $user->getUsername() : $user->getName()).Emoticon::victory();
+                        case Emoticon::older().$lang->menu->keepOlderConfiguration:
+                            try {
+                                $userList = $groupController->getOlderMember($user);
+                                $text = "Ok, prima di procedere ho bisogno della conferma dei singoli giocatori.".chr(10).chr(10);
+                                if (!in_array($user->getIdTelegram(), $userList)) {
+                                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $text, false, $user->getIdMessage());
+                                    $text = "";
+                                }
+                                
+                                foreach ($userList as $key => $value) {
+                                    $text .= "@".$value["name"].", ";
+                                }
+                                $text .= "per favore rispondetemi con le vostre intenzioni";
+                                
                                 $menu = array(
                                     array(
-                                        "action" => Emoticon::plus().$lang->menu->chooseBenefactor, 
+                                        "action" => $lang->menu->continueParticipating.Emoticon::victory(),
                                         "alone" => true
                                     ),
                                     array(
-                                        "action" => Emoticon::lists().$lang->menu->listCompetitors
-                                    ),
-                                    array(
-                                        "action" => Emoticon::stats().$lang->menu->stats
-                                    ),
-                                    array(
-                                        "action" => Emoticon::off()." ".$lang->menu->exitToTheGame,
-                                        "alone" => true
+                                        "action" => Emoticon::cancel().$lang->menu->willNotParticipate
                                     )
                                 );
                                 $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
                                 $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true, $user->getIdMessage());
+                            }
+                            catch (CoffeeControllerException $ex) {
+                                // Altrimenti chiedo ai partecipanti del gruppo di avviare una nuova sessione
+                                try {
+                                    $groupController->setActive($user);
+                                    $text = $lang->ui->letsGo.chr(10)
+                                        .$lang->ui->sayHi
+                                    ;
+                                    $menu = array(
+                                        array(
+                                            "action" => $lang->ui->hiFriend.Emoticon::giveMeFive(),
+                                            "alone" => true
+                                        ),
+                                        array(
+                                            "action" => Emoticon::cancel().$lang->menu->willNotParticipate
+                                        )
+                                    );
+                                    $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                                    $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, false, $user->getIdMessage());
+                                }
+                                catch (DatabaseException $ex) {
+                                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                                }
+                                catch (GroupControllerException $ex) {
+                                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                                }
+                            }
+                            catch (GroupControllerException $ex) {
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                            }
+                            break;
+                        
+                        case Emoticon::older().$lang->menu->resetOlderConfiguration:
+                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet);
+                            break;
+                        
+                        case $lang->menu->continueParticipating.Emoticon::victory():
+                            $text = $lang->ui->welcomeBack." @".($user->getUsername() != "" ? $user->getUsername() : $user->getName()).", ".$lang->ui->haveYouBackWithUs." ".Emoticon::victory();
+                            $menu = array(
+                                array(
+                                    "action" => Emoticon::plus().$lang->menu->chooseBenefactor, 
+                                    "alone" => true
+                                ),
+                                array(
+                                    "action" => Emoticon::lists().$lang->menu->listCompetitors
+                                ),
+                                array(
+                                    "action" => Emoticon::stats().$lang->menu->stats
+                                ),
+                                array(
+                                    "action" => Emoticon::off()." ".$lang->menu->exitToTheGame,
+                                    "alone" => true
+                                )
+                            );
+                            $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                            $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, true, $user->getIdMessage());
                             break;
 
                         case NULL_VALUE:
