@@ -195,9 +195,8 @@ class MessageManager {
     }
         
     function sendSimpleMessage($id, $message, $disableNotification = false, $_replyToMsg = 0, $_selective = false) {
-        $url = "/sendmessage?chat_id=".$id."&text=".urlencode($message).($disableNotification ? "&disable_notification=true" : "").($_replyToMsg != 0 ? "&reply_to_message_id=".$_replyToMsg : "").($_selective != 0 ? "&selective=true" : "");
+        $url = "/sendmessage?chat_id=".$id."&text=".urlencode($message).($disableNotification ? "&disable_notification=true" : "").($_replyToMsg != 0 ? "&reply_to_message_id=".$_replyToMsg : "").($_selective != 0 ? "&selective=true&parse_mode=HTML" : "");
        file_get_contents(API_URL.$url);
-       //file_get_contents(API_URL."/sendmessage?chat_id=".$id."&text=".urlencode($message)."&disable_notification=true");
     }
         
     function answerCallbackQuery($_id, $_message = "", $_showAlert = false) {

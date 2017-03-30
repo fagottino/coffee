@@ -68,8 +68,10 @@
         <serviceCommunication>Service communication:</serviceCommunication>
         <hasJustLeftTheGame>has just left the game.</hasJustLeftTheGame>
         <hasJustJoinTheGame>has just join the game!</hasJustJoinTheGame>
-        <excludeFromChooseBenefactor>From this moment you will no longer included during the extraction of benefactor</excludeFromChooseBenefactor>
+        <excludeFromChooseBenefactor>From this moment &lt;b&gt;you will no longer&lt;/b&gt; included during the extraction of benefactor.</excludeFromChooseBenefactor>
+        <includedInChooseBenefactor>From this moment &lt;b&gt;you will longer&lt;/b&gt; included during the extraction of benefactor.</includedInChooseBenefactor>
         <youChoseToLeaveGame>You've chose to leave the game in the group</youChoseToLeaveGame>
+        <youChoseToPlayIn>You've chose to join the game in the group</youChoseToPlayIn>
         <thereAreActiveUsers>I think that there are already active users.</thereAreActiveUsers>
         <whatDoYouWantToDoWithOlderConfiguration>What do you want to do with the older configuration?</whatDoYouWantToDoWithOlderConfiguration>
         <keepOlderConfiguration> => The older active users must confirm again their willingness to participate to the game</keepOlderConfiguration>

@@ -219,7 +219,7 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 //                "text" => "Setta la linuga:"
 //                ),
 //            "chat_instance" => "-4206174352189128888",
-//            "data" => "myGroups~-114342037"
+//            "data" => "myGroups~-114342037~TestGroup"
 //            )
 //        );
         
@@ -636,8 +636,9 @@ if($user->getChat()->getType() != "") {
                                 $menu[$i]["text"] = $key["title"].Emoticon::checkPositive();
                             }
                             $menu[$i]["callback_data"] = "myGroups~".$key["id_group"]."~".$key["title"];
-                            if ($key["id_group"] == $groupId)
+                            if ($key["id_group"] == $groupId) {
                                 $onOff = $key["partecipate"];
+                            }
                         $i++;
                     }
 
@@ -654,12 +655,37 @@ if($user->getChat()->getType() != "") {
 //                        $text = "Hai scelto di partecipare ai giochi nel gruppo ".$groupTitle;
 //                    }
                     
-                    $message = $lang->general->serviceCommunication.chr(10).$user->getName()
-                            ." ".($onOff == 0 ? $lang->general->hasJustLeftTheGame : $lang->general->hasJustJoinTheGame).chr(10)
-                            .$lang->general->excludeFromChooseBenefactor;
-                    $text = $lang->general->youChoseToLeaveGame.$groupTitle;
+                    if ($onOff == 0) {
+                        $message = $lang->general->serviceCommunication.chr(10)."@".($user->getChat()->getUsername() != NULL ? $user->getChat()->getUsername() : $user->getName())
+                                ." ".$lang->general->hasJustLeftTheGame.chr(10)
+                                .$lang->general->excludeFromChooseBenefactor;
+                        $messageManager->sendSimpleMessage($groupId, $message, true, 0, $user->getIdTelegram());
+                        $text = $lang->general->youChoseToLeaveGame." ".$groupTitle;
+                    } else if ($onOff == 1) {
+                        $message = $lang->general->serviceCommunication.chr(10)."@".($user->getChat()->getUsername() != NULL ? $user->getChat()->getUsername() : $user->getName())
+                                ." ".$lang->general->hasJustJoinTheGame.chr(10)
+                                .$lang->general->includedInChooseBenefactor;
+                        $text = $lang->general->youChoseToPlayIn." ".$groupTitle;
+                        $menu = array(
+                                    array(
+                                        "action" => Emoticon::plus().$lang->menu->chooseBenefactor, 
+                                        "alone" => true
+                                    ),
+                                    array(
+                                        "action" => Emoticon::lists().$lang->menu->listCompetitors
+                                    ),
+                                    array(
+                                        "action" => Emoticon::stats().$lang->menu->stats
+                                    ),
+                                    array(
+                                        "action" => Emoticon::off()." ".$lang->menu->exitToTheGame,
+                                        "alone" => true
+                                    )
+                            );
+                        $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                        $messageManager->sendReplyMarkup($groupId, $message, $createMenu, true, false, true, false);
+                    }
                     
-                    $messageManager->sendSimpleMessage($groupId, $message, true, 0, $user->getIdTelegram());
                     $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text, true);
                 }
                 catch (DatabaseException $ex) {
@@ -933,7 +959,7 @@ if($user->getChat()->getType() != "") {
                                 $coffeeController->destroyCoffee($user);
                                 $user->setGroupOperation(HOME);
                                 $userController->updateGroupOperation($user);
-                                $text = $lang->general->operationCanceled;
+                                $text = (string)$lang->general->operationCanceled;
                                 $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
                             }
                             catch (CoffeeControllerException $ex) {
@@ -989,7 +1015,16 @@ if($user->getChat()->getType() != "") {
                             try {
                                 $userList = $groupController->getOlderMember($user);
                                 $text = "Ok, prima di procedere ho bisogno della conferma dei singoli giocatori.".chr(10).chr(10);
-                                if (!in_array($user->getIdTelegram(), $userList)) {
+                                //if (!in_array($user->getIdTelegram(), $userList)) {
+                                
+                                $sendIt = true;
+                                foreach ($userList as $key => $value) {
+                                    if ($user->getIdTelegram() == $value["id_telegram"]) {
+                                        $sendIt = false;
+                                    }
+                                }
+                                
+                                if ($sendIt) {
                                     $messageManager->sendSimpleMessage($user->getChat()->getId(), $text, false, $user->getIdMessage());
                                     $text = "";
                                 }

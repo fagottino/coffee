@@ -68,8 +68,10 @@
         <serviceCommunication>Comunicazione di servizio:</serviceCommunication>
         <hasJustLeftTheGame>si è appena ritirato dai giochi.</hasJustLeftTheGame>
         <hasJustJoinTheGame>si è appena unito ai giochi!</hasJustJoinTheGame>
-        <excludeFromChooseBenefactor>Da questo momento non sarà più incluso nell'estrazione del Benefattore</excludeFromChooseBenefactor>
+        <excludeFromChooseBenefactor>Da questo momento &lt;b&gt;non&lt;/b&gt; sarà più incluso nell'estrazione del Benefattore.</excludeFromChooseBenefactor>
+        <includedInChooseBenefactor>Da questo momento &lt;b&gt;sarà&lt;/b&gt; incluso nell'estrazione del Benefattore.</includedInChooseBenefactor>
         <youChoseToLeaveGame>Hai scelto di abbandonare i giochi nel gruppo</youChoseToLeaveGame>
+        <youChoseToPlayIn>Hai scelto di partecipare ai giochi nel gruppo</youChoseToPlayIn>
         <thereAreActiveUsers>Mi risulta ci siano già utenti attivi.</thereAreActiveUsers>
         <whatDoYouWantToDoWithOlderConfiguration>Cosa intendi fare con la vecchia configurazione?</whatDoYouWantToDoWithOlderConfiguration>
         <keepOlderConfiguration> => I vecchi utenti iscritti dovranno confermare la loro volontà a partecipare ai giochi</keepOlderConfiguration>
