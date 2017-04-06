@@ -114,46 +114,46 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 //    );
     
 // MESSAGE WITH ANSWER
-    $privateMessage = array(
-        "update_id" => 624793660,
-        "message" => array(
-            "message_id" => 4854,
-            "from" => array(
-                "id" => 19179842,
-                "first_name" => "fagottino",
-                "username" => "fagottino"
-            ),
-             "chat" => array(
-                "id" => -114342037,
-                "title" => "TestGroup",
-                "type" => "group",
-                "all_members_are_administrators" => true
-            ),
-            "date" => 1483905746,
-            "reply_to_message" => array(
-                "message_id" => 4853,
-                "from" => array(
-                    "id" => 186132931,
-                    "first_name" => "Il benefattore del caff\u00e8",
-                    "username" => "IlBenefattoreDelCaffe_Bot"
-                ),
-                 "chat" => array(
-                    "id" => -114342037,
-                    "title" => "TestGroup",
-                    "type" => "group",
-                    "all_members_are_administrators" => true
-                ),
-                "date" => 1483905728,
-                "text" => "Ciao a tutti! @fagottino ha il potere.\nPer iniziare chiedete a lui.",
-                "entities" => array(
-                    "type" => "mention",
-                    "offset" => 14,
-                    "length" => 10
-                )
-                ),
-            "text" => $lang->menu->start.Emoticon::rocket()
-                )
-            );
+//    $privateMessage = array(
+//        "update_id" => 624793660,
+//        "message" => array(
+//            "message_id" => 4854,
+//            "from" => array(
+//                "id" => 19179842,
+//                "first_name" => "fagottino",
+//                "username" => "fagottino"
+//            ),
+//             "chat" => array(
+//                "id" => -114342037,
+//                "title" => "TestGroup",
+//                "type" => "group",
+//                "all_members_are_administrators" => true
+//            ),
+//            "date" => 1483905746,
+//            "reply_to_message" => array(
+//                "message_id" => 4853,
+//                "from" => array(
+//                    "id" => 186132931,
+//                    "first_name" => "Il benefattore del caff\u00e8",
+//                    "username" => "IlBenefattoreDelCaffe_Bot"
+//                ),
+//                 "chat" => array(
+//                    "id" => -114342037,
+//                    "title" => "TestGroup",
+//                    "type" => "group",
+//                    "all_members_are_administrators" => true
+//                ),
+//                "date" => 1483905728,
+//                "text" => "Ciao a tutti! @fagottino ha il potere.\nPer iniziare chiedete a lui.",
+//                "entities" => array(
+//                    "type" => "mention",
+//                    "offset" => 14,
+//                    "length" => 10
+//                )
+//                ),
+//            "text" => $lang->menu->start.Emoticon::rocket()
+//                )
+//            );
 
 // MESSAGE WITH ANSWER RICCISHOP
 //    $privateMessage = array(
@@ -224,40 +224,40 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 //        );
         
 // CALLACK GROUP QUERY
-//    $privateMessage = array(
-//        "update_id" => 404132637,
-//        "callback_query" => array(
-//            "id" => "82376795781791020",
-//            "from" => array(
-//                "id" => 19179842,
-//                "first_name" => "fagottino",
-//                "username" => "fagottino"
-//            ),
-//            "message" => array (
-//                "message_id" => 5938,
-//                "from" => array (
-//                    "id" => 186132931,
-//                    "first_name" => "Il benefattore del caff\u00e8",
-//                    "username" => "IlBenefattoreDelCaffe_Bot"
-//                ),
-//                "chat" => array (
-//                    "id" => -114342037,
-//                    "title" => "TestGroup",
-//                    "type" => "group",
-//                    "all_members_are_administrators" => true
-//                ),
-//                "date" => 1484227281,
-//                "text" => "Ok @fagottino!\nSeleziona i nomi dei partecipanti.",
-//                "entities" => array(
-//                        "type" => "mention",
-//                        "offset" => 3,
-//                        "length" => 10
-//                        )
-//                ),
-//            "chat_instance" => "-3971973381224532564",
-//            "data" => 48293504
-//        )
-//    );
+    $privateMessage = array(
+        "update_id" => 404132637,
+        "callback_query" => array(
+            "id" => "82376795781791020",
+            "from" => array(
+                "id" => 19179842,
+                "first_name" => "fagottino",
+                "username" => "fagottino"
+            ),
+            "message" => array (
+                "message_id" => 5938,
+                "from" => array (
+                    "id" => 186132931,
+                    "first_name" => "Il benefattore del caff\u00e8",
+                    "username" => "IlBenefattoreDelCaffe_Bot"
+                ),
+                "chat" => array (
+                    "id" => -114342037,
+                    "title" => "TestGroup",
+                    "type" => "group",
+                    "all_members_are_administrators" => true
+                ),
+                "date" => 1484227281,
+                "text" => "Ok @fagottino!\nSeleziona i nomi dei partecipanti.",
+                "entities" => array(
+                        "type" => "mention",
+                        "offset" => 3,
+                        "length" => 10
+                        )
+                ),
+            "chat_instance" => "-3971973381224532564",
+            "data" => CHOOSE_BENEFACTOR2
+        )
+    );
     
 //    $json = '{
 //    "update_id": 404132244,
@@ -787,7 +787,7 @@ if($user->getChat()->getType() != "") {
                             catch (CoffeeControllerException $ex) {
                                 // Altrimenti chiedo ai partecipanti del gruppo di avviare una nuova sessione
                                 try {
-                                    $groupController->setActive($user);
+                                    $groupController->setParticipate($user, 1);
                                     $text = $lang->ui->letsGo.chr(10)
                                         .$lang->ui->sayHi
                                     ;
@@ -817,6 +817,7 @@ if($user->getChat()->getType() != "") {
 
                         case $lang->ui->hiFriend.Emoticon::giveMeFive():
                             try {
+//                                $groupController->setActive($user, 1);
                                 $groupController->setParticipate($user, 1);
                                 $text = $lang->ui->hi." @".($user->getUsername() != "" ? $user->getUsername() : $user->getName()).Emoticon::victory();
                                 $menu = array(
@@ -940,10 +941,12 @@ if($user->getChat()->getType() != "") {
 
                         case CHOOSE_BENEFACTOR2:
                             try {
-                                $whoOfferCoffee = $coffeeController->countOfferCoffee($user);
-                                //$whoPaidCoffee = $coffeeController->countPaidCoffee($user);
-                                //$numberAbsences;
-                                $benefactor = $coffeeController->setPaid($user, 49402640);
+                                $countOfferCoffee = $coffeeController->countOfferCoffee($user);
+                                $countReceivedCoffee = $coffeeController->countReceivedCoffee($user);
+                                
+                                
+                                
+//                                $benefactor = $coffeeController->setPaid($user, 49402640);
 
                                 $user->setGroupOperation(HOME);
                                 $userController->updateGroupOperation($user);
@@ -1054,7 +1057,7 @@ if($user->getChat()->getType() != "") {
                             catch (CoffeeControllerException $ex) {
                                 // Altrimenti chiedo ai partecipanti del gruppo di avviare una nuova sessione
                                 try {
-                                    $groupController->setActive($user);
+                                    $groupController->setParticipate($user, 1);
                                     $text = $lang->ui->letsGo.chr(10)
                                         .$lang->ui->sayHi
                                     ;

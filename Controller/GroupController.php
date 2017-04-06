@@ -89,27 +89,27 @@ class GroupController {
         return true;
     }
     
-    public function setActive(User $_user) {
-        global $lang;
-        try {
-            $db = Database::getConnection();
-            
-            $sql = "UPDATE ".DB_PREFIX."user_group SET active = '1' WHERE id_user = '".$_user->getIdTelegram()."' AND id_group = '".$_user->getChat()->getId()."' AND leaves = '0'";
-            $updateUser = $db->query($sql);
-            if (!$updateUser) {
-                throw new GroupControllerException($lang->error->errorWhileUserUpdate);
-            }
-        } catch (DatabaseException $ex) {
-            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
-        }
-    }
+//    public function setActive(User $_user, $_bool) {
+//        global $lang;
+//        try {
+//            $db = Database::getConnection();
+//            
+//            $sql = "UPDATE ".DB_PREFIX."user_group SET active = '".$_bool."' WHERE id_user = '".$_user->getIdTelegram()."' AND id_group = '".$_user->getChat()->getId()."' AND leaves = '0'";
+//            $updateUser = $db->query($sql);
+//            if (!$updateUser) {
+//                throw new GroupControllerException($lang->error->errorWhileUserUpdate);
+//            }
+//        } catch (DatabaseException $ex) {
+//            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+//        }
+//    }
     
     public function getCompetitors(Chat $_chat) {
         global $lang;
         try {
             $db = Database::getConnection();
             
-            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user WHERE ".DB_PREFIX."user_group.id_group = '".$_chat->getId()."' AND ".DB_PREFIX."user_group.active = '1' AND ".DB_PREFIX."user_group.partecipate = '1' AND ".DB_PREFIX."user_group.leaves = '0'";
+            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user WHERE ".DB_PREFIX."user_group.id_group = '".$_chat->getId()."' AND ".DB_PREFIX."user_group.partecipate = '1' AND ".DB_PREFIX."user_group.leaves = '0'";
             $query = $db->query($sql);
             
             if (mysqli_num_rows($query) > 0) {
@@ -135,7 +135,6 @@ class GroupController {
                     JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
                     WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
                     AND coffee_user_group.leaves = '0'
-                    AND coffee_user_group.active = '1'
                     AND coffee_user_group.partecipate = '1'
                     AND ".DB_PREFIX."user.id_telegram NOT IN
                     (SELECT ".DB_PREFIX."paid_coffee_people.id_user FROM ".DB_PREFIX."paid_coffee
@@ -196,7 +195,7 @@ class GroupController {
         try {
             $db = Database::getConnection();
             
-            $db->query("UPDATE ".DB_PREFIX."user_group SET leaves = 1 WHERE id_group = ".$_chat->getId());
+            $db->query("UPDATE ".DB_PREFIX."group SET leaves = '1' WHERE id_group = ".$_chat->getId());
             
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
@@ -226,7 +225,6 @@ class GroupController {
             $sql = "SELECT ".DB_PREFIX."group.id_group, ".DB_PREFIX."group.title, ".DB_PREFIX."user_group.partecipate FROM ".DB_PREFIX."user_group
                     JOIN ".DB_PREFIX."group ON ".DB_PREFIX."user_group.id_group = ".DB_PREFIX."group.id_group
                     WHERE ".DB_PREFIX."user_group.id_user = '".$_user->getIdTelegram()."'
-                    AND  ".DB_PREFIX."user_group.active = '1'
                     AND ".DB_PREFIX."user_group.leaves = '0'
                     ";
 
@@ -295,7 +293,7 @@ class GroupController {
         try {
             $db = Database::getConnection();
             
-            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user_group JOIN ".DB_PREFIX."user ON ".DB_PREFIX."user_group.id_user = ".DB_PREFIX."user.id_telegram WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."' AND ".DB_PREFIX."user_group.active = '1'  AND ".DB_PREFIX."user_group.partecipate = '1' AND ".DB_PREFIX."user_group.leaves = '0'";
+            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user_group JOIN ".DB_PREFIX."user ON ".DB_PREFIX."user_group.id_user = ".DB_PREFIX."user.id_telegram WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."' AND ".DB_PREFIX."user_group.partecipate = '1' AND ".DB_PREFIX."user_group.leaves = '0'";
             $result = $db->query($sql);
             
             if (mysqli_num_rows($result) > 0) {
@@ -316,7 +314,7 @@ class GroupController {
         try {
             $db = Database::getConnection();
             
-            $db->query("UPDATE ".DB_PREFIX."user_group SET partecipate = '0', active = '0' WHERE id_group = ".$_chat->getId());
+            $db->query("UPDATE ".DB_PREFIX."user_group SET partecipate = '0' WHERE id_group = ".$_chat->getId());
             
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
