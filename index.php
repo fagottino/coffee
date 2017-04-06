@@ -151,7 +151,7 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
                     "length" => 10
                 )
                 ),
-            "text" => Emoticon::older().$lang->menu->keepOlderConfiguration
+            "text" => $lang->menu->start.Emoticon::rocket()
                 )
             );
 
@@ -188,7 +188,7 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 //                "date" => 1483905728,
 //                "text" => "Ok, iniziamo!\nChi vuole partecipare deve salutatarmi con il tasto in basso.",
 //                ),
-//            "text" => $lang->menu->start." ".Emoticon::rocket()
+//            "text" => $lang->ui->hiFriend.Emoticon::giveMeFive()
 //                )
 //            );
     
@@ -761,7 +761,12 @@ if($user->getChat()->getType() != "") {
                                 // Se sono già stato in questo gruppo e ci sono vecchi settaggi
                                 // Propongo quelli
                                 $coffeeController->checkCoffeeInSpecificGroup($user->getChat());
-                                $groupController->getOlderMember($user);
+                                $olderMember = $groupController->getOlderMember($user);
+                                if ($olderMember > 0) {
+                                    
+                                } else {
+                                    
+                                }
                                 $text = $lang->general->thereAreActiveUsers.chr(10)
                                         .$lang->general->whatDoYouWantToDoWithOlderConfiguration.chr(10).chr(10)
                                         .Emoticon::older()." ".$lang->menu->keepOlderConfiguration.$lang->general->keepOlderConfiguration.chr(10).chr(10)
@@ -1077,8 +1082,28 @@ if($user->getChat()->getType() != "") {
                             }
                             break;
                         
-                        case Emoticon::older().$lang->menu->resetOlderConfiguration:
-                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->notImplementedYet);
+                        case Emoticon::neww().$lang->menu->resetOlderConfiguration:
+                            try {
+                                $groupController->resetParticipate($user->getChat());
+                                
+                                $text = $lang->ui->resetGroupIsOk." "
+                                    .$lang->ui->letsGo.chr(10). " ".Emoticon::smile()
+                                    .$lang->ui->sayHi
+                                ;
+                                $menu = array(
+                                    array(
+                                        "action" => $lang->ui->hiFriend.Emoticon::giveMeFive(),
+                                        "alone" => true
+                                    ),
+                                    array(
+                                        "action" => Emoticon::cancel().$lang->menu->willNotParticipate
+                                    )
+                                );
+                                $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, false, $user->getIdMessage());
+                            } catch (DatabaseExceptionException $ex) {
+                            $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                            }
                             break;
                         
                         case $lang->menu->continueParticipating.Emoticon::victory():

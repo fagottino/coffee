@@ -36,6 +36,11 @@
         <noResultsFound>Nessun risultato trovato</noResultsFound>
         <cantGetNameOfUser>Errore durante la lettura dei nomi degli utenti.</cantGetNameOfUser>
         <errorWhileUserRegistration>Errore nella registrazione dell'utente.</errorWhileUserRegistration>
+        <errorWhileUserRegistrationInGroup>Errore nella registrazione dell'utente nel gruppo.</errorWhileUserRegistrationInGroup>
+        <errorWhileUserRegistrationUpdate>Errore durante l'aggiornamento dell'utente.</errorWhileUserRegistrationUpdate>
+        <errorWhileUserAssociate>Errore durante l'associazione dell'utente al caffè.</errorWhileUserAssociate>
+        <errorWhileRegisterParticipate>Errore durante la registrazione della partecipazione.</errorWhileRegisterParticipate>
+        <errorWhileUptadingParticipated>Errore durante l'aggiornamento della partecipazione.</errorWhileUptadingParticipated>
         <errorWhileGroupRegistration>Errore nella registrazione del gruppo.</errorWhileGroupRegistration>
         <errorWhileCoffeeRegistration>Errore nella registrazione del caffè.</errorWhileCoffeeRegistration>
         <errorWhileUserUpdate>Errore nell'aggiornamento dati dell'utente.</errorWhileUserUpdate>
@@ -91,6 +96,7 @@
         <giveMeTips>I suggerimenti sono benvenuti, qualora ne avessi inviameli pure</giveMeTips>
         <clickingHere>Cliccando qui</clickingHere>
         <letsGo>Ok, iniziamo!</letsGo>
+        <resetGroupIsOk>Reset avvenuto con successo.</resetGroupIsOk>
         <sayHi>Chi vuole partecipare deve salutatarmi con il tasto in basso.</sayHi>
         <hiFriend>Ciao amico</hiFriend>
         <hiEverybody>Ciao a tutti!</hiEverybody>

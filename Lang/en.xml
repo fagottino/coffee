@@ -36,6 +36,11 @@
         <noResultsFound>No results found.</noResultsFound>
         <cantGetNameOfUser>Error while reading the names of users.</cantGetNameOfUser>
         <errorWhileUserRegistration>Error while user registration.</errorWhileUserRegistration>
+        <errorWhileUserRegistrationInGroup>Error while registration user in group.</errorWhileUserRegistrationInGroup>
+        <errorWhileUserRegistrationUpdate>Error while user registration update.</errorWhileUserRegistrationUpdate>
+        <errorWhileUserAssociate>Error while registration user to coffee.</errorWhileUserAssociate>
+        <errorWhileRegisterParticipate>Error while registration of participate.</errorWhileRegisterParticipate>
+        <errorWhileUptadingParticipated>Error while updating of participated.</errorWhileUptadingParticipated>
         <errorWhileGroupRegistration>Error while group registration.</errorWhileGroupRegistration>
         <errorWhileCoffeeRegistration>Error while coffee registration.</errorWhileCoffeeRegistration>
         <errorWhileUserUpdate>Error while user data update.</errorWhileUserUpdate>
@@ -91,6 +96,7 @@
         <giveMeTips>Suggestions are welcome, if you had someone send me by.</giveMeTips>
         <clickingHere>Clicking here</clickingHere>
         <letsGo>Ok, let's go!</letsGo>
+        <resetGroupIsOk>The reset of the group was successful.</resetGroupIsOk>
         <sayHi>Who wants to participate must say hi to me through the button below.</sayHi>
         <hiFriend>Hello my friend</hiFriend>
         <hiEverybody>Hello to everybody!</hiEverybody>

@@ -41,7 +41,7 @@ class GroupController {
             $result = $db->query($sql);
             
             if (!$result) {
-                throw new GroupControllerException($lang->error->errorWhileUserRegistration);
+                throw new GroupControllerException($lang->error->errorWhileUserRegistrationInGroup);
             }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
@@ -53,9 +53,9 @@ class GroupController {
         try {
             $db = Database::getConnection();
             
-            $insertUser = $db->query("INSERT INTO ".DB_PREFIX."user_group (id_user, id_group, bot_owner) VALUES('".$_user->getIdTelegram()."', '".$_user->getChat()->getId()."', '1')");
-            if (!$insertUser) {
-                throw new GroupControllerException($lang->error->errorWhileUserRegistration);
+            $associateUser = $db->query("INSERT INTO ".DB_PREFIX."user_group (id_user, id_group, bot_owner) VALUES('".$_user->getIdTelegram()."', '".$_user->getChat()->getId()."', '1')");
+            if (!$associateUser) {
+                throw new GroupControllerException($lang->error->errorWhileUserAssociate);
             }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
@@ -71,15 +71,16 @@ class GroupController {
             $result = $db->query("SELECT * FROM ".DB_PREFIX."user_group WHERE id_user = '".$_user->getIdTelegram()."' AND id_group = '".$_user->getChat()->getId()."' AND leaves = 0");
             //if ($result->num_rows == 0) {
             if (mysqli_num_rows($result) == 0) {
-                
                 $sql = "INSERT INTO ".DB_PREFIX."user_group (id_user, id_group, partecipate) VALUES('".$_user->getIdTelegram()."', '".$_user->getChat()->getId()."', '".$_partecipate."')";
-                if (!$db->query($sql)) {
-                    throw new GroupControllerException($lang->error->errorWhileUserRegistration);
+                $result = $db->query($sql);
+                if (!$result) {
+                    throw new GroupControllerException($lang->error->errorWhileRegisterParticipate);
                 }
             } else {
-                $sql = "UPDATE ".DB_PREFIX."user_group SET partecipate = ".$_partecipate." WHERE id_user = '".$_user->getIdTelegram()."' AND id_group = '".$_user->getChat()->getId()."' AND active = 1";
-                if (!$db->query($sql)) {
-                    throw new GroupControllerException($lang->error->errorWhileUserRegistration);
+                $sql = "UPDATE ".DB_PREFIX."user_group SET partecipate = ".$_partecipate." WHERE id_user = '".$_user->getIdTelegram()."' AND id_group = '".$_user->getChat()->getId()."'";
+                $result = $db->query($sql);
+                if (!$result) {
+                    throw new GroupControllerException($lang->error->errorWhileUptadingParticipated);
                 }
             }
         } catch (DatabaseException $ex) {
@@ -271,21 +272,52 @@ class GroupController {
     }
     
     public function getOlderMember(User $_user) {
+//        global $lang;
+//        try {
+//            $db = Database::getConnection();
+//            
+//            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user_group JOIN ".DB_PREFIX."user ON ".DB_PREFIX."user_group.id_user = ".DB_PREFIX."user.id_telegram WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."' AND ".DB_PREFIX."user_group.active = '1'  AND ".DB_PREFIX."user_group.partecipate = '1' AND ".DB_PREFIX."user_group.leaves = '0'";
+//            $result = $db->query($sql);
+//            while ($singleUser = $result->fetch_assoc()) {
+//                $user[] = $singleUser; 
+//            }
+//            
+//            if (mysqli_num_rows($result) > 0) {
+//                return $user;
+//            } else {
+//                //throw new GroupControllerException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+//                return 0;
+//            }
+//        } catch (DatabaseException $ex) {
+//            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+//        }
         global $lang;
         try {
             $db = Database::getConnection();
             
             $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user_group JOIN ".DB_PREFIX."user ON ".DB_PREFIX."user_group.id_user = ".DB_PREFIX."user.id_telegram WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."' AND ".DB_PREFIX."user_group.active = '1'  AND ".DB_PREFIX."user_group.partecipate = '1' AND ".DB_PREFIX."user_group.leaves = '0'";
             $result = $db->query($sql);
-            while ($singleUser = $result->fetch_assoc()) {
-                $user[] = $singleUser; 
-            }
             
             if (mysqli_num_rows($result) > 0) {
+                while ($singleUser = $result->fetch_assoc()) {
+                    $user[] = $singleUser; 
+                }
                 return $user;
             } else {
-                throw new GroupControllerException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+                return 0;
             }
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function resetParticipate(Chat $_chat) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $db->query("UPDATE ".DB_PREFIX."user_group SET partecipate = '0', active = '0' WHERE id_group = ".$_chat->getId());
+            
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
