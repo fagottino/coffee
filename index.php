@@ -902,35 +902,39 @@ if($user->getChat()->getType() != "") {
                             break;
 
                         case Emoticon::lists().$lang->menu->listCompetitors:
-                            try {
-                                $user->setGroupOperation(BENEFACTOR_LIST);
-                                $userController->updateGroupOperation($user);
-                                $competitors = $groupController->getCompetitors($user->getChat(), $me);
-                                $text = $groupController->createText($competitors);
-                                $menu = array(
-                                    array(
-                                        "action" => Emoticon::plus().$lang->menu->chooseBenefactor, 
-                                        "alone" => true
-                                    ), 
-                                    array(
-                                        "action" => Emoticon::lists().$lang->menu->listCompetitors
-                                    ),
-                                    array(
-                                        "action" => Emoticon::stats().$lang->menu->stats
-                                    ),
-                                    array(
-                                        "action" => Emoticon::off()." ".$lang->menu->exitToTheGame,
-                                        "alone" => true
-                                    )
-                                );
-                                $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
-                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, false, $user->getIdMessage(), false, true);
-                            }
-                            catch (DatabaseException $ex) {
-                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
-                            }
-                            catch (GroupControllerException $ex) {
-                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                            if ($user->getGroupOperation() != CHOOSE_BENEFACTOR) {
+                                try {
+                                    $user->setGroupOperation(BENEFACTOR_LIST);
+                                    $userController->updateGroupOperation($user);
+                                    $competitors = $groupController->getCompetitors($user->getChat(), $me);
+                                    $text = $groupController->createText($competitors);
+                                    $menu = array(
+                                        array(
+                                            "action" => Emoticon::plus().$lang->menu->chooseBenefactor, 
+                                            "alone" => true
+                                        ), 
+                                        array(
+                                            "action" => Emoticon::lists().$lang->menu->listCompetitors
+                                        ),
+                                        array(
+                                            "action" => Emoticon::stats().$lang->menu->stats
+                                        ),
+                                        array(
+                                            "action" => Emoticon::off()." ".$lang->menu->exitToTheGame,
+                                            "alone" => true
+                                        )
+                                    );
+                                    $createMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                                    $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $createMenu, false, $user->getIdMessage(), false);
+                                }
+                                catch (DatabaseException $ex) {
+                                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                                }
+                                catch (GroupControllerException $ex) {
+                                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                                }
+                            } else {
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), "Hai un'operazione di aggiunta caffè in sospeso. Annullala per continuare a navigare con il bot.");
                             }
                             break;
                         
@@ -981,18 +985,22 @@ if($user->getChat()->getType() != "") {
 
                         case Emoticon::off()." ".$lang->menu->exitToTheGame:
                         case Emoticon::cancel().$lang->menu->willNotParticipate:
-                            try {
-                                $groupController->setParticipate($user, 0);
-                                $text = $user->getName()." ricorda che puoi sempre scegliere di partecipare al gioco abilitando il gruppo tramite il tasto in basso ".Emoticon::group()."<b>I miei gruppi</b>";
-                                $menu = array(array("action" => Emoticon::group().$lang->menu->yourGroups, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
-                                $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
-                                $messageManager->sendReplyMarkup($user->getIdTelegram(), $text, $customMenu);
+                            if ($user->getGroupOperation() != CHOOSE_BENEFACTOR) {
+                                try {
+                                    $groupController->setParticipate($user, 0);
+                                    $text = $user->getName()." ricorda che puoi sempre scegliere di partecipare al gioco abilitando il gruppo tramite il tasto in basso ".Emoticon::group()."<b>I miei gruppi</b>";
+                                    $menu = array(array("action" => Emoticon::group().$lang->menu->yourGroups, "alone" => true), array("action" => Emoticon::help().$lang->menu->help, "alone" => false), array("action" => Emoticon::settings().$lang->menu->settings, "alone" => false), array("action" => Emoticon::quit().$lang->menu->quit, "alone" => true));
+                                    $customMenu = $menuController->createCustomReplyMarkupMenu($menu);
+                                    $messageManager->sendReplyMarkup($user->getIdTelegram(), $text, $customMenu);
 
-                                $text = $lang->ui->ok." ".$user->getName().", ti ho inviato un messaggio privato con un piccolo promemoria qualora cambiassi idea.".chr(10)."A presto! ".Emoticon::smile();
-                                $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, false, true, $user->getIdMessage());
-                            }
-                            catch (DatabaseException $ex) {
-                                $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                                    $text = $lang->ui->ok." ".$user->getName().", ti ho inviato un messaggio privato con un piccolo promemoria qualora cambiassi idea.".chr(10)."A presto! ".Emoticon::smile();
+                                    $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, false, true, $user->getIdMessage());
+                                }
+                                catch (DatabaseException $ex) {
+                                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage());
+                                }
+                            } else {
+                                $messageManager->sendSimpleMessage($user->getChat()->getId(), "Hai un'operazione di aggiunta caffè in sospeso. Annullala per continuare a navigare con il bot.");
                             }
                             break;
                         
