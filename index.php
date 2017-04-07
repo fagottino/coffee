@@ -1,4 +1,4 @@
-<?php
+-<?php
 require_once './Config/Config.php';
 require_once './Model/Database.php';
 require_once './Model/Lang.php';
@@ -949,7 +949,14 @@ if($user->getChat()->getType() != "") {
                                 $countReceivedCoffee = $coffeeController->countReceivedCoffee($user);
                                 
                                 
-                                
+//                                SELECT coffee_user.name, coffee_paid_coffee.id_paid_coffee, COUNT(coffee_paid_coffee_people.id_paid_coffee) AS caffe_ricevuti, SUM(coffee_user.name) FROM coffee_paid_coffee
+//                                JOIN coffee_paid_coffee_people ON coffee_paid_coffee.id_paid_coffee = coffee_paid_coffee_people.id_paid_coffee
+//                                JOIN coffee_user ON coffee_paid_coffee_people.id_user = coffee_user.id_telegram
+//                                WHERE coffee_paid_coffee.id_group = '-114342037'
+//                                AND coffee_paid_coffee.powered_by IS NOT NULL
+//                                GROUP BY coffee_user.name, coffee_paid_coffee.id_paid_coffee
+//                                ORDER BY caffe_ricevuti DESC
+//                                
 //                                $benefactor = $coffeeController->setPaid($user, 49402640);
 
                                 $user->setGroupOperation(HOME);
