@@ -66,6 +66,16 @@ class MessageManager {
         $this->sendMessage("sendMessage", $args);
     }
     
+    public function sendChatAction($_idChat, $_action)
+    {
+        $args = array(
+            'chat_id' => $_idChat,
+            'action' => $_action
+        );
+                        
+        $this->sendMessage("sendChatAction", $args);
+    }
+    
     public function sendInline($_idChat, $text, $_keyboard, $_replyTo)
     {
         global $lang;

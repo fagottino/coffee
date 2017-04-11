@@ -72,11 +72,11 @@ class CoffeeController {
         global $lang;
         try {
             $db = Database::getConnection();
-            $sql = "SELECT ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
+            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
                     JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
                     WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
                     AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
-                    GROUP BY ".DB_PREFIX."user.name
+                    GROUP BY ".DB_PREFIX."user.id_telegram
                     ORDER BY caffe_offerti DESC";
             $result = $db->query($sql);
             if (mysqli_num_rows($result) == 0) {
@@ -97,12 +97,12 @@ class CoffeeController {
         global $lang;
         try {
             $db = Database::getConnection();
-            $sql = "SELECT ".DB_PREFIX."paid_coffee.id_paid_coffee, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee_people.id_paid_coffee) AS caffe_ricevuti FROM ".DB_PREFIX."paid_coffee
+            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee_people.id_paid_coffee) AS caffe_ricevuti FROM ".DB_PREFIX."paid_coffee
                     JOIN ".DB_PREFIX."paid_coffee_people ON ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
                         JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee_people.id_user = ".DB_PREFIX."user.id_telegram
                         WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
                         AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
-                        GROUP BY name
+                        GROUP BY ".DB_PREFIX."user.id_telegram
                         ORDER BY caffe_ricevuti DESC";
             $result = $db->query($sql);
             if (mysqli_num_rows($result) == 0) {

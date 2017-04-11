@@ -902,6 +902,8 @@ if($user->getChat()->getType() != "") {
                             break;
 
                         case Emoticon::lists().$lang->menu->listCompetitors:
+                            //$messageManager->sendReplyMarkup($user->getChat()->getId(), "a"."&#822;"."n"."&#822;"."t"."&#822;"."o"."&#822;"."n"."&#822;"."i"."&#822;"."o"."&#822;");
+                            //$messageManager->sendChatAction($user->getChat()->getId(), "typing");
                             if ($user->getGroupOperation() != CHOOSE_BENEFACTOR) {
                                 try {
                                     $user->setGroupOperation(BENEFACTOR_LIST);
@@ -948,15 +950,41 @@ if($user->getChat()->getType() != "") {
                                 $countOfferCoffee = $coffeeController->countOfferCoffee($user);
                                 $countReceivedCoffee = $coffeeController->countReceivedCoffee($user);
                                 
+                                //$allBenefactor = array();
+                                $allId = array_column($countReceivedCoffee, 'id_telegram');
                                 
-//                                SELECT coffee_user.name, coffee_paid_coffee.id_paid_coffee, COUNT(coffee_paid_coffee_people.id_paid_coffee) AS caffe_ricevuti, SUM(coffee_user.name) FROM coffee_paid_coffee
-//                                JOIN coffee_paid_coffee_people ON coffee_paid_coffee.id_paid_coffee = coffee_paid_coffee_people.id_paid_coffee
-//                                JOIN coffee_user ON coffee_paid_coffee_people.id_user = coffee_user.id_telegram
-//                                WHERE coffee_paid_coffee.id_group = '-114342037'
-//                                AND coffee_paid_coffee.powered_by IS NOT NULL
-//                                GROUP BY coffee_user.name, coffee_paid_coffee.id_paid_coffee
-//                                ORDER BY caffe_ricevuti DESC
-//                                
+                                foreach ($countOfferCoffee as $offerCoffee) {
+                                    foreach ($countReceivedCoffee as $receivedCoffee) {
+                                        if ($offerCoffee["id_telegram"] == $receivedCoffee["id_telegram"]) {
+                                            $difference = $offerCoffee["caffe_offerti"] - $receivedCoffee["caffe_ricevuti"];
+                                            $allBenefactor[] = array("id_telegram" => $offerCoffee["id_telegram"], "name" => $offerCoffee["name"], "caffe_ricevuti" => $difference);
+                                            $index = array_search($offerCoffee["id_telegram"], $allId);
+                                            unset($countReceivedCoffee[$index]);
+                                            break;
+                                        }
+                                    }
+                                }
+                                
+                                if (sizeof($countReceivedCoffee) > 0) {
+                                    foreach ($countReceivedCoffee as $key) {
+                                    $allBenefactor[] = $key;
+                                    }
+                                }
+                                
+                                $diff = array_column($allBenefactor, 'caffe_ricevuti');
+                                rsort($diff);
+                                
+                                $i = 0;
+                                foreach ($diff as $item) {
+                                    if (isset($diff[$i + 1])) {
+                                        if ($item["caffe_ricevuti"] < $diff[$i]["caffe_ricevuti"]) {
+                                            break;
+                                        }
+                                        $benefactor[] = $item;
+                                    }
+                                        $i++;
+                                }
+                                
 //                                $benefactor = $coffeeController->setPaid($user, 49402640);
 
                                 $user->setGroupOperation(HOME);
