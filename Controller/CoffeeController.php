@@ -76,13 +76,14 @@ class CoffeeController {
                     JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
                     WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
                     AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
-                    GROUP BY ".DB_PREFIX."user.id_telegram
+                    GROUP BY ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name
                     ORDER BY caffe_offerti DESC";
             $result = $db->query($sql);
             if (mysqli_num_rows($result) == 0) {
                 return 0;
             } else {
                 while($singleUser = $result->fetch_assoc()) {
+                    $singleUser["caffe_offerti"] = (int)$singleUser["caffe_offerti"];
                     $usersWithPaidCoffee[] = $singleUser;
                 }
                 
@@ -102,13 +103,14 @@ class CoffeeController {
                         JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee_people.id_user = ".DB_PREFIX."user.id_telegram
                         WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
                         AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
-                        GROUP BY ".DB_PREFIX."user.id_telegram
+                        GROUP BY ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name
                         ORDER BY caffe_ricevuti DESC";
             $result = $db->query($sql);
             if (mysqli_num_rows($result) == 0) {
                 return 0;
             } else {
                 while($singleUser = $result->fetch_assoc()) {
+                    $singleUser["caffe_ricevuti"] = (int)$singleUser["caffe_ricevuti"];
                     $usersWithReceivedCoffee[] = $singleUser;
                 }
                 

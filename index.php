@@ -946,18 +946,18 @@ if($user->getChat()->getType() != "") {
                             break;
 
                         case CHOOSE_BENEFACTOR2:
-                            try {
+                            try {                            
                                 $countOfferCoffee = $coffeeController->countOfferCoffee($user);
                                 $countReceivedCoffee = $coffeeController->countReceivedCoffee($user);
                                 
-                                //$allBenefactor = array();
+                                $allBenefactor = array();
                                 $allId = array_column($countReceivedCoffee, 'id_telegram');
                                 
                                 foreach ($countOfferCoffee as $offerCoffee) {
                                     foreach ($countReceivedCoffee as $receivedCoffee) {
                                         if ($offerCoffee["id_telegram"] == $receivedCoffee["id_telegram"]) {
                                             $difference = $offerCoffee["caffe_offerti"] - $receivedCoffee["caffe_ricevuti"];
-                                            $allBenefactor[] = array("id_telegram" => $offerCoffee["id_telegram"], "name" => $offerCoffee["name"], "caffe_ricevuti" => $difference);
+                                            $allBenefactor[] = array("id_telegram" => $offerCoffee["id_telegram"], "name" => $offerCoffee["name"], "caffe_ricevuti" => (int)$difference);
                                             $index = array_search($offerCoffee["id_telegram"], $allId);
                                             unset($countReceivedCoffee[$index]);
                                             break;
@@ -971,18 +971,43 @@ if($user->getChat()->getType() != "") {
                                     }
                                 }
                                 
-                                $diff = array_column($allBenefactor, 'caffe_ricevuti');
-                                rsort($diff);
+//                                $diff = array_column($allBenefactor, 'caffe_ricevuti');
+//                                rsort($diff);
                                 
-                                $i = 0;
-                                foreach ($diff as $item) {
-                                    if (isset($diff[$i + 1])) {
-                                        if ($item["caffe_ricevuti"] < $diff[$i]["caffe_ricevuti"]) {
-                                            break;
-                                        }
-                                        $benefactor[] = $item;
+//                                $i = 0;
+//                                foreach ($diff as $item) {
+//                                    if (isset($diff[$i + 1])) {
+//                                        if ($item["caffe_ricevuti"] < $diff[$i]["caffe_ricevuti"]) {
+//                                            break;
+//                                        }
+//                                        $benefactor[] = $item;
+//                                    }
+//                                    $i++;
+//                                }
+                                
+                                $difference = array();
+                                foreach ($allBenefactor as $key)
+                                {
+                                    $difference[] = $key['caffe_ricevuti'];
+                                }
+                                array_multisort($difference, SORT_DESC, $allBenefactor);
+                                usort($allBenefactor, "caffe_ricevuti");
+                                
+                                $max = -999999;
+                                foreach($allBenefactor as $k => $v)
+                                {
+                                    if($v['caffe_ricevuti'] > $max)
+                                    {
+                                       $max = $v['caffe_ricevuti'];
+                                       $found_item[] = $v;
                                     }
-                                        $i++;
+                                }
+                                
+                                if (sizeof($found_item) > 1) {
+                                    $end = sizeof($found_item);
+                                    $choose = $found_item[rand(0, $end)];
+                                } else {
+                                    
                                 }
                                 
 //                                $benefactor = $coffeeController->setPaid($user, 49402640);
