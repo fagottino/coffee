@@ -946,75 +946,109 @@ if($user->getChat()->getType() != "") {
                             break;
 
                         case CHOOSE_BENEFACTOR2:
-                            try {                            
-                                $countOfferCoffee = $coffeeController->countOfferCoffee($user);
-                                $countReceivedCoffee = $coffeeController->countReceivedCoffee($user);
-                                
-                                $allBenefactor = array();
-                                $allId = array_column($countReceivedCoffee, 'id_telegram');
-                                
-                                foreach ($countOfferCoffee as $offerCoffee) {
-                                    foreach ($countReceivedCoffee as $receivedCoffee) {
-                                        if ($offerCoffee["id_telegram"] == $receivedCoffee["id_telegram"]) {
-                                            $difference = $offerCoffee["caffe_offerti"] - $receivedCoffee["caffe_ricevuti"];
-                                            $allBenefactor[] = array("id_telegram" => $offerCoffee["id_telegram"], "name" => $offerCoffee["name"], "caffe_ricevuti" => (int)$difference);
-                                            $index = array_search($offerCoffee["id_telegram"], $allId);
-                                            unset($countReceivedCoffee[$index]);
-                                            break;
+                            try {
+                                $candidate = $coffeeController->getCandidate($user);
+                                if (sizeof($candidate) > 0) {
+                                    foreach ($candidate as $data) {
+                                    $countOfferCoffee[] = $coffeeController->countOfferCoffee($user, $data);
+                                    $countReceivedCoffee[] = $coffeeController->countReceivedCoffee($user, $data);
+                                    }
+
+                                    $allBenefactor = array();
+                                    $allId = array_column($countReceivedCoffee, 'id_telegram');
+
+//                                    foreach ($countOfferCoffee as $offerCoffee) {
+//                                        foreach ($countReceivedCoffee as $receivedCoffee) {
+//                                            if ($offerCoffee["id_telegram"] == $receivedCoffee["id_telegram"]) {
+//                                                $difference = $offerCoffee["caffe_offerti"] - $receivedCoffee["caffe_ricevuti"];
+//                                                $allBenefactor[] = array("id_telegram" => $offerCoffee["id_telegram"], "name" => $offerCoffee["name"], "caffe_ricevuti" => (int)$difference);
+//                                                $index = array_search($offerCoffee["id_telegram"], $allId);
+//                                                unset($countReceivedCoffee[$index]);
+//                                                break;
+//                                            }
+//                                        }
+//                                    }
+
+                                    foreach ($countOfferCoffee as $offerCoffee) {
+                                        foreach ($countReceivedCoffee as $receivedCoffee) {
+                                            if ($offerCoffee["id_telegram"] == $receivedCoffee["id_telegram"]) {
+                                                $difference = $offerCoffee["caffe_offerti"] - $receivedCoffee["caffe_ricevuti"];
+                                                $allBenefactor[] = array("id_telegram" => $offerCoffee["id_telegram"], "name" => $offerCoffee["name"], "caffe_ricevuti" => (int)$difference);
+                                            }
                                         }
                                     }
-                                }
-                                
-                                if (sizeof($countReceivedCoffee) > 0) {
-                                    foreach ($countReceivedCoffee as $key) {
-                                    $allBenefactor[] = $key;
-                                    }
-                                }
-                                
-//                                $diff = array_column($allBenefactor, 'caffe_ricevuti');
-//                                rsort($diff);
-                                
-//                                $i = 0;
-//                                foreach ($diff as $item) {
-//                                    if (isset($diff[$i + 1])) {
-//                                        if ($item["caffe_ricevuti"] < $diff[$i]["caffe_ricevuti"]) {
-//                                            break;
-//                                        }
-//                                        $benefactor[] = $item;
+                                    
+//                                    $i = 0;
+//                                    foreach ($countOfferCoffee as $offerCoffee) {
+//                                        $difference = $offerCoffee["caffe_offerti"] - $countReceivedCoffee[$i]["caffe_ricevuti"];
+//                                        $allBenefactor[] = array("id_telegram" => $offerCoffee["id_telegram"], "name" => $offerCoffee["name"], "caffe_ricevuti" => (int)$difference);
 //                                    }
-//                                    $i++;
-//                                }
-                                
-                                $difference = array();
-                                foreach ($allBenefactor as $key)
-                                {
-                                    $difference[] = $key['caffe_ricevuti'];
-                                }
-                                array_multisort($difference, SORT_DESC, $allBenefactor);
-                                usort($allBenefactor, "caffe_ricevuti");
-                                
-                                $max = -999999;
-                                foreach($allBenefactor as $k => $v)
-                                {
-                                    if($v['caffe_ricevuti'] > $max)
+
+//                                    if (sizeof($countReceivedCoffee) > 0) {
+//                                        foreach ($countReceivedCoffee as $key) {
+//                                        $allBenefactor[] = $key;
+//                                        }
+//                                    }
+
+    //                                $diff = array_column($allBenefactor, 'caffe_ricevuti');
+    //                                rsort($diff);
+
+    //                                $i = 0;
+    //                                foreach ($diff as $item) {
+    //                                    if (isset($diff[$i + 1])) {
+    //                                        if ($item["caffe_ricevuti"] < $diff[$i]["caffe_ricevuti"]) {
+    //                                            break;
+    //                                        }
+    //                                        $benefactor[] = $item;
+    //                                    }
+    //                                    $i++;
+    //                                }
+
+                                    $difference = array();
+                                    foreach ($allBenefactor as $key)
                                     {
-                                       $max = $v['caffe_ricevuti'];
-                                       $found_item[] = $v;
+                                        $difference[] = $key['caffe_ricevuti'];
                                     }
-                                }
-                                
-                                if (sizeof($found_item) > 1) {
-                                    $end = sizeof($found_item);
-                                    $choose = $found_item[rand(0, $end)];
+                                    array_multisort($difference, SORT_ASC, $allBenefactor);
+                                    usort($allBenefactor, "caffe_ricevuti");
+
+                                    $max = $allBenefactor[0]["caffe_ricevuti"];
+                                    foreach($allBenefactor as $k => $v)
+                                    {
+                                        if($v['caffe_ricevuti'] <= $max) {
+                                           //$max = $v['caffe_ricevuti'];
+                                           $found_item[] = $v;
+                                        }
+                                    }
+
+                                    if (sizeof($found_item) > 1) {
+                                        $end = (sizeof($found_item) - 1);
+                                        $choose = $found_item[rand(0, $end)];
+
+                                        $text = "Tra gli aspiranti benefattori:";
+                                        $i = 0;
+                                        while(isset($found_item[$i])) {
+                                            $text .= " ".$found_item[$i]["name"].", ";
+                                            $i++;
+                                        }
+                                        $text .= "ho scelto ... ".chr(10)
+                                                ."<b>".$choose["name"]."</b> ".Emoticon::party1().Emoticon::party1().Emoticon::party2();
+                                        $benefactor = $coffeeController->setPaid($user, $choose["id_telegram"]);
+                                    } else if (sizeof($found_item) == 1) {
+                                        $text = "Il benefattore di turno è";
+
+                                        $text .= " <b>".$found_item[0]["name"]."</b> ".Emoticon::party1().Emoticon::party1().Emoticon::party2();
+                                        $benefactor = $coffeeController->setPaid($user, $found_item[0]["id_telegram"]);
+                                    } else {
+
+                                    }
                                 } else {
                                     
                                 }
-                                
-//                                $benefactor = $coffeeController->setPaid($user, 49402640);
 
                                 $user->setGroupOperation(HOME);
                                 $userController->updateGroupOperation($user);
-                                $text = "It's ok! Il benefattore del momento è ----";
+//                                $text = "It's ok! Il benefattore del momento è ----";
                                 $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
                             }
                             catch (CoffeeControllerException $ex) {

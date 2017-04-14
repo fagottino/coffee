@@ -68,24 +68,65 @@ class CoffeeController {
         }
     }
     
-    public function countOfferCoffee(User $_user) {
+//    public function countOfferCoffee(User $_user, $_data) {
+//        global $lang;
+//        try {
+//            $db = Database::getConnection();
+////            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
+////                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
+////                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
+////                    AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
+////                    GROUP BY ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name
+////                    ORDER BY caffe_offerti DESC";
+//            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
+//                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
+//                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
+//                    AND ".DB_PREFIX."paid_coffee.powered_by != '".$_data["id_user"]."'
+//                    GROUP BY ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name
+//                    ORDER BY caffe_offerti DESC";
+//            $result = $db->query($sql);
+//            if (mysqli_num_rows($result) == 0) {
+//                return 0;
+//            } else {
+//                while($singleUser = $result->fetch_assoc()) {
+//                    $singleUser["caffe_offerti"] = (int)$singleUser["caffe_offerti"];
+//                    $usersWithPaidCoffee[] = $singleUser;
+//                }
+//                
+//                return $usersWithPaidCoffee;
+//            }
+//        } catch (DatabaseException $ex) {
+//            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+//        }
+//    }
+    
+    public function countOfferCoffee(User $_user, $_data) {
         global $lang;
         try {
             $db = Database::getConnection();
+//            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
+//                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
+//                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
+//                    AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
+//                    GROUP BY ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name
+//                    ORDER BY caffe_offerti DESC";
             $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
                     JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
                     WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
-                    AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
+                    AND ".DB_PREFIX."paid_coffee.powered_by = '".$_data["id_user"]."'
                     GROUP BY ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name
                     ORDER BY caffe_offerti DESC";
             $result = $db->query($sql);
             if (mysqli_num_rows($result) == 0) {
-                return 0;
+                $usersWithPaidCoffee["id_telegram"] = $_data["id_user"];
+                $usersWithPaidCoffee["name"] = $_data["name"];
+                $usersWithPaidCoffee["caffe_offerti"] = 0;
+                return $usersWithPaidCoffee;
+                //return 0;
             } else {
-                while($singleUser = $result->fetch_assoc()) {
+                $singleUser = $result->fetch_assoc();
                     $singleUser["caffe_offerti"] = (int)$singleUser["caffe_offerti"];
-                    $usersWithPaidCoffee[] = $singleUser;
-                }
+                    $usersWithPaidCoffee = $singleUser;
                 
                 return $usersWithPaidCoffee;
             }
@@ -94,7 +135,7 @@ class CoffeeController {
         }
     }
     
-    public function countReceivedCoffee(User $_user) {
+    public function countReceivedCoffee(User $_user, $_data) {
         global $lang;
         try {
             $db = Database::getConnection();
@@ -102,17 +143,21 @@ class CoffeeController {
                     JOIN ".DB_PREFIX."paid_coffee_people ON ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
                         JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee_people.id_user = ".DB_PREFIX."user.id_telegram
                         WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
+                        AND ".DB_PREFIX."paid_coffee.powered_by != '".$_data["id_user"]."'
                         AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
+                        AND ".DB_PREFIX."paid_coffee_people.id_user = '".$_data["id_user"]."'
                         GROUP BY ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name
                         ORDER BY caffe_ricevuti DESC";
             $result = $db->query($sql);
             if (mysqli_num_rows($result) == 0) {
-                return 0;
+                $usersWithReceivedCoffee["id_telegram"] = $_data["id_user"];
+                $usersWithReceivedCoffee["name"] = $_data["name"];
+                $usersWithReceivedCoffee["caffe_ricevuti"] = 0;
+                return $usersWithReceivedCoffee;
             } else {
-                while($singleUser = $result->fetch_assoc()) {
-                    $singleUser["caffe_ricevuti"] = (int)$singleUser["caffe_ricevuti"];
-                    $usersWithReceivedCoffee[] = $singleUser;
-                }
+                $singleUser = $result->fetch_assoc();
+                $singleUser["caffe_ricevuti"] = (int)$singleUser["caffe_ricevuti"];
+                $usersWithReceivedCoffee = $singleUser;
                 
                 return $usersWithReceivedCoffee;
             }
@@ -157,6 +202,38 @@ class CoffeeController {
             $result = $db->query($sql);
             if (!$result || mysqli_num_rows($result) == 0) {
                 throw new CoffeeControllerException($lang->error->cantAddBenefactor);
+            }
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function getCandidate(User $_user) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $sql = "SELECT ".DB_PREFIX."paid_coffee_people.id_user, ".DB_PREFIX."user.name FROM ".DB_PREFIX."paid_coffee
+					JOIN ".DB_PREFIX."paid_coffee_people ON ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
+                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee_people.id_user = ".DB_PREFIX."user.id_telegram
+                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
+                    AND ".DB_PREFIX."paid_coffee.powered_by IS NULL";
+            
+//            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
+//                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
+//                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
+//                    AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
+//                    GROUP BY ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name
+//                    ORDER BY caffe_offerti DESC";
+            $result = $db->query($sql);
+            if (mysqli_num_rows($result) == 0) {
+                return 0;
+            } else {
+                while($singleUser = $result->fetch_assoc()) {
+                    $users[] = $singleUser;
+                }
+                
+                return $users;
             }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());

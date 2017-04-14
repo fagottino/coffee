@@ -121,4 +121,12 @@ class Emoticon {
     public static function older() {
         return "\xF0\x9F\x94\x81";
     }
+    
+    public static function party1() {
+        return "\xF0\x9F\x8E\x89";
+    }
+    
+    public static function party2() {
+        return "\xF0\x9F\x8E\x8A";
+    }
 }
