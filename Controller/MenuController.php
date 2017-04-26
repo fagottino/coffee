@@ -41,6 +41,7 @@ class MenuController {
         $menu[0] = array();
         $i = 0;
         $j = -1;
+        if (is_array($_itemArray)) {
         foreach ($_itemArray as $key => $value) {
             if (isset($value["alone"]) && $value["alone"]) {
                 unset($value["alone"]);
@@ -53,6 +54,7 @@ class MenuController {
                 }
                 $i++;
             }
+        }
         }
 //        foreach ($_itemArray as $key => $value) {
 //            if (isset($value["alone"]) && $value["alone"]) {
@@ -72,7 +74,7 @@ class MenuController {
         }
         
         if ($_donation) {
-            $menu[++$j] = array("text" => $lang->menu->offer." ".Emoticon::coffee(), "url" => "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=anto%2eorla%40gmail%2ecom&lc=IT&item_name=Il%20Benefattore%20del%20Caff%c3%a8&item_number=bdc&amount=0%2e80&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted");
+            $menu[++$j] = array(array("text" => $lang->menu->offer." ".Emoticon::coffee(), "url" => "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=anto%2eorla%40gmail%2ecom&lc=IT&item_name=Il%20Benefattore%20del%20Caff%c3%a8&item_number=bdc&amount=0%2e80&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted"));
         }
         
         return $menu;
@@ -94,9 +96,13 @@ class MenuController {
                         "alone" => false
                         ),
                     array(
-                        "action" => Emoticon::quit().$lang->menu->quit,
+                        "action" => Emoticon::inLove().$lang->menu->doYouLikeTheBot,
                         "alone" => true
                         )
+//                    array(
+//                        "action" => Emoticon::quit().$lang->menu->quit,
+//                        "alone" => true
+//                        )
                     );
         $menu = $this->createCustomReplyMarkupMenu($item);
         return $menu;
@@ -118,19 +124,19 @@ class MenuController {
         return $menu;
     }
     
-    public function quit() {
-        global $lang;
-        $item = array(
-                    array(
-                        "text" => Emoticon::bye().$lang->menu->quitNow, 
-                        "callback_data" => "yes"
-                        ), 
-                    array(
-                        "text" => Emoticon::justJocking().$lang->menu->justJoking,
-                        "callback_data" => "no"
-                        )
-                    );
-        $menu = $this->createCustomInlineMenu($item, 2, false, true);
+    public function doYouLikeTheBot() {
+//        global $lang;
+//        $item = array(
+//                    array(
+//                        "text" => Emoticon::bye().$lang->menu->quitNow, 
+//                        "callback_data" => "yes"
+//                        ), 
+//                    array(
+//                        "text" => Emoticon::justJocking().$lang->menu->justJoking,
+//                        "callback_data" => "no"
+//                        )
+//                    );
+        $menu = $this->createCustomInlineMenu(null, 2, false, true);
         return $menu;
     }
     

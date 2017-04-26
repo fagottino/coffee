@@ -5,6 +5,7 @@
         <help>Aiuto</help>
         <settings>Impostazioni</settings>
         <quit>Esci dal bot</quit>
+        <doYouLikeTheBot>Ti piace il bot?</doYouLikeTheBot>
         <home>Menù principale</home>
         <back>Indietro</back>
         <offer>Ti piace il bot? Offrimi un caffè</offer>
@@ -78,7 +79,6 @@
         <code>Codice -></code>
         <languageSet>Hai settato la lingua in Italiano.</languageSet>
         <moreInfo>Usa i pulsanti in basso per capirne di più</moreInfo>
-        <disableBot>Sei sicuro di voler &lt;b&gt;disabilitare&lt;/b&gt; il bot?</disableBot>
         <it>Italiano</it>
         <en>Inglese</en>
         <youAreHere>Sei qui:</youAreHere>
@@ -88,7 +88,7 @@
         <notParticipatingToGame1>NON stai partecipando al gioco</notParticipatingToGame1>
         <participatingToGame>&lt;b&gt;STAI&lt;/b&gt; partecipando al gioco</participatingToGame>
         <participatingToGame1>STAI partecipando al gioco</participatingToGame1>
-        <changeGroupState>Tappa su un gruppo per cambiare lo stato ed aggiungerti ai giochi / abbandonare i giochi</changeGroupState>
+        <changeGroupState>Tappa su un gruppo per entrare nelle impostazioni.</changeGroupState>
         <serviceCommunication>Comunicazione di servizio:</serviceCommunication>
         <hasJustLeftTheGame>si è appena ritirato dai giochi.</hasJustLeftTheGame>
         <hasJustJoinTheGame>si è appena unito ai giochi!</hasJustJoinTheGame>
@@ -98,9 +98,10 @@
         <youChoseToPlayIn>Hai scelto di partecipare ai giochi nel gruppo</youChoseToPlayIn>
         <thereAreActiveUsers>Mi risulta ci siano già utenti attivi.</thereAreActiveUsers>
         <whatDoYouWantToDoWithOlderConfiguration>Cosa intendi fare con la vecchia configurazione?</whatDoYouWantToDoWithOlderConfiguration>
-        <keepOlderConfiguration> => I vecchi utenti iscritti dovranno confermare la loro volontà a partecipare ai giochi</keepOlderConfiguration>
+        <keepOlderConfiguration> => I vecchi utenti iscritti dovranno confermare la loro volontà di partecipare ai giochi</keepOlderConfiguration>
         <resetOlderConfiguration> => Saranno azzerati i partecipanti ai giochi. Ogni partecipante al gruppo dovrà sottoscrivere nuovamente la propria partecipazione ai giochi</resetOlderConfiguration>
         <operationCanceled>Operazione annullata correttamente.</operationCanceled>
+        <changedKeyboard>Ho cambiato anche la tastiera per farti sentire come a casa tua. Buon divertimento!</changedKeyboard>
     </general>
     <ui>
         <hi>Ciao</hi>
@@ -143,5 +144,8 @@
         <currentSituationIs>La situazione attuale è questa:</currentSituationIs>
         <offered>ha offerto</offered>
         <andReceivedIt>caffè e ne ha ricevuti</andReceivedIt>
+        <manageGroupSettings>Perfetto, gestisci qui le impostazioni del gruppo</manageGroupSettings>
+        <iLikeYouToo>Awwww, anche tu mi piaci</iLikeYouToo>
+        <iLikeYouToo1>Se usi il tasto in basso potremmo anche fidanzarci </iLikeYouToo1>
     </ui>
 </document>

@@ -1,4 +1,4 @@
--<?php
+<?php
 require_once './Config/Config.php';
 require_once './Model/Database.php';
 require_once './Model/Lang.php';
@@ -139,7 +139,7 @@ if($user->getChat()->getType() != "") {
                             $menu = $menuController->defaultGroup();
                             $text = (string)$lang->general->languageSet;
                             $messageManager->sendReplyMarkup($groupId, $text, $menu, 0, false, true);
-                            $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text, true);
+                            $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text);
                             $lang = Lang::getLang($user->getLang());
                             $inlineMenu = $menuController->lang($user->getChat()->getLang());
                             $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $inlineMenu);
@@ -150,35 +150,37 @@ if($user->getChat()->getType() != "") {
                             $userController->updateLang($user);
                             $lang = Lang::getLang($user->getLang());
                             $menu = $menuController->defaultPrivate();
-                            $text = (string)$lang->general->languageSet;
+                            $text = (string)$lang->general->changedKeyboard." ".Emoticon::smile();
                             $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $menu);
-                            $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text, true);
+                            $text = (string)$lang->general->languageSet;
+                            $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
+                            $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text);
                             $inlineMenu = $menuController->lang($user->getMessage());
-                            $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $inlineMenu);
+                            //$messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $inlineMenu);
                         }
                     }
-                    $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                 }
                 catch (DatabaseException $ex) {
                     $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
-                    $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                 }
                 catch (UserControllerExceptions $ex) {
                     $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
-                    $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                 }
                 catch (MessageException $ex) {
                     //$messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
                     $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                 }
+                $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
                 break;
 
-            case Emoticon::quit().$lang->menu->quit:
+//            case Emoticon::quit().$lang->menu->quit:
+            case Emoticon::inLove().$lang->menu->doYouLikeTheBot:
                 try {
-                    $user->setCurrentOperation(QUIT);
-                    $userController->updateCurrentOperation($user);
-                    $menu = $menuController->quit();
-                    $text = (string)$lang->general->disableBot;
+//                    $user->setCurrentOperation(QUIT);
+//                    $userController->updateCurrentOperation($user);
+                    $menu = $menuController->doYouLikeTheBot();
+                    $text = (string)$lang->ui->iLikeYouToo.Emoticon::inLove().Emoticon::inLove().chr(10);
+                    $text .= (string)$lang->ui->iLikeYouToo1.Emoticon::inLove().Emoticon::inLove().Emoticon::heart();
                     $messageManager->sendInline($user->getChat()->getId(), $text, $menu);
                 }
                 catch (DatabaseException $ex) {
@@ -195,33 +197,31 @@ if($user->getChat()->getType() != "") {
             // DA CONTROLLARE
             case "yes":
             case "no":
-                try {
-                    if ($user->getMessage() != $user->getLang()) {
-                        $user->setLang($user->getMessage());
-                        $userController->updateLang($user);
-                        $lang = Lang::getLang($user->getLang());
-                        $menu = $menuController->defaultPrivate();
-                        $text = "ASVASVAVAVA".$lang->general->languageSet;
-                        $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $menu);
-                        $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text, true);
-                        $inlineMenu = $menuController->lang($user->getMessage());
-                        $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $inlineMenu);
-                    } else {
-                        $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
-                    }
-                }
-                catch (DatabaseException $ex) {
-                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
-                    $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
-                }
-                catch (UserControllerExceptions $ex) {
-                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
-                    $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
-                }
-                catch (MessageException $ex) {
-                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
-                    $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
-                }
+                $text = "maooooomaoooooo";
+                $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text);
+//                try {
+//                        $user->setLang($user->getMessage());
+//                        $userController->updateLang($user);
+//                        $lang = Lang::getLang($user->getLang());
+//                        $menu = $menuController->defaultPrivate();
+//                        $text = "ASVASVAVAVA".$lang->general->languageSet;
+//                        $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $menu);
+//                        $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text);
+//                        $inlineMenu = $menuController->lang($user->getMessage());
+//                        $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $inlineMenu);
+//                }
+//                catch (DatabaseException $ex) {
+//                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
+//                    $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
+//                }
+//                catch (UserControllerExceptions $ex) {
+//                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
+//                    $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
+//                }
+//                catch (MessageException $ex) {
+//                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
+//                    $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
+//                }
 //                try {
 //                    $text = (string)$lang->error->notImplementedYet;
 ////                    $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text, true);
@@ -247,7 +247,6 @@ if($user->getChat()->getType() != "") {
             case Emoticon::home().$lang->menu->home:
                 $operation = $user->getCurrentOperation();
                 switch ($operation) {
-                
                     case "setOperationGroup":
                             try {
                                 $myGroups = $groupController->getMyGroup($user);
@@ -260,7 +259,6 @@ if($user->getChat()->getType() != "") {
                                     $menu = $menuController->myGroups($myGroups);
                                     $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
                                     $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $menu);
-//                                    $messageManager->sendInline($user->getChat()->getId(), $text, $menu, $user->getIdMessage());
                                 } else {
                                     $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->noResultsFound, $user->getIdMessage());
                                 }
@@ -359,7 +357,7 @@ if($user->getChat()->getType() != "") {
                 try {
                     $user->setCurrentOperation(SETTING_OPERATION_GROUP);
                     $userController->updateCurrentOperation($user);
-                    $text = "Yess, gestisci qui le impostazioni del gruppo.";
+                    $text = $lang->ui->manageGroupSettings." <b>".$groupTitle."</b>";
                     $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
                     $getGroupInfo = $groupController->getGroupInfo($user, $groupId);
                     $getGroupInfo[0]["title"] = $groupTitle;
@@ -421,7 +419,6 @@ if($user->getChat()->getType() != "") {
                     $userController->updateCurrentOperation($user);
                     $text = (string)$lang->menu->setLanguage." ".$groupTitle;
                     $menu = $menuController->lang($user->getLang());
-                    //$messageManager->sendInline($user->getChat()->getId(), $text, $menu);
                     $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
                     $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $menu);
                 }

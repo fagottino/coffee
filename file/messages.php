@@ -2,30 +2,30 @@
 $whitelist = array('127.0.0.1', "::1");
 if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 // PRIVATE
-//    $privateMessage = array(
-//        "update_id" => 624792369,
-//        "message" => array(
-//            "message_id" => 1270,
-//            "from" => array(
-//                "id" => 19179842,
-//                "first_name" => "fagottino",
-//                "username" => "fagottino"
-//            ),
-//             "chat" => array(
-//                "id" => 19179842,
-//                 "first_name" => "fagottino",
-//                 "username" => "fagottino",
-//                 "type" => "private"
-//            ),
-//            "date" => 1482502325,
-//            "text" => Emoticon::back().$lang->menu->back,
-//            "entities" => array(
-//                "type" => "bot_command",
-//                "offset" => 0,
-//                "length" => 9
-//            )
-//        )
-//    );
+    $privateMessage = array(
+        "update_id" => 624792369,
+        "message" => array(
+            "message_id" => 1270,
+            "from" => array(
+                "id" => 19179842,
+                "first_name" => "fagottino",
+                "username" => "fagottino"
+            ),
+             "chat" => array(
+                "id" => 19179842,
+                 "first_name" => "fagottino",
+                 "username" => "fagottino",
+                 "type" => "private"
+            ),
+            "date" => 1482502325,
+            "text" => Emoticon::quit().$lang->menu->quit,
+            "entities" => array(
+                "type" => "bot_command",
+                "offset" => 0,
+                "length" => 9
+            )
+        )
+    );
     
 // GROUP
 //    $privateMessage = array(
@@ -293,54 +293,54 @@ if(in_array(filter_input(INPUT_SERVER,'REMOTE_ADDR'), $whitelist)){
 //    }
 //    }';
     
-    $json = '{
-    "update_id": 404135787,
-    "callback_query": {
-        "id": "82376794293774174",
-        "from": {
-            "id": 19179842,
-            "first_name": "fagottino",
-            "username": "fagottino"
-        },
-        "message": {
-            "message_id": 9436,
-            "from": {
-                "id": 186132931,
-                "first_name": "Il benefattore del caff\u00e8",
-                "username": "IlBenefattoreDelCaffe_Bot"
-            },
-            "chat": {
-                "id": 19179842,
-                "first_name": "fagottino",
-                "username": "fagottino",
-                "type": "private"
-            },
-            "date": 1493056756,
-            "edit_date": 1493056762,
-            "reply_to_message": {
-                "message_id": 9435,
-                "from": {
-                    "id": 19179842,
-                    "first_name": "fagottino",
-                    "username": "fagottino"
-                },
-                "chat": {
-                    "id": 19179842,
-                    "first_name": "fagottino",
-                    "username": "fagottino",
-                    "type": "private"
-                },
-                "date": 1493056755,
-                "text": "\ud83d\udc65I miei gruppi"
-            },
-            "text": "Yess, gestisci qui le impostazioni del gruppo."
-        },
-        "chat_instance": "-4206174352189128888",
-        "data": "en"
-    }
-}';
-    
-    $privateMessage = json_decode($json, true);
+//    $json = '{
+//    "update_id": 404135787,
+//    "callback_query": {
+//        "id": "82376794293774174",
+//        "from": {
+//            "id": 19179842,
+//            "first_name": "fagottino",
+//            "username": "fagottino"
+//        },
+//        "message": {
+//            "message_id": 9436,
+//            "from": {
+//                "id": 186132931,
+//                "first_name": "Il benefattore del caff\u00e8",
+//                "username": "IlBenefattoreDelCaffe_Bot"
+//            },
+//            "chat": {
+//                "id": 19179842,
+//                "first_name": "fagottino",
+//                "username": "fagottino",
+//                "type": "private"
+//            },
+//            "date": 1493056756,
+//            "edit_date": 1493056762,
+//            "reply_to_message": {
+//                "message_id": 9435,
+//                "from": {
+//                    "id": 19179842,
+//                    "first_name": "fagottino",
+//                    "username": "fagottino"
+//                },
+//                "chat": {
+//                    "id": 19179842,
+//                    "first_name": "fagottino",
+//                    "username": "fagottino",
+//                    "type": "private"
+//                },
+//                "date": 1493056755,
+//                "text": "\ud83d\udc65I miei gruppi"
+//            },
+//            "text": "Yess, gestisci qui le impostazioni del gruppo."
+//        },
+//        "chat_instance": "-4206174352189128888",
+//        "data": "en"
+//    }
+//}';
+//    
+//    $privateMessage = json_decode($json, true);
     
     $unreadMessage = $privateMessage;
 }

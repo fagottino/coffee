@@ -5,6 +5,7 @@
         <help>Help</help>
         <settings>Settings</settings>
         <quit>Leave</quit>
+        <doYouLikeTheBot>Do you like the bot?</doYouLikeTheBot>
         <home>Start</home>
         <back>Back</back>
         <offer>Do you like the bot? Give me a coffee!</offer>
@@ -78,7 +79,6 @@
         <code>Code -></code>
         <languageSet>Language default changed.</languageSet>
         <moreInfo>Use the buttons below to learn more</moreInfo>
-        <disableBot>Are you sure that you want to &lt;b&gt;disable&lt;/b&gt; the bot?</disableBot>
         <it>Italian</it>
         <en>English</en>
         <youAreHere>You are here:</youAreHere>
@@ -88,7 +88,7 @@
         <notParticipatingToGame1>You aren't participating in the game</notParticipatingToGame1>
         <participatingToGame>You <b>are participating</b> in the game</participatingToGame>
         <participatingToGame1>You are participating in the game</participatingToGame1>
-        <changeGroupState>Tap on group to change his state and join the game / leave the game.</changeGroupState>
+        <changeGroupState>Tap on group to change his settings.</changeGroupState>
         <serviceCommunication>Service communication:</serviceCommunication>
         <hasJustLeftTheGame>has just left the game.</hasJustLeftTheGame>
         <hasJustJoinTheGame>has just join the game!</hasJustJoinTheGame>
@@ -101,6 +101,7 @@
         <keepOlderConfiguration> => The older active users must confirm again their willingness to participate to the game</keepOlderConfiguration>
         <resetOlderConfiguration> => All the participants will be deleted. Each participant in the group will have to subscribe again his willingness to join in the game.</resetOlderConfiguration>
         <operationCanceled>Operation successfully canceled.</operationCanceled>
+        <changedKeyboard>I've also changed your keyboard to make you feel at home. Have fun!</changedKeyboard>
     </general>
     <ui>
         <hi>Hi</hi>
@@ -143,5 +144,8 @@
         <currentSituationIs>The current situation is:</currentSituationIs>
         <offered>offered</offered>
         <andReceivedIt>coffee and received it</andReceivedIt>
+        <manageGroupSettings>Ok, handle the group settings here</manageGroupSettings>
+        <iLikeYouToo>Awwww, i like you too</iLikeYouToo>
+        <iLikeYouToo1>If you use the button below we can even engage</iLikeYouToo1>
     </ui>
 </document>

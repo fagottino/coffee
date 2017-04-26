@@ -145,4 +145,16 @@ class Emoticon {
     public static function globe() {
         return "\xF0\x9F\x8C\x8D";
     }
+    
+    public static function inLove() {
+        return "\xF0\x9F\x98\x8D";
+    }
+    
+    public static function shy() {
+        return "\xF0\x9F\x98\x8A";
+    }
+    
+    public static function heart() {
+        return "\xE2\x9D\xA4";
+    }
 }
