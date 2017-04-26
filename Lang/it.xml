@@ -14,6 +14,7 @@
         <quitNow>Si, esci subito.</quitNow>
         <justJoking>No, ho sbagliato.</justJoking>
         <setLanguage>Setta la lingua:</setLanguage>
+        <setLanguageGroup>Setta la lingua del gruppo</setLanguageGroup>
         <makeDonation>Fai una donazione</makeDonation>
         <yourGroups>I miei gruppi</yourGroups>
         <off>Off</off>
@@ -26,6 +27,8 @@
         <keepOlderConfiguration>Tieni la vecchia configurazione</keepOlderConfiguration>
         <resetOlderConfiguration>Resetta i settaggi del gruppo</resetOlderConfiguration>
         <continueParticipating>Voglio continuare a partecipare</continueParticipating>
+        <selectAll>Seleziona tutti</selectAll>
+        <changeLanguage>Cambia lingua</changeLanguage>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Errore nella creazione del menù custom.</errorWithCreationOfCustomMenu>
@@ -42,7 +45,7 @@
         <errorWhileRegisterParticipate>Errore durante la registrazione della partecipazione.</errorWhileRegisterParticipate>
         <errorWhileUptadingParticipated>Errore durante l'aggiornamento della partecipazione.</errorWhileUptadingParticipated>
         <errorWhileGroupRegistration>Errore nella registrazione del gruppo.</errorWhileGroupRegistration>
-        <errorWhileCoffeeRegistration>Errore nella registrazione del caffè.</errorWhileCoffeeRegistration>
+        <setPaid>Errore nella registrazione del caffè.</setPaid>
         <errorWhileUserUpdate>Errore nell'aggiornamento dati dell'utente.</errorWhileUserUpdate>
         <cantGetLastOperation>Errore durante la lettura dell'operazione corrente.</cantGetLastOperation>
         <cantGetGroupOperation>Errore durante la lettura dell'operazione nel gruppo.</cantGetGroupOperation>
@@ -52,8 +55,22 @@
         <errorWhileDestroyCoffee>Errore durante la cancellazione del caffè pagato</errorWhileDestroyCoffee>
         <errorWhileGettingName>Errore durante il recupero la lista dei benefattori</errorWhileGettingName>
         <errorWhileCountingCoffee>Errore durante il conteggio dei caffè pagati</errorWhileCountingCoffee>
-        <cantAddBenefactor>Non puoi aggiungere papabili benefattori sul caffè che settato da altri.</cantAddBenefactor>
+        <cantAddBenefactor>Non puoi aggiungere papabili benefattori sul caffè che stanno settando altri.</cantAddBenefactor>
         <cantAddCoffeeToYourself>Ci sei solo tu! Non puoi registrare un caffe offerto a te stesso.</cantAddCoffeeToYourself>
+        <cantAddCoffeeThereIsOneUser>Non puoi registrare un caffe perchè mi risulta essere disponibile solamente una persona.</cantAddCoffeeThereIsOneUser>
+        <pendingChooseBenefactor>Hai un'operazione di aggiunta caffè in sospeso. Annullala per continuare a navigare con il bot.</pendingChooseBenefactor>
+        <checkCoffee>Errore durante il controllo del caffè.</checkCoffee>
+        <cantDoOperationOnOtherCoffee>Non puoi effettuare azioni su un caffè settato da altri. Scostumato.</cantDoOperationOnOtherCoffee>
+        <cantGoBack>Non riesco a tornare dietro perchè non capisco dove sei.</cantGoBack>
+        <cantAddCoffeeNow>Non puoi farlo ora, c'è già chi sta aggiungendo un caffè.</cantAddCoffeeNow>
+        <mustWaitToAddCoffee>Aspetta che finisca e solo dopo potrai registrare un nuovo caffè.</mustWaitToAddCoffee>
+        <dontFindAspiringBenefactor>Non ho trovato aspiranti benefattori.. Qualcosa è andato storto.</dontFindAspiringBenefactor>
+        <errorWhileCountingParticipants>Errore nel conteggio dei partecipanti.</errorWhileCountingParticipants>
+        <checkCoffeeSpecificGroup>Errore durante il controllo dell'esistenza di caffè in uno specifico gruppo.</checkCoffeeSpecificGroup>
+        <checkCoffee>Errore durante il controllo di un caffè.</checkCoffee>
+        <addPeopleToCoffee>Errore durante l'aggiunta di un utente ad un caffè.</addPeopleToCoffee>
+        <newPaidCoffee>Errore durante l'aggiunta di un nuovo caffè.</newPaidCoffee>
+        <registerEmptyField>Errore in fase di registrazione. I campi sono nulli.</registerEmptyField>
     </error>
     <general>
         <retry>Riprova.</retry>
@@ -61,14 +78,16 @@
         <code>Codice -></code>
         <languageSet>Hai settato la lingua in Italiano.</languageSet>
         <moreInfo>Usa i pulsanti in basso per capirne di più</moreInfo>
-        <disableBot>Sei sicuro di voler disabilitare il bot?</disableBot>
+        <disableBot>Sei sicuro di voler &lt;b&gt;disabilitare&lt;/b&gt; il bot?</disableBot>
         <it>Italiano</it>
         <en>Inglese</en>
         <youAreHere>Sei qui:</youAreHere>
         <listsOfYourGroup>Ecco la lista dei tuoi gruppi</listsOfYourGroup>
         <legend>Legenda</legend>
         <notParticipatingToGame>&lt;b&gt;NON STAI&lt;/b&gt; partecipando al gioco</notParticipatingToGame>
+        <notParticipatingToGame1>NON stai partecipando al gioco</notParticipatingToGame1>
         <participatingToGame>&lt;b&gt;STAI&lt;/b&gt; partecipando al gioco</participatingToGame>
+        <participatingToGame1>STAI partecipando al gioco</participatingToGame1>
         <changeGroupState>Tappa su un gruppo per cambiare lo stato ed aggiungerti ai giochi / abbandonare i giochi</changeGroupState>
         <serviceCommunication>Comunicazione di servizio:</serviceCommunication>
         <hasJustLeftTheGame>si è appena ritirato dai giochi.</hasJustLeftTheGame>
@@ -105,9 +124,24 @@
         <ok>Ok</ok>
         <hereComesAgain>Rieccoci</hereComesAgain>
         <haveYouBackWithUs>che piacere riaverti tra noi!</haveYouBackWithUs>
+        <youAskIobey>chiedi e ti sarà dato!</youAskIobey>
         <aspiringBenefactorsAreTerminated>Gli aspiranti benefattori sono terminati</aspiringBenefactorsAreTerminated>
         <tap>Tappa</tap>
         <toDiscoverTheBenefactor>per scoprire il &lt;b&gt;benefattore&lt;/b&gt;!</toDiscoverTheBenefactor>
         <welcomeBack>Bentornato</welcomeBack>
+        <rememberYouCanRejoinGames>ricorda che puoi sempre scegliere di partecipare al gioco abilitando il gruppo tramite il tasto in basso</rememberYouCanRejoinGames>
+        <myGroup><b>I miei gruppi</b></myGroup>
+        <sendYouAMessageIfYouChangeIdea>ti ho inviato un messaggio privato con un piccolo promemoria qualora cambiassi idea.</sendYouAMessageIfYouChangeIdea>
+        <seeYouSoon>A presto!</seeYouSoon>
+        <beforeStartConfirmConfiguration>Ok, prima di procedere ho bisogno della conferma dei singoli giocatori.</beforeStartConfirmConfiguration>
+        <pleaseAnswerMeYourIntentions>per favore rispondetemi con le vostre intenzioni</pleaseAnswerMeYourIntentions>
+        <amongBenefactorThereAre>Tra gli aspiranti benefattori ci sono</amongBenefactorThereAre>
+        <contenders>contendenti:</contenders>
+        <and>e</and>
+        <betweenUsIchoose>Tra loro ho scelto ...</betweenUsIchoose>
+        <benefactorIs>Il benefattore di turno è</benefactorIs>
+        <currentSituationIs>La situazione attuale è questa:</currentSituationIs>
+        <offered>ha offerto</offered>
+        <andReceivedIt>caffè e ne ha ricevuti</andReceivedIt>
     </ui>
 </document>

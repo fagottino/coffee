@@ -129,4 +129,20 @@ class Emoticon {
     public static function party2() {
         return "\xF0\x9F\x8E\x8A";
     }
+    
+    public static function sparkles() {
+        return "\xE2\x9C\xA8";
+    }
+    
+    public static function bye() {
+        return "\xF0\x9F\x91\x8B";
+    }
+    
+    public static function justJocking() {
+        return "\xF0\x9F\x98\xB9";
+    }
+    
+    public static function globe() {
+        return "\xF0\x9F\x8C\x8D";
+    }
 }

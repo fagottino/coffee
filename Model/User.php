@@ -34,6 +34,7 @@ class User {
                     $this->chat = new ChatPrivate($_user["message"]["chat"]);
                     break;
                 case "group":
+                case "supergroup":
                     $this->chat = new ChatGroup($_user["message"]["chat"]);
                     
                     if (isset($_user["message"]["new_chat_member"])) {
@@ -90,6 +91,10 @@ class User {
     
     public function getMessage() {
         return $this->message;
+    }
+    
+    public function setMessage($_message) {
+        $this->message = $_message;
     }
     
     public function getMessageIdCallBack($_array) {

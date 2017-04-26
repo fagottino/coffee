@@ -18,52 +18,54 @@ class MessageManager {
     //secondo: testo messaggio
     //terzo: array di array della tastiera da mostrare all'utente
     //quarto: true->disabilita notifica per questo messaggio
-    public function sendReplyMarkup($_idChat, $_text, $_replyMarkup, $_selectiveKeyboard = false, $_replyToMessage = false, $_disableNotificationMessage = false, $_oneTimeKeyboard = false)
-    {
+    public function sendReplyMarkup($_idChat, $_text, $_replyMarkup = null, $_replyToMessage = false, $_selectiveKeyboard = false, $_disableNotificationMessage = false, $_oneTimeKeyboard = false) {
         $args = array(
             'chat_id' => $_idChat,
             'text' => $_text,
-            'parse_mode' => "HTML",
-            'disable_notification' => $_disableNotificationMessage,
-            'reply_to_message_id' => $_replyToMessage,
+            'parse_mode' => "HTML"
         );
         
         if (is_array($_replyMarkup)) {
-            $keyboard = array('keyboard' => $_replyMarkup,
-                'resize_keyboard' => true
+            $keyboard = array(
+                'keyboard' => $_replyMarkup
             );
-            if ($_oneTimeKeyboard)
-                $keyboard['one_time_keyboard'] = true;
-        } else if ($_replyMarkup == false) {
-            $keyboard = array('remove_keyboard' => true);
-        } else {
             
+            $keyboard['resize_keyboard'] = true;
+            
+            if ($_oneTimeKeyboard) {
+                $keyboard['one_time_keyboard'] = true;
+            }
+            
+            if ($_selectiveKeyboard) {
+                $keyboard['selective'] = true;
+            }
+        
+            $_replyMarkup = json_encode($keyboard);
+            $args['reply_markup'] = $_replyMarkup;
+        } else if ($_replyMarkup == "remove") {
+            $keyboard = array('remove_keyboard' => true);
+            
+            if ($_selectiveKeyboard) {
+                $keyboard['selective'] = true;
+            }
+        
+            $_replyMarkup = json_encode($keyboard);
+            $args['reply_markup'] = $_replyMarkup;
+        }
+        
+        if ($_replyToMessage) {
+            $args['reply_to_message_id'] = $_replyToMessage;
         }
 
-        if (!is_array($keyboard) && $_selectiveKeyboard)
-            $keyboard = array('selective' => true);
-        else if ($_selectiveKeyboard)
-            $keyboard['selective'] = true;
+        if ($_disableNotificationMessage) {
+            $args['disable_notification'] = $_disableNotificationMessage;
+        }
         
-        $_replyMarkup = json_encode($keyboard);
-        $args['reply_markup'] = $_replyMarkup;
-        
-//        if (!$_replyMarkup) {
-//            $rmGen = array('hide_keyboard' => true);
-//            $_replyMarkup = json_encode($rmGen);
-//        } else {
-//            $rmGen = array('keyboard' => $_replyMarkup,
-//            'resize_keyboard' => true
-//            );
-//        
-//            if ($_selectiveKeyboard) {
-//                $rmGen['selective'] = true;
-//            }
-//            $_replyMarkup = json_encode($rmGen);
-//            $args['reply_markup'] = $_replyMarkup;
-//        }
-                
-        $this->sendMessage("sendMessage", $args);
+        try {
+            $this->sendMessage("sendMessage", $args);
+        } catch (MessageException $ex) {
+            throw new MessageException($ex->getMessage());
+        }
     }
     
     public function sendChatAction($_idChat, $_action)
@@ -76,7 +78,7 @@ class MessageManager {
         $this->sendMessage("sendChatAction", $args);
     }
     
-    public function sendInline($_idChat, $text, $_keyboard, $_replyTo)
+    public function sendInline($_idChat, $text, $_keyboard, $_replyTo, $_resize = false)
     {
         global $lang;
         if ($text) {
@@ -84,15 +86,21 @@ class MessageManager {
                 $_keyboardGen = array('inline_keyboard' => $_keyboard);
                 $_keyboard = json_encode($_keyboardGen);
 
-            $args = array(
-                'chat_id' => $_idChat,
-                'text' => $text,
-                'reply_markup' => $_keyboard,
-                "parse_mode" => "HTML",
-                "reply_to_message_id" => $_replyTo
-            );
+                $args = array(
+                    'chat_id' => $_idChat,
+                    'text' => $text,
+                    'reply_markup' => $_keyboard,
+                    'resize_keyboard' => $_resize,
+                    "parse_mode" => "HTML",
+                    "reply_to_message_id" => $_replyTo
+                );
 
-            $this->sendMessage("sendMessage", $args);
+                try {
+                    $this->sendMessage("sendMessage", $args);
+                }
+                catch (MessageException $ex) {
+                    throw new MessageException($ex->getMessage());
+                }
             } else {
                 throw new MessageException($lang->error->inlineKeyboardIsRequired);
             }
@@ -138,7 +146,7 @@ class MessageManager {
         $this->sendMessage("editMessageReplyMarkup", $args);
     }
     
-    public function editMessageText($_idChat, $_messageId, $_text, $_keyboard = NULL) {
+    public function editMessageText($_idChat, $_messageId, $_text) {
         global $lang;
         
         $args = array(
@@ -147,14 +155,13 @@ class MessageManager {
             'text' => $_text,
             "parse_mode" => "HTML"
         );
-        
-        if ($_keyboard != NULL) {
-            $_keyboardGen = array('inline_keyboard' => $_keyboard);
-            $_keyboards = json_encode($_keyboardGen);
-            $args['reply_markup'] = $_keyboards;
-        }
 
-        $this->sendMessage("editMessageText", $args);
+        try {
+            $this->sendMessage("editMessageText", $args);
+        }
+        catch (MessageException $ex) {
+            throw new MessageException($ex->getMessage());
+        }
     }
     
     public function replyMessage($_idChat, $_idMessage) {
@@ -181,30 +188,48 @@ class MessageManager {
         $ok = $data["ok"]; //false
         if ($ok == 0) {
             $error = $data["error_code"];
-            switch ($error) {
-                case 403:
-                //imposta che tale utente ha disattivato il bot.                        
-                break;
-                case 400:
-                default:
-                    $errorFile = "./file/errors.txt";
-                    if (!file_exists($errorFile)) {
-                        $eF = fopen($errorFile, "wr");
-                        fclose($eF);
-                    }
-                    $errorCurrent = file_get_contents($errorFile);
-                    $errorCurrent .= date("d/m/Y H:i:s / ");
-                    $errorCurrent .= $data["description"];
-                    $errorCurrent .= "\n";
-                    file_put_contents($errorFile, $errorCurrent);
-                break;
+            if ($error == 403 ) {
+                //imposta che tale utente ha disattivato il bot. 
+            } else if ($error == 400) {
+                $errorFile = "./file/errors.txt";
+                if (!file_exists($errorFile)) {
+                    $eF = fopen($errorFile, "wr");
+                    fclose($eF);
+                }
+                $errorCurrent = file_get_contents($errorFile);
+                $errorCurrent .= date("d/m/Y H:i:s / ");
+                $errorCurrent .= $data["description"];
+                $errorCurrent .= "\n";
+                file_put_contents($errorFile, $errorCurrent);
+                throw new MessageException("Errore nell'invio del messaggio");
+            } else {
+                
             }
+//            switch ($error) {
+//                case 403:
+//                //imposta che tale utente ha disattivato il bot.                        
+//                break;
+//                case 400:
+//                default:
+//                    $errorFile = "./file/errors.txt";
+//                    if (!file_exists($errorFile)) {
+//                        $eF = fopen($errorFile, "wr");
+//                        fclose($eF);
+//                    }
+//                    $errorCurrent = file_get_contents($errorFile);
+//                    $errorCurrent .= date("d/m/Y H:i:s / ");
+//                    $errorCurrent .= $data["description"];
+//                    $errorCurrent .= "\n";
+//                    file_put_contents($errorFile, $errorCurrent);
+//                    throw new MessageException("");
+//                    break;
+//            }
         } else {
             $this->answerFromHttpRequest = $data["result"];
         }
     }
         
-    function sendSimpleMessage($id, $message, $disableNotification = false, $_replyToMsg = 0, $_selective = false) {
+    function sendSimpleMessage($id, $message, $_replyToMsg = 0, $disableNotification = false, $_selective = false) {
         $url = "/sendmessage?chat_id=".$id."&text=".urlencode($message).($disableNotification ? "&disable_notification=true" : "").($_replyToMsg != 0 ? "&reply_to_message_id=".$_replyToMsg : "").($_selective != 0 ? "&selective=true&parse_mode=HTML" : "");
        file_get_contents(API_URL.$url);
     }

@@ -18,17 +18,23 @@ define('DB_PREFIX', 'coffee_');
 
 // Menu list
 define("START", '/start');
-define('HOME', 'home');
-define('HELP', '/help');
 define('INFO', '/info');
 define("KEYBOARD", "/keyboard");
-define('SETTINGS', 'settings');
 define('EXIT', '/exit');
+define('HOME', 'home');
+define('HELP', 'help');
+define('SETTINGS', 'settings');
 define('CANCEL_COFFEE', 'cancel');
+define('SELECT_ALL', 'selectAll');
+define('CHANGE_LANGUAGE', 'changeLanguage');
+define('STATS', 'stats');
+define('RESET_GROUP', 'resetGroup');
 define('NULL_VALUE', 'nullValue');
 define('CHOOSE_BENEFACTOR', 'chooseBenefactor');
 define('CHOOSE_BENEFACTOR2', 'chooseBenefactor2');
 define('BENEFACTOR_LIST', 'benefactorList');
+define('SETTING_OPERATION_GROUP', 'setOperationGroup');
+define('CHANGE_LANGUAGE_GROUP', 'changeLanguageGroup');
 
 //class Config {
 //    

@@ -7,6 +7,7 @@
 class Chat {
 
     protected $type;
+    protected $lang;
 
     public function __construct() {
         
@@ -58,6 +59,14 @@ class Chat {
     
     public function getOperation() {
         return $this->operation;
+    }
+    
+    public function getLang() {
+        return $this->lang;
+    }
+    
+    public function setLang($_lang) {
+        $this->lang = $_lang;
     }
 }
 

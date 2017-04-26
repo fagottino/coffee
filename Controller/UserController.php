@@ -14,18 +14,6 @@ class UserController {
         
     }
     
-//    public function getMessageData($_data) {
-//        $idTelegram = $_data["message"]["from"]["id"];
-//        $name = $_data["message"]["from"]["first_name"];
-//        $username = $_data["message"]["from"]["username"];
-//        $idChat = $_data["message"]["chat"]["id"];
-//        $message = $_data["message"]["text"];
-//
-//        $user = new User();
-//        $user->createUser($idTelegram, $name, $message, $idChat, START_OPERATION, (isset($username) ? $username : NULL));
-//        return $user;
-//    }
-    
     public function getInfo($_idTelegram) {
         global $lang;
         try {
@@ -33,16 +21,19 @@ class UserController {
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
-        //$result = $db->query("SELECT ".DB_PREFIX."user.name, ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."operation.name_operation, ".DB_PREFIX."lang.name_lang FROM ".DB_PREFIX."user JOIN ".DB_PREFIX."operation ON ".DB_PREFIX."user.operation = ".DB_PREFIX."operation.id_operation JOIN ".DB_PREFIX."lang ON ".DB_PREFIX."user.lang = ".DB_PREFIX."lang.id_lang WHERE ".DB_PREFIX."user.id_telegram = '".$_idTelegram."'");
+        
         $sql = "SELECT ".DB_PREFIX."user.name, ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.operation, ".DB_PREFIX."lang.name_lang FROM ".DB_PREFIX."user JOIN ".DB_PREFIX."lang ON ".DB_PREFIX."user.lang = ".DB_PREFIX."lang.id_lang WHERE ".DB_PREFIX."user.id_telegram = '".$_idTelegram."'";
         $result = $db->query($sql);
-        if ($result->num_rows > 0) {
+        
+        if (!$result) {
+            throw new DatabaseException("Non sono riuscito a rintracciarti nel database.");
+        } else if ($result->num_rows == 0) {
+            $row = array();
+        } else {
             $row = $result->fetch_assoc();
             $result->free();
-            return $row;
-        } else {
-            throw new UserControllerException($lang->error->noResultsFound);
         }
+        return $row;
     }
     
     public function getAllUserName() {
@@ -66,19 +57,24 @@ class UserController {
     public function register(User $_user) {
         global $lang;
         try {
-            $db = Database::getConnection();
-            
-            $result = $db->query("INSERT INTO ".DB_PREFIX."user (name, id_telegram, operation) VALUES('".$_user->getName()."', '".$_user->getIdTelegram()."', '6')");
-            if ($result) {
-//                $lastId = $db->insert_id;
-//                // Valore opzionale, non presente a tutti i messaggi
-//                if ($_user->getUsername())
-//                    $addUsername = $db->query ("UPDATE `user` SET username = '".$_user->getUsername()."' WHERE id_user = ".$lastId." AND id_telegram = '".$_user->getIdTelegram()."'");
-//                // Valore opzionale, non presente a tutti i messaggi
-//                if ($_user->getIdChat())
-//                    $addChatId = $db->query ("UPDATE `user` SET chat_id = '".$_user->getIdChat()."' WHERE id_user = ".$lastId." AND id_telegram = '".$_user->getIdTelegram()."'");
+            if ($_user->getName() != null && $_user->getIdTelegram() != null) {
+                $db = Database::getConnection();
+                $sql = "INSERT INTO ".DB_PREFIX."user (name, id_telegram) VALUES('".$_user->getName()."', '".$_user->getIdTelegram()."')";
+                $result = $db->query($sql);
+                if (!$result) {
+                    throw new UserControllerException($lang->error->errorWhileUserRegistration);
+    //                $lastId = $db->insert_id;
+    //                // Valore opzionale, non presente a tutti i messaggi
+    //                if ($_user->getUsername())
+    //                    $addUsername = $db->query ("UPDATE `user` SET username = '".$_user->getUsername()."' WHERE id_user = ".$lastId." AND id_telegram = '".$_user->getIdTelegram()."'");
+    //                // Valore opzionale, non presente a tutti i messaggi
+    //                if ($_user->getIdChat())
+    //                    $addChatId = $db->query ("UPDATE `user` SET chat_id = '".$_user->getIdChat()."' WHERE id_user = ".$lastId." AND id_telegram = '".$_user->getIdTelegram()."'");
+                } else {
+                    return true;
+                }
             } else {
-                throw new UserControllerException($lang->error->errorWhileUserRegistration);
+                    throw new UserControllerException($lang->error->registerEmptyField);
             }
             
         } catch (DatabaseException $ex) {
@@ -91,10 +87,12 @@ class UserController {
         try {
             $db = Database::getConnection();
             
-            //$sql = "UPDATE `".DB_PREFIX."user` SET `operation` = (SELECT id_operation FROM `".DB_PREFIX."operation` WHERE name_operation = '".$_user->getCurrentOperation()."') WHERE id_telegram = '".$_user->getIdTelegram()."'";
             $sql = "UPDATE `".DB_PREFIX."user` SET `operation` = '".$_user->getCurrentOperation()."' WHERE id_telegram = '".$_user->getIdTelegram()."'";
-            $db->query($sql);
+            $result = $db->query($sql);
             $db->close();
+            if (!$result) {
+                throw new UserControllerException("Errore durante l'aggiornamento dell'operazione corrente");
+            }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }        
@@ -125,13 +123,16 @@ class UserController {
             
             $sql = "SELECT operation FROM ".DB_PREFIX."user_group WHERE id_user = ".$_user->getIdTelegram()." AND id_group =  ".$_user->getChat()->getId()."";
             $result = $db->query ($sql);
-            if ($result && $result->num_rows > 0) {
+            if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $result->free();
-                return $row["operation"];
+                $res = $row["operation"];
+            } else if ($result->num_rows == 0) {
+                $res = array();
             } else {
                 throw new UserControllerException($lang->error->cantGetGroupOperation);
             }
+            return $res;
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
@@ -144,8 +145,11 @@ class UserController {
             
             //$sql = "UPDATE `".DB_PREFIX."user` SET `operation` = (SELECT id_operation FROM `".DB_PREFIX."operation` WHERE name_operation = '".$_user->getCurrentOperation()."') WHERE id_telegram = '".$_user->getIdTelegram()."'";
             $sql = "UPDATE `".DB_PREFIX."user_group` SET `operation` = '".$_user->getGroupOperation()."' WHERE id_user = '".$_user->getIdTelegram()."' AND id_group =  ".$_user->getChat()->getId()."";
-            $db->query($sql);
+            $result = $db->query($sql);
             $db->close();
+            if (!$result) {
+            throw new UserControllerException("Errore durante l'aggiornamento dell'operazione nel gruppo dell'utente.");
+            }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }        
@@ -156,8 +160,11 @@ class UserController {
         try {
             $db = Database::getConnection();
             $sql = "UPDATE `".DB_PREFIX."user` SET `lang` = (SELECT id_lang FROM `".DB_PREFIX."lang` WHERE name_lang = '".$_user->getLang()."') WHERE id_telegram = '".$_user->getIdTelegram()."'";
-            $db->query($sql);
+            $result = $db->query($sql);
             $db->close();
+            if (!$result) {
+                throw new UserControllerException("Errore durante l'aggiornamento della lingua");
+            }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }        

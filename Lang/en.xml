@@ -14,6 +14,7 @@
         <quitNow>Yes, quit now.</quitNow>
         <justJoking>No, i'm joking</justJoking>
         <setLanguage>Set language:</setLanguage>
+        <setLanguageGroup>Set language of group</setLanguageGroup>
         <makeDonation>Make a donation</makeDonation>
         <yourGroups>My groups</yourGroups>
         <off>Off</off>
@@ -26,6 +27,8 @@
         <keepOlderConfiguration>Keep the older configuration</keepOlderConfiguration>
         <resetOlderConfiguration>Reset the older configuration</resetOlderConfiguration>
         <continueParticipating>I want to continue to participate</continueParticipating>
+        <selectAll>Select all</selectAll>
+        <changeLanguage>Change language</changeLanguage>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Error while the creation of the custom menu'.</errorWithCreationOfCustomMenu>
@@ -42,7 +45,7 @@
         <errorWhileRegisterParticipate>Error while registration of participate.</errorWhileRegisterParticipate>
         <errorWhileUptadingParticipated>Error while updating of participated.</errorWhileUptadingParticipated>
         <errorWhileGroupRegistration>Error while group registration.</errorWhileGroupRegistration>
-        <errorWhileCoffeeRegistration>Error while coffee registration.</errorWhileCoffeeRegistration>
+        <setPaid>Error while coffee registration.</setPaid>
         <errorWhileUserUpdate>Error while user data update.</errorWhileUserUpdate>
         <cantGetLastOperation>Error while current operation reading.</cantGetLastOperation>
         <cantGetGroupOperation>Error while group operation reading.</cantGetGroupOperation>
@@ -54,6 +57,20 @@
         <errorWhileCountingCoffee>Error while counting paid coffee</errorWhileCountingCoffee>
         <cantAddBenefactor>You can't add benefactor on coffee that are setting from others.</cantAddBenefactor>
         <cantAddCoffeeToYourself>You're alone! You can't register a coffee to yourself</cantAddCoffeeToYourself>
+        <cantAddCoffeeThereIsOneUser>You can't register a new coffee because i found only one person.</cantAddCoffeeThereIsOneUser>
+        <pendingChooseBenefactor>You have a pending add coffee operation. Cancel it to continue to chat with the bot.</pendingChooseBenefactor>
+        <checkCoffee>Error while checking coffee.</checkCoffee>
+        <cantDoOperationOnOtherCoffee>You can't do an operation on coffee which is set by other. You lout.</cantDoOperationOnOtherCoffee>
+        <cantGoBack>Can't go back because I don't understand where you at.</cantGoBack>
+        <cantAddCoffeeNow>You can't do it now. There's already someone who is adding a coffee.</cantAddCoffeeNow>
+        <mustWaitToAddCoffee>You have to wait for him to finish and only after you can register a new coffee.</mustWaitToAddCoffee>
+        <dontFindAspiringBenefactor>I don't find any aspiring benefactors..Something went wrong.</dontFindAspiringBenefactor>
+        <errorWhileCountingParticipants>Error while counting participants.</errorWhileCountingParticipants>
+        <checkCoffeeSpecificGroup>Error while checking existence coffee in a specific group</checkCoffeeSpecificGroup>
+        <checkCoffee>Error while checking coffee.</checkCoffee>
+        <addPeopleToCoffee>Error while adding an user to coffee.</addPeopleToCoffee>
+        <newPaidCoffee>Error while adding a new coffee.</newPaidCoffee>
+        <registerEmptyField>Error while registration user. The fields are null.</registerEmptyField>
     </error>
     <general>
         <retry>Retry.</retry>
@@ -61,14 +78,16 @@
         <code>Code -></code>
         <languageSet>Language default changed.</languageSet>
         <moreInfo>Use the buttons below to learn more</moreInfo>
-        <disableBot>Are you sure that you want to disable the bot?</disableBot>
+        <disableBot>Are you sure that you want to &lt;b&gt;disable&lt;/b&gt; the bot?</disableBot>
         <it>Italian</it>
         <en>English</en>
         <youAreHere>You are here:</youAreHere>
         <listsOfYourGroup>This is the list of your groups</listsOfYourGroup>
         <legend>Legend</legend>
         <notParticipatingToGame>You <b>aren't participating</b> in the game</notParticipatingToGame>
+        <notParticipatingToGame1>You aren't participating in the game</notParticipatingToGame1>
         <participatingToGame>You <b>are participating</b> in the game</participatingToGame>
+        <participatingToGame1>You are participating in the game</participatingToGame1>
         <changeGroupState>Tap on group to change his state and join the game / leave the game.</changeGroupState>
         <serviceCommunication>Service communication:</serviceCommunication>
         <hasJustLeftTheGame>has just left the game.</hasJustLeftTheGame>
@@ -93,7 +112,7 @@
         <infoBot>PS: You can find all useful information about the bot by</infoBot>
         <botAlreadyStarted>You have already started the bot</botAlreadyStarted>
         <sendSomeButtons>I send you some buttons if you want me to help you with something.</sendSomeButtons>
-        <giveMeTips>Suggestions are welcome, if you had someone send me by.</giveMeTips>
+        <giveMeTips>Suggestions are welcome, if you had someone send me by</giveMeTips>
         <clickingHere>Clicking here</clickingHere>
         <letsGo>Ok, let's go!</letsGo>
         <resetGroupIsOk>The reset of the group was successful.</resetGroupIsOk>
@@ -105,9 +124,24 @@
         <ok>Ok</ok>
         <hereComesAgain>Here comes again</hereComesAgain>
         <haveYouBackWithUs>what a plaseure to have you back again with us!</haveYouBackWithUs>
+        <youAskIobey>you ask, i obey!</youAskIobey>
         <aspiringBenefactorsAreTerminated>The aspiring benefactors are terminated</aspiringBenefactorsAreTerminated>
         <tap>Tap</tap>
         <toDiscoverTheBenefactor>to discover the <b>benefactor</b>!</toDiscoverTheBenefactor>
         <welcomeBack>Welcome back</welcomeBack>
+        <rememberYouCanRejoinGames>Remember you can always choose to rejoin the game by enabling the group via the button below</rememberYouCanRejoinGames>
+        <myGroup><b>I miei gruppi</b></myGroup>
+        <sendYouAMessageIfYouChangeIdea>i sent you one private message with a small reminder if you change idea.</sendYouAMessageIfYouChangeIdea>
+        <seeYouSoon>See you soon!</seeYouSoon>
+        <beforeStartConfirmConfiguration>Ok, before starting i need of the confirmation of each sigle player.</beforeStartConfirmConfiguration>
+        <pleaseAnswerMeYourIntentions>please answer me with your intentions</pleaseAnswerMeYourIntentions>
+        <amongBenefactorThereAre>Among the aspiring benefactors there are</amongBenefactorThereAre>
+        <contenders>contenders:</contenders>
+        <and>and</and>
+        <betweenUsIchoose>Between they I've chosen ...</betweenUsIchoose>
+        <benefactorIs>The benefactor of this coffee is</benefactorIs>
+        <currentSituationIs>The current situation is:</currentSituationIs>
+        <offered>offered</offered>
+        <andReceivedIt>coffee and received it</andReceivedIt>
     </ui>
 </document>
