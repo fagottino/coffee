@@ -42,19 +42,19 @@ class MenuController {
         $i = 0;
         $j = -1;
         if (is_array($_itemArray)) {
-        foreach ($_itemArray as $key => $value) {
-            if (isset($value["alone"]) && $value["alone"]) {
-                unset($value["alone"]);
-                $menu[++$j][0] = $value;
-            } else {
-                if ($i % $_itemToRow == 0) {
+            foreach ($_itemArray as $key => $value) {
+                if (isset($value["alone"]) && $value["alone"]) {
+                    unset($value["alone"]);
                     $menu[++$j][0] = $value;
                 } else {
-                    array_push($menu[$j], $value);
+                    if ($i % $_itemToRow == 0) {
+                        $menu[++$j][0] = $value;
+                    } else {
+                        array_push($menu[$j], $value);
+                    }
+                    $i++;
                 }
-                $i++;
             }
-        }
         }
 //        foreach ($_itemArray as $key => $value) {
 //            if (isset($value["alone"]) && $value["alone"]) {
@@ -108,7 +108,7 @@ class MenuController {
         return $menu;
     }
     
-    public function lang($_actuallyLanguage) {
+    public function lang($_actuallyLanguage, $_backbutton = true) {
         global $lang;
         $item = array(
                     array(
@@ -120,7 +120,7 @@ class MenuController {
                         "callback_data" => "en"
                         )
                 );
-        $menu = $this->createCustomInlineMenu($item, 3, true);
+        $menu = $this->createCustomInlineMenu($item, 3, $_backbutton);
         return $menu;
     }
     
@@ -234,7 +234,7 @@ class MenuController {
         } else {
             $state = array(
                 "text" => Emoticon::checkPositive().$lang->general->participatingToGame1,
-                "callback_data" => "partecipateGroup~".$_group[0]["id_group"].$_group[0]["title"],
+                "callback_data" => "partecipateGroup~".$_group[0]["id_group"]."~".$_group[0]["title"],
                 "alone" => true
             );
         }
@@ -244,15 +244,15 @@ class MenuController {
                         $state,
                         array(
                             "text" => Emoticon::globe().$lang->menu->changeLanguage,
-                            "callback_data" => "changeLanguageGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]."~".(string)$lang->menu->changeLanguage
+                            "callback_data" => "changeLanguageGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]
                             ),
                         array(
                             "text" => Emoticon::stats().$lang->menu->stats,
-                            "callback_data" => "statsGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]."~".(string)$lang->menu->stats
+                            "callback_data" => "statsGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]
                             ),
                         array(
                             "text" => Emoticon::neww().$lang->menu->resetOlderConfiguration,
-                            "callback_data" => "resetGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]."~".(string)$lang->menu->resetOlderConfiguration
+                            "callback_data" => RESET_GROUP."~".$_group[0]["id_group"]."~".$_group[0]["title"]
                             )
                     );
         } else {
@@ -260,16 +260,32 @@ class MenuController {
                         $state,
                         array(
                             "text" => Emoticon::plus().$lang->menu->changeLanguage,
-                            "callback_data" => "changeLanguageGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]."~".(string)$lang->menu->changeLanguage
+                            "callback_data" => "changeLanguageGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]
                             ),
                         array(
                             "text" => Emoticon::stats().$lang->menu->stats,
-                            "callback_data" => "statsGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]."~".(string)$lang->menu->stats
+                            "callback_data" => "statsGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]
                             )
                     );
         }
 
         $menu = $this->createCustomInlineMenu($item, 2, true);
+        return $menu;
+    }
+    
+    public function yesOrNo($_group) {
+        global $lang;
+        $item = array(
+            array(
+                "text" => Emoticon::check().$lang->menu->yes,
+                "callback_data" => RESET_GROUP_YES."~".$_group[1]."~".$_group[2]
+            ),
+            array(
+                "text" => Emoticon::cancel().$lang->menu->no,
+                "callback_data" => RESET_GROUP_NO."~".$_group[1]."~".$_group[2]
+            )
+        );
+        $menu = $this->createCustomInlineMenu($item, 3, true);
         return $menu;
     }
 }

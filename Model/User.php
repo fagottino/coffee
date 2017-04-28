@@ -57,15 +57,13 @@ class User {
                     $this->chat = new ChatPrivate($_user["callback_query"]["message"]["chat"]);
                     break;
                 case "group":
+                case "supergroup":
                     $this->chat = new ChatGroup($_user["callback_query"]["message"]["chat"]);
                     break;
                 default:
                 break;
             }
         }
-        
-//        if ($this->idTelegram == null || $this->name == null || $this->username == null || $this->message == null)
-//            return false;
     }
     
     public function setUserDataFromDb($_user) {

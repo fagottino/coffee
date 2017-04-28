@@ -8,12 +8,12 @@
         <doYouLikeTheBot>Ti piace il bot?</doYouLikeTheBot>
         <home>Menù principale</home>
         <back>Indietro</back>
-        <offer>Ti piace il bot? Offrimi un caffè</offer>
+        <offer>Se hai voglia puoi offrimi un caffè qui</offer>
         <chooseBenefactor>Scegli il benefattore</chooseBenefactor>
         <listCompetitors>Lista dei concorrenti</listCompetitors>
         <stats>Statistiche</stats>
-        <quitNow>Si, esci subito.</quitNow>
-        <justJoking>No, ho sbagliato.</justJoking>
+        <yes>Si</yes>
+        <no>No</no>
         <setLanguage>Setta la lingua:</setLanguage>
         <setLanguageGroup>Setta la lingua del gruppo</setLanguageGroup>
         <makeDonation>Fai una donazione</makeDonation>
@@ -54,6 +54,7 @@
         <notImplementedYet>Non ancora implementata.</notImplementedYet>
         <errorWhileSelectionPaidCoffee>Errore durante la selezione del caffè pagato</errorWhileSelectionPaidCoffee>
         <errorWhileDestroyCoffee>Errore durante la cancellazione del caffè pagato</errorWhileDestroyCoffee>
+        <errorWhileDestroyAllCoffee>Errore durante la cancellazione dei caffè pagati</errorWhileDestroyAllCoffee>
         <errorWhileGettingName>Errore durante il recupero la lista dei benefattori</errorWhileGettingName>
         <errorWhileCountingCoffee>Errore durante il conteggio dei caffè pagati</errorWhileCountingCoffee>
         <cantAddBenefactor>Non puoi aggiungere papabili benefattori sul caffè che stanno settando altri.</cantAddBenefactor>
@@ -72,6 +73,9 @@
         <addPeopleToCoffee>Errore durante l'aggiunta di un utente ad un caffè.</addPeopleToCoffee>
         <newPaidCoffee>Errore durante l'aggiunta di un nuovo caffè.</newPaidCoffee>
         <registerEmptyField>Errore in fase di registrazione. I campi sono nulli.</registerEmptyField>
+        <getPath>Errore durante il recupero del path.</getPath>
+        <notEnoughUser>Non ci sono abbastanza persone che stanno partecipando al gioco</notEnoughUser>
+        <cantHaveKeyboard>Mi risulta che non stai partecipando ai giochi, è così?</cantHaveKeyboard>
     </error>
     <general>
         <retry>Riprova.</retry>
@@ -88,7 +92,7 @@
         <notParticipatingToGame1>NON stai partecipando al gioco</notParticipatingToGame1>
         <participatingToGame>&lt;b&gt;STAI&lt;/b&gt; partecipando al gioco</participatingToGame>
         <participatingToGame1>STAI partecipando al gioco</participatingToGame1>
-        <changeGroupState>Tappa su un gruppo per entrare nelle impostazioni.</changeGroupState>
+        <changeGroupState>Tappa su un gruppo per entrare nelle impostazioni</changeGroupState>
         <serviceCommunication>Comunicazione di servizio:</serviceCommunication>
         <hasJustLeftTheGame>si è appena ritirato dai giochi.</hasJustLeftTheGame>
         <hasJustJoinTheGame>si è appena unito ai giochi!</hasJustJoinTheGame>
@@ -97,9 +101,9 @@
         <youChoseToLeaveGame>Hai scelto di abbandonare i giochi nel gruppo</youChoseToLeaveGame>
         <youChoseToPlayIn>Hai scelto di partecipare ai giochi nel gruppo</youChoseToPlayIn>
         <thereAreActiveUsers>Mi risulta ci siano già utenti attivi.</thereAreActiveUsers>
-        <whatDoYouWantToDoWithOlderConfiguration>Cosa intendi fare con la vecchia configurazione?</whatDoYouWantToDoWithOlderConfiguration>
-        <keepOlderConfiguration> => I vecchi utenti iscritti dovranno confermare la loro volontà di partecipare ai giochi</keepOlderConfiguration>
-        <resetOlderConfiguration> => Saranno azzerati i partecipanti ai giochi. Ogni partecipante al gruppo dovrà sottoscrivere nuovamente la propria partecipazione ai giochi</resetOlderConfiguration>
+        <whatDoYouWantToDoWithOlderConfiguration>Cosa vuoi farne della vecchia configurazione?</whatDoYouWantToDoWithOlderConfiguration>
+        <keepOlderConfiguration> => I vecchi utenti iscritti al gioco dovranno confermare la loro volontà di partecipare ai giochi, prima di poter essere conteggiati nuovamente</keepOlderConfiguration>
+        <resetOlderConfiguration> => Saranno azzerati i partecipanti ai giochi ed eventuali vecchi caffè. Invierò dei pulsanti a tutti i membri del gruppo per poter scegliere di partecipare o meno ai giochi</resetOlderConfiguration>
         <operationCanceled>Operazione annullata correttamente.</operationCanceled>
         <changedKeyboard>Ho cambiato anche la tastiera per farti sentire come a casa tua. Buon divertimento!</changedKeyboard>
     </general>
@@ -120,7 +124,7 @@
         <sayHi>Chi vuole partecipare deve salutatarmi con il tasto in basso.</sayHi>
         <hiFriend>Ciao amico</hiFriend>
         <hiEverybody>Ciao a tutti!</hiEverybody>
-        <hasPower>Ha il potere.</hasPower>
+        <hasPower>ha il potere.</hasPower>
         <askHimToStart>Per iniziare chiedete a lui.</askHimToStart>
         <ok>Ok</ok>
         <hereComesAgain>Rieccoci</hereComesAgain>
@@ -146,6 +150,10 @@
         <andReceivedIt>caffè e ne ha ricevuti</andReceivedIt>
         <manageGroupSettings>Perfetto, gestisci qui le impostazioni del gruppo</manageGroupSettings>
         <iLikeYouToo>Awwww, anche tu mi piaci</iLikeYouToo>
-        <iLikeYouToo1>Se usi il tasto in basso potremmo anche fidanzarci </iLikeYouToo1>
+        <iLikeYouToo1>Se usi il &lt;b&gt;tasto in basso&lt;/b&gt; potremmo anche fidanzarci </iLikeYouToo1>
+        <resetAll>Stai per resettare tutte le partecipazioni degli utenti nel gruppo</resetAll>
+        <resetAll1>Continuare?</resetAll1>
+        <resetDone>Ok! Hai resettato i settaggi del gruppo</resetDone>
+        <restartTogether>Se ti va possiamo riniziare insieme! Usa i tasti in basso</restartTogether>
     </ui>
 </document>

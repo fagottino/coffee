@@ -20,7 +20,6 @@ class CoffeeController {
             
             $sql = "INSERT INTO ".DB_PREFIX."paid_coffee (id_group, set_by, date, time) VALUES('".$_idChat."', '".$_idUser."', '".date("Y-m-d")."', '".date("H:i:s")."')";
             $result = $db->query($sql);
-            //$sql = "INSERT INTO ".DB_PREFIX."paid_coffee (id_group, set_by, date, time) VALUES('".$_idUser."', '".date("Y-m-d")."', '".date("H:i:s")."'";
             if (!$result) {
                 throw new CoffeeControllerException($lang->error->newPaidCoffee);
             }
@@ -68,16 +67,34 @@ class CoffeeController {
         }
     }
     
+    public function destroyAllCoffee(Chat $_chat) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            $sql = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE id_group =  '".$_chat->getId()."'";
+            $result = $db->query($sql);
+            if (!$result || mysqli_num_rows($result) == 0) {
+                throw new CoffeeControllerException($lang->error->errorWhileSelectionPaidCoffee);
+            }
+            while ($idToDelete = $result->fetch_assoc()) {
+                $delete = "DELETE ".DB_PREFIX."paid_coffee, ".DB_PREFIX."paid_coffee_people FROM ".DB_PREFIX."paid_coffee
+                        INNER JOIN ".DB_PREFIX."paid_coffee_people
+                        WHERE ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
+                        AND ".DB_PREFIX."paid_coffee.id_paid_coffee = '".$idToDelete["id_paid_coffee"]."'";
+                $results = $db->query($delete);
+                if (!$results) {
+                    throw new CoffeeControllerException($lang->error->errorWhileDestroyAllCoffee);
+                }
+            }
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
     public function countOfferCoffee(User $_user, $_data) {
         global $lang;
         try {
             $db = Database::getConnection();
-//            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
-//                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
-//                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
-//                    AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
-//                    GROUP BY ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name
-//                    ORDER BY caffe_offerti DESC";
             $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
                     JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
                     WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
@@ -168,7 +185,6 @@ class CoffeeController {
         global $lang;
         try {
             $db = Database::getConnection();
-            //$sql = "SELECT COUNT(id_paid_coffee) FROM ".DB_PREFIX."paid_coffee WHERE id_group =  '".$_chat->getId()."' AND powered_by IS NULL";
             $sql = "SELECT * FROM ".DB_PREFIX."paid_coffee WHERE id_group =  '".$_chat->getId()."' AND powered_by IS NULL";
             $query = $db->query($sql);
             if (mysqli_num_rows($query) > 0) {
@@ -196,7 +212,6 @@ class CoffeeController {
                     JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee_people.id_user = ".DB_PREFIX."user.id_telegram
                     WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
                     AND ".DB_PREFIX."paid_coffee.powered_by IS NULL";
-            
             $result = $db->query($sql);
             if (mysqli_num_rows($result) == 0) {
                 return 0;
@@ -212,120 +227,25 @@ class CoffeeController {
         }
     }
     
-//    public function countOfferCoffee(User $_user, $_data) {
-//        global $lang;
-//        try {
-//            $db = Database::getConnection();
-////            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
-////                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
-////                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
-////                    AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
-////                    GROUP BY ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name
-////                    ORDER BY caffe_offerti DESC";
-//            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
-//                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
-//                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
-//                    AND ".DB_PREFIX."paid_coffee.powered_by != '".$_data["id_user"]."'
-//                    GROUP BY ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name
-//                    ORDER BY caffe_offerti DESC";
-//            $result = $db->query($sql);
-//            if (mysqli_num_rows($result) == 0) {
-//                return 0;
-//            } else {
-//                while($singleUser = $result->fetch_assoc()) {
-//                    $singleUser["caffe_offerti"] = (int)$singleUser["caffe_offerti"];
-//                    $usersWithPaidCoffee[] = $singleUser;
-//                }
-//                
-//                return $usersWithPaidCoffee;
-//            }
-//        } catch (DatabaseException $ex) {
-//            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
-//        }
-//    }
-    
-//    public function countTotalOfferCoffee(Chat $_chat) {
-//        global $lang;
-//        try {
-//            $db = Database::getConnection();
-//            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee.powered_by) AS caffe_offerti FROM ".DB_PREFIX."paid_coffee
-//                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee.powered_by = ".DB_PREFIX."user.id_telegram
-//                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_chat->getId()."'
-//                    AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
-//                    ORDER BY caffe_offerti DESC";
-//            $result = $db->query($sql);
-//            if (mysqli_num_rows($result) == 0) {
-//                $usersWithPaidCoffee["id_telegram"] = $_data["id_user"];
-//                $usersWithPaidCoffee["name"] = $_data["name"];
-//                $usersWithPaidCoffee["caffe_offerti"] = 0;
-//                return $usersWithPaidCoffee;
-//            } else {
-//                $singleUser = $result->fetch_assoc();
-//                    $singleUser["caffe_offerti"] = (int)$singleUser["caffe_offerti"];
-//                    $usersWithPaidCoffee = $singleUser;
-//                
-//                return $usersWithPaidCoffee;
-//            }
-//        } catch (DatabaseException $ex) {
-//            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
-//        }
-//    }
-    
-//    public function countTotalReceivedCoffee(User $_user, $_data) {
-//        global $lang;
-//        try {
-//            $db = Database::getConnection();
-//            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, COUNT(".DB_PREFIX."paid_coffee_people.id_paid_coffee) AS caffe_ricevuti FROM ".DB_PREFIX."paid_coffee
-//                    JOIN ".DB_PREFIX."paid_coffee_people ON ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
-//                        JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee_people.id_user = ".DB_PREFIX."user.id_telegram
-//                        WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_user->getChat()->getId()."'
-//                        AND ".DB_PREFIX."paid_coffee.powered_by IS NOT NULL
-//                        ORDER BY caffe_ricevuti DESC";
-//            $result = $db->query($sql);
-//            if (mysqli_num_rows($result) == 0) {
-//                $usersWithReceivedCoffee["id_telegram"] = $_data["id_user"];
-//                $usersWithReceivedCoffee["name"] = $_data["name"];
-//                $usersWithReceivedCoffee["caffe_ricevuti"] = 0;
-//                return $usersWithReceivedCoffee;
-//            } else {
-//                $singleUser = $result->fetch_assoc();
-//                $singleUser["caffe_ricevuti"] = (int)$singleUser["caffe_ricevuti"];
-//                $usersWithReceivedCoffee = $singleUser;
-//                
-//                return $usersWithReceivedCoffee;
-//            }
-//        } catch (DatabaseException $ex) {
-//            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
-//        }
-//    }
-    
-//    public function getAllCandidate(Chat $_chat, $_data) {
-//        global $lang;
-//        try {
-//            $db = Database::getConnection();
-//            
-//            $sql = "SELECT ".DB_PREFIX."paid_coffee_people.id_user, ".DB_PREFIX."user.name FROM ".DB_PREFIX."paid_coffee
-//                    JOIN ".DB_PREFIX."paid_coffee_people ON ".DB_PREFIX."paid_coffee.id_paid_coffee = ".DB_PREFIX."paid_coffee_people.id_paid_coffee
-//                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."paid_coffee_people.id_user = ".DB_PREFIX."user.id_telegram
-//                    WHERE ".DB_PREFIX."paid_coffee.id_group = '".$_chat->getId()."'
-//                    AND ".DB_PREFIX."paid_coffee.powered_by IS NULL";
-//            $result = $db->query($sql);
-//            if (mysqli_num_rows($result) == 0) {
-//                $users["id_telegram"] = $_data["id_user"];
-//                $users["name"] = $_data["name"];
-//                $users["caffe_offerti"] = 0;
-//                return $users;
-//            } else {
-//                while($singleUser = $result->fetch_assoc()) {
-//                    $users[] = $singleUser;
-//                }
-//                
-//                return $users;
-//            }
-//        } catch (DatabaseException $ex) {
-//            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
-//        }
-//    }
+    public function checkParticipate(User $_user) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $sql = "SELECT ".DB_PREFIX."user_group.partecipate FROM ".DB_PREFIX."user_group
+                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
+                    AND ".DB_PREFIX."user_group.id_user = '".$_user->getIdTelegram()."'";
+            $result = $db->query($sql);
+            if (mysqli_num_rows($result) == 0) {
+                $partecipate =  0;
+            } else {
+                $partecipate = $result->fetch_assoc();
+            }
+            return $partecipate;
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
 }
 
 class CoffeeControllerException extends Exception { }

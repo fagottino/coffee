@@ -157,4 +157,8 @@ class Emoticon {
     public static function heart() {
         return "\xE2\x9D\xA4";
     }
+    
+    public static function thoughtful() {
+        return "\xF0\x9F\x98\x92";
+    }
 }

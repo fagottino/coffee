@@ -12,8 +12,8 @@
         <chooseBenefactor>Choose the big hearted</chooseBenefactor>
         <listCompetitors>Competitors list</listCompetitors>
         <stats>Stats</stats>
-        <quitNow>Yes, quit now.</quitNow>
-        <justJoking>No, i'm joking</justJoking>
+        <yes>Yes</yes>
+        <no>No</no>
         <setLanguage>Set language:</setLanguage>
         <setLanguageGroup>Set language of group</setLanguageGroup>
         <makeDonation>Make a donation</makeDonation>
@@ -54,6 +54,7 @@
         <notImplementedYet>Not implemented yet</notImplementedYet>
         <errorWhileSelectionPaidCoffee>Error while selection paid coffee</errorWhileSelectionPaidCoffee>
         <errorWhileDestroyCoffee>Error while deleting of paid coffee</errorWhileDestroyCoffee>
+        <errorWhileDestroyAllCoffee>Error while deleting of all paid coffee</errorWhileDestroyAllCoffee>
         <errorWhileGettingName>Error while getting list of benefactor</errorWhileGettingName>
         <errorWhileCountingCoffee>Error while counting paid coffee</errorWhileCountingCoffee>
         <cantAddBenefactor>You can't add benefactor on coffee that are setting from others.</cantAddBenefactor>
@@ -72,12 +73,15 @@
         <addPeopleToCoffee>Error while adding an user to coffee.</addPeopleToCoffee>
         <newPaidCoffee>Error while adding a new coffee.</newPaidCoffee>
         <registerEmptyField>Error while registration user. The fields are null.</registerEmptyField>
+        <getPath>Error while retrieving the path.</getPath>
+        <notEnoughUser>There is no one who is participating in the game</notEnoughUser>
+        <cantHaveKeyboard>Seems like that you're not participating in the games, right?</cantHaveKeyboard>
     </error>
     <general>
         <retry>Retry.</retry>
         <line>Line -></line>
         <code>Code -></code>
-        <languageSet>Language default changed.</languageSet>
+        <languageSet>Language default changed to English.</languageSet>
         <moreInfo>Use the buttons below to learn more</moreInfo>
         <it>Italian</it>
         <en>English</en>
@@ -88,7 +92,7 @@
         <notParticipatingToGame1>You aren't participating in the game</notParticipatingToGame1>
         <participatingToGame>You <b>are participating</b> in the game</participatingToGame>
         <participatingToGame1>You are participating in the game</participatingToGame1>
-        <changeGroupState>Tap on group to change his settings.</changeGroupState>
+        <changeGroupState>Tap on group to change his settings</changeGroupState>
         <serviceCommunication>Service communication:</serviceCommunication>
         <hasJustLeftTheGame>has just left the game.</hasJustLeftTheGame>
         <hasJustJoinTheGame>has just join the game!</hasJustJoinTheGame>
@@ -120,7 +124,7 @@
         <sayHi>Who wants to participate must say hi to me through the button below.</sayHi>
         <hiFriend>Hello my friend</hiFriend>
         <hiEverybody>Hello to everybody!</hiEverybody>
-        <hasPower>Has the power.</hasPower>
+        <hasPower>has the power.</hasPower>
         <askHimToStart>Please ask him to get started.</askHimToStart>
         <ok>Ok</ok>
         <hereComesAgain>Here comes again</hereComesAgain>
@@ -147,5 +151,9 @@
         <manageGroupSettings>Ok, handle the group settings here</manageGroupSettings>
         <iLikeYouToo>Awwww, i like you too</iLikeYouToo>
         <iLikeYouToo1>If you use the button below we can even engage</iLikeYouToo1>
+        <resetAll>You're for resetting all the participate of the user in the group</resetAll>
+        <resetAll1>Do you want to continue?</resetAll1>
+        <resetDone>Ok! You've correctly reset the settings of the group</resetDone>
+        <restartTogether>If you want we can start together again! Use the botton below</restartTogether>
     </ui>
 </document>

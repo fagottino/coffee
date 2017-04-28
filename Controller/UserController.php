@@ -169,6 +169,46 @@ class UserController {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }        
     }
+    
+    public function getPath() {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $sql = "SELECT * FROM ".DB_PREFIX."storage";
+            $result = $db->query ($sql);
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $result->free();
+                $res = $row["path"];
+            } else if ($result->num_rows == 0) {
+                $res = array();
+            } else {
+                throw new UserControllerException($lang->error->cantGetPath);
+            }
+            return $res;
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function setConfiguration(Chat $_chat, $_idTelegram, $_configuration) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $sql = "UPDATE `".DB_PREFIX."user_group` SET `configuration` = '".$_configuration."'
+                    WHERE id_user = '".$_idTelegram."'
+                    AND id_group = '".$_chat->getId()."'";
+            $result = $db->query($sql);
+            $db->close();
+            if (!$result) {
+                throw new UserControllerException("Errore durante l'aggiornamento della configurazione dell'utente.");
+            }
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }        
+    }
 }
 
 class UserControllerException extends Exception { }
