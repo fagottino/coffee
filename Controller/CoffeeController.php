@@ -241,7 +241,7 @@ class CoffeeController {
             } else {
                 $partecipate = $result->fetch_assoc();
             }
-            return $partecipate;
+            return $partecipate["partecipate"];
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
