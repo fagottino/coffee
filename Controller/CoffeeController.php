@@ -42,13 +42,17 @@ class CoffeeController {
         }
     }
     
-    public function destroyCoffee(User $_user) {
+    public function destroyCoffee(User $_user, $_all = false) {
         global $lang;
         try {
             $db = Database::getConnection();
-            $sql = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE set_by = '".$_user->getIdTelegram()."' AND id_group =  '".$_user->getChat()->getId()."' AND powered_by IS NULL";
+            if ($_all) {
+                $sql = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE set_by = '".$_user->getIdTelegram()."' AND id_group =  '".$_user->getChat()->getId()."' AND powered_by IS NULL";
+            } else {
+                $sql = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE id_group =  '".$_user->getChat()->getId()."' AND powered_by IS NULL";
+            }
             $result = $db->query($sql);
-            if (!$result || mysqli_num_rows($result) == 0) {
+            if (!$result) {
                 throw new CoffeeControllerException($lang->error->errorWhileSelectionPaidCoffee);
             }
             $idToDelete = $result->fetch_assoc();
@@ -67,13 +71,17 @@ class CoffeeController {
         }
     }
     
-    public function destroyAllCoffee(Chat $_chat) {
+    public function destroyAllCoffee(Chat $_chat = null, $_idGroup = null) {
         global $lang;
         try {
             $db = Database::getConnection();
-            $sql = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE id_group =  '".$_chat->getId()."'";
+            if ($_chat != null) {
+                $sql = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE id_group =  '".$_chat->getId()."'";
+            } else {
+                $sql = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE id_group =  '".$_idGroup."'";
+            }
             $result = $db->query($sql);
-            if (!$result || mysqli_num_rows($result) == 0) {
+            if (!$result) {
                 throw new CoffeeControllerException($lang->error->errorWhileSelectionPaidCoffee);
             }
             while ($idToDelete = $result->fetch_assoc()) {
@@ -85,6 +93,20 @@ class CoffeeController {
                 if (!$results) {
                     throw new CoffeeControllerException($lang->error->errorWhileDestroyAllCoffee);
                 }
+            }
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function checkAllCoffee(Chat $_chat) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            $sql = "SELECT id_paid_coffee FROM ".DB_PREFIX."paid_coffee WHERE id_group =  '".$_chat->getId()."'";
+            $result = $db->query($sql);
+            if (!$result || mysqli_num_rows($result) == 0) {
+                throw new CoffeeControllerException($lang->error->errorWhileSelectionPaidCoffee);
             }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
@@ -227,14 +249,43 @@ class CoffeeController {
         }
     }
     
-    public function checkParticipate(User $_user) {
+    public function checkParticipate(User $_user, $_idUser = null) {
         global $lang;
         try {
             $db = Database::getConnection();
             
-            $sql = "SELECT ".DB_PREFIX."user_group.partecipate FROM ".DB_PREFIX."user_group
+            if ($_idUser != null) {
+                $sql = "SELECT ".DB_PREFIX."user_group.partecipate FROM ".DB_PREFIX."user_group
                     WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
-                    AND ".DB_PREFIX."user_group.id_user = '".$_user->getIdTelegram()."'";
+                    AND ".DB_PREFIX."user_group.id_user = '".$_idUser."'
+                    AND ".DB_PREFIX."user_group.configuration = '0'";
+            } else {
+                $sql = "SELECT ".DB_PREFIX."user_group.partecipate FROM ".DB_PREFIX."user_group
+                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
+                    AND ".DB_PREFIX."user_group.id_user = '".$_user->getIdTelegram()."'
+                    AND ".DB_PREFIX."user_group.configuration = '0'";
+            }
+            $result = $db->query($sql);
+            if (mysqli_num_rows($result) == 0) {
+                $partecipate =  -1;
+            } else {
+                $partecipate = $result->fetch_assoc();
+            }
+            return $partecipate["partecipate"];
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function checkAllParticipate(User $_user) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $sql = "SELECT COUNT(".DB_PREFIX."user_group.partecipate) FROM ".DB_PREFIX."user_group
+                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
+                    AND ".DB_PREFIX."user_group.participate = '1'
+                    AND ".DB_PREFIX."user_group.leaves = '0'";
             $result = $db->query($sql);
             if (mysqli_num_rows($result) == 0) {
                 $partecipate =  0;

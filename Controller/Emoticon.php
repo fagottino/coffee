@@ -161,4 +161,12 @@ class Emoticon {
     public static function thoughtful() {
         return "\xF0\x9F\x98\x92";
     }
+    
+    public static function smileOpenMouth() {
+        return "\xF0\x9F\x98\x83";
+    }
+    
+    public static function smileTongue() {
+        return "\xF0\x9F\x98\x9C";
+    }
 }

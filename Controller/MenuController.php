@@ -56,18 +56,6 @@ class MenuController {
                 }
             }
         }
-//        foreach ($_itemArray as $key => $value) {
-//            if (isset($value["alone"]) && $value["alone"]) {
-//                $menu[++$j] = array($value["action"]);
-//            } else {
-//                if ($i % 3 == 0) {
-//                    $menu[++$j] = array($value["action"]);
-//                } else {
-//                    array_push($menu[$j], $value["action"]);
-//                }
-//                $i++;
-//            }
-//        }
         
         if ($_backButton) {
             $menu[++$j] = array(array("text" => Emoticon::back().$lang->menu->back, "callback_data" => Emoticon::back().$lang->menu->back), array("text" => Emoticon::home().$lang->menu->home, "callback_data" => Emoticon::home().$lang->menu->home));
@@ -125,17 +113,6 @@ class MenuController {
     }
     
     public function doYouLikeTheBot() {
-//        global $lang;
-//        $item = array(
-//                    array(
-//                        "text" => Emoticon::bye().$lang->menu->quitNow, 
-//                        "callback_data" => "yes"
-//                        ), 
-//                    array(
-//                        "text" => Emoticon::justJocking().$lang->menu->justJoking,
-//                        "callback_data" => "no"
-//                        )
-//                    );
         $menu = $this->createCustomInlineMenu(null, 2, false, true);
         return $menu;
     }
@@ -222,6 +199,26 @@ class MenuController {
         return $menu;
     }
     
+    public function whatDoYouWantToReset() {
+        global $lang;
+        $item = array(
+            array(
+                "action" => Emoticon::older().$lang->menu->resetOldHoldings,
+                "alone" => true
+            ),
+            array(
+                "action" => Emoticon::neww().$lang->menu->resetOldCoffee,
+                "alone" => true
+            ),
+            array(
+                "action" => Emoticon::right().$lang->menu->nextStep,
+                "alone" => true
+            )
+        );
+        $menu = $this->createCustomReplyMarkupMenu($item);
+        return $menu;
+    }
+    
     public function settingsGroup($_group) {
         global $lang;
         
@@ -251,17 +248,17 @@ class MenuController {
                             "callback_data" => "statsGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]
                             ),
                         array(
-                            "text" => Emoticon::neww().$lang->menu->resetOlderConfiguration,
-                            "callback_data" => RESET_GROUP."~".$_group[0]["id_group"]."~".$_group[0]["title"]
+                            "text" => Emoticon::neww().$lang->menu->resetOldHoldings,
+                            "callback_data" => RESET_HOLD_HOLDINGS."~".$_group[0]["id_group"]."~".$_group[0]["title"]
+                            ),
+                        array(
+                            "text" => Emoticon::neww().$lang->menu->resetOldCoffee,
+                            "callback_data" => RESET_OLD_COFFEE."~".$_group[0]["id_group"]."~".$_group[0]["title"]
                             )
                     );
         } else {
             $item = array(
                         $state,
-                        array(
-                            "text" => Emoticon::plus().$lang->menu->changeLanguage,
-                            "callback_data" => "changeLanguageGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]
-                            ),
                         array(
                             "text" => Emoticon::stats().$lang->menu->stats,
                             "callback_data" => "statsGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]
@@ -273,19 +270,55 @@ class MenuController {
         return $menu;
     }
     
-    public function yesOrNo($_group) {
+    public function yesOrNo($_group, $_type) {
         global $lang;
+        if ($_type == RESET_HOLD_HOLDINGS) {
+            $resetYes = RESET_HOLD_HOLDINGS_YES;
+            $resetNo = RESET_HOLD_HOLDINGS_NO;
+        } else if ($_type == RESET_OLD_COFFEE) {
+            $resetYes = RESET_OLD_COFFEE_YES;
+            $resetNo = RESET_OLD_COFFEE_NO;
+        }
         $item = array(
             array(
                 "text" => Emoticon::check().$lang->menu->yes,
-                "callback_data" => RESET_GROUP_YES."~".$_group[1]."~".$_group[2]
+                "callback_data" => $resetYes."~".$_group[1]."~".$_group[2]
             ),
             array(
                 "text" => Emoticon::cancel().$lang->menu->no,
-                "callback_data" => RESET_GROUP_NO."~".$_group[1]."~".$_group[2]
+                "callback_data" => $resetNo."~".$_group[1]."~".$_group[2]
             )
         );
         $menu = $this->createCustomInlineMenu($item, 3, true);
+        return $menu;
+    }
+    
+    public function writeMe($_type) {
+        
+        switch ($_type) {
+            case "privateChat":
+                $item = array(
+                    array(
+                        "text" => "Scrivimi ora",
+                        "url" => "https://t.me/IlBenefattoreDelCaffe_Bot"
+                    )
+                );
+                break;
+            
+            case "addToGroup":
+                $item = array(
+                    array(
+                        "text" => "Aggiungimi ad un gruppo",
+                        "url" => "http://t.me/IlBenefattoreDelCaffe_Bot?startgroup=start"
+                    )
+                );
+                break;
+            
+            default:
+                
+                break;
+        }
+        $menu = $this->createCustomInlineMenu($item, 3);
         return $menu;
     }
 }

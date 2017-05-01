@@ -164,10 +164,6 @@ class MessageManager {
         }
     }
     
-    public function replyMessage($_idChat, $_idMessage) {
-        
-    }
-    
     public function getNumberMemberGroup($_idChat, $_idUser)
     {
         $args = array(
@@ -189,7 +185,8 @@ class MessageManager {
         if ($ok == 0) {
             $error = $data["error_code"];
             if ($error == 403 ) {
-                //imposta che tale utente ha disattivato il bot. 
+                //l' utente ha disattivato il bot
+                throw new MessageException($data["error_code"]);
             } else if ($error == 400) {
                 $errorFile = "./file/errors.txt";
                 if (!file_exists($errorFile)) {
@@ -205,25 +202,6 @@ class MessageManager {
             } else {
                 
             }
-//            switch ($error) {
-//                case 403:
-//                //imposta che tale utente ha disattivato il bot.                        
-//                break;
-//                case 400:
-//                default:
-//                    $errorFile = "./file/errors.txt";
-//                    if (!file_exists($errorFile)) {
-//                        $eF = fopen($errorFile, "wr");
-//                        fclose($eF);
-//                    }
-//                    $errorCurrent = file_get_contents($errorFile);
-//                    $errorCurrent .= date("d/m/Y H:i:s / ");
-//                    $errorCurrent .= $data["description"];
-//                    $errorCurrent .= "\n";
-//                    file_put_contents($errorFile, $errorCurrent);
-//                    throw new MessageException("");
-//                    break;
-//            }
         } else {
             $this->answerFromHttpRequest = $data["result"];
         }

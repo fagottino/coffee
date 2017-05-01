@@ -26,7 +26,7 @@ class GroupController {
             } else if (mysqli_num_rows($result) == 0) {
                 $row = array();
             } else {
-                throw new GroupControllerException($lang->error->noResultsFound);
+                throw new GroupControllerException($lang->error->checkGroup);
             }
             return $row;
         } catch (DatabaseException $ex) {
@@ -105,27 +105,32 @@ class GroupController {
         return true;
     }
     
-//    public function setActive(User $_user, $_bool) {
-//        global $lang;
-//        try {
-//            $db = Database::getConnection();
-//            
-//            $sql = "UPDATE ".DB_PREFIX."user_group SET active = '".$_bool."' WHERE id_user = '".$_user->getIdTelegram()."' AND id_group = '".$_user->getChat()->getId()."' AND leaves = '0'";
-//            $updateUser = $db->query($sql);
-//            if (!$updateUser) {
-//                throw new GroupControllerException($lang->error->errorWhileUserUpdate);
-//            }
-//        } catch (DatabaseException $ex) {
-//            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
-//        }
-//    }
+    public function setLeave(User $_user, $_idUser = null, $_leave) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            if ($_idUser != null) {
+                $sql = "UPDATE ".DB_PREFIX."user_group SET leaves = '".$_leave."' WHERE id_user = '".$_idUser."' AND id_group = '".$_user->getChat()->getId()."'";
+            } else {
+                $sql = "UPDATE ".DB_PREFIX."user_group SET leaves = '".$_leave."' WHERE id_user = '".$_user->getIdTelegram()."' AND id_group = '".$_user->getChat()->getId()."'";
+            }
+            $result = $db->query($sql);
+            if (!$result) {
+                throw new GroupControllerException($lang->error->errorWhileUptadingParticipated);
+            }
+            return true;
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+        return true;
+    }
     
     public function getCompetitors(Chat $_chat) {
         global $lang;
         try {
             $db = Database::getConnection();
             
-            $sql = "SELECT ".DB_PREFIX."user.id_telegram AS id_user, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user
+            $sql = "SELECT ".DB_PREFIX."user.id_telegram AS id_user, ".DB_PREFIX."user.name, ".DB_PREFIX."user.username, ".DB_PREFIX."user_group.configuration FROM ".DB_PREFIX."user
                     JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
                     WHERE ".DB_PREFIX."user_group.id_group = '".$_chat->getId()."'
                     AND ".DB_PREFIX."user_group.partecipate = '1'
@@ -141,7 +146,35 @@ class GroupController {
             } else if (mysqli_num_rows($query) == 0) {
                 $res = array();
             } else {
-                throw new GroupControllerException($lang->error->noResultsFound);
+                throw new GroupControllerException($lang->error->getCompetitors);
+            }
+            return $res;
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function getAllCompetitors(Chat $_chat) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $sql = "SELECT ".DB_PREFIX."user.id_telegram AS id_user, ".DB_PREFIX."user.name, ".DB_PREFIX."user.username, ".DB_PREFIX."user_group.configuration FROM ".DB_PREFIX."user
+                    JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
+                    WHERE ".DB_PREFIX."user_group.id_group = '".$_chat->getId()."'
+                    AND ".DB_PREFIX."user_group.partecipate = '1'
+                    AND ".DB_PREFIX."user_group.leaves = '0'";
+            $query = $db->query($sql);
+            
+            if (mysqli_num_rows($query) > 0) {
+                while($tmp = $query->fetch_assoc())
+                    $res[] = $tmp;
+
+                $db->close();
+            } else if (mysqli_num_rows($query) == 0) {
+                $res = array();
+            } else {
+                throw new GroupControllerException($lang->error->getCompetitors);
             }
             return $res;
         } catch (DatabaseException $ex) {
@@ -170,16 +203,15 @@ class GroupController {
 
             $query = $db->query($sql);
             
-            if (!$query) {
-                throw new GroupControllerException($lang->error->noResultsFound);
+            if (mysqli_num_rows($query) > 0) {
+                while($tmp = $query->fetch_assoc())
+                    $res[] = $tmp;
+
+                $db->close();
             } else if (mysqli_num_rows($query) == 0) {
                 $res = array();
             } else {
-                while($tmp = $query->fetch_assoc()) {
-                    $res[] = $tmp;
-                }
-
-                $db->close();
+                throw new GroupControllerException($lang->error->getOtherCompetitors);
             }
             return $res;
         } catch (DatabaseException $ex) {
@@ -213,7 +245,7 @@ class GroupController {
             $result = $db->query($sql);
             
             if (!$result) {
-                throw new GroupControllerException("Errore mentre aggiornavo l'entrata nel gruppo.");
+                throw new GroupControllerException($lang->error->activateGroup);
             }
             
         } catch (DatabaseException $ex) {
@@ -229,7 +261,7 @@ class GroupController {
             $result = $db->query($sql);
             
             if (!$result) {
-                throw new GroupControllerException("Errore mentre aggiornavo l'uscita dal gruppo.");
+                throw new GroupControllerException($lang->error->leaveGroup);
             }
             
         } catch (DatabaseException $ex) {
@@ -238,18 +270,20 @@ class GroupController {
     }
     
     public function createText($_data) {
-        $text = "I concorrenti sono:".chr(10);
+        global $lang;
+        $text = $lang->ui->theCompetitorsAre.chr(10).chr(10);
         $i = 0;
         foreach ($_data  as $key => $value) {
-            $text .= ++$i.") ".$value["name"].chr(10);
+//                          $competitors[$key]['text'] = "a"."&#822;"."n"."&#822;"."t"."&#822;"."o"."&#822;"."n"."&#822;"."i"."&#822;"."o"."&#822;";
+            if ($value["configuration"] == 1) {
+                $text .= ++$i."<b>)</b> ";
+                $text .= $this->strikethrougText($value["name"]);
+                $text .= " (deve riconfermare la volontà a partecipare)".chr(10);
+            } else {
+                $text .= ++$i.") ".$value["name"].chr(10);
+            }
         }
         return $text;
-    }
-    
-    public function checkAllUserOperation() {
-        // QUERY FUNZIONANTE. CONTROLLARE SE CI SONO ALTRI UTENTI NELLO STESSO GRUPPO CHE STANNO GIÀ AGGIUNGENDO UN PAGAMENTO DI CAFFÈ
-        // 
-        //SELECT operation FROM coffee_user WHERE id_telegram IN (SELECT id_user FROM coffee_user_group WHERE id_group = '-114342037' AND active = '1')
     }
     
     public function getMyGroup(User $_user) {
@@ -265,14 +299,15 @@ class GroupController {
 
             $query = $db->query($sql);
             
-            //if ($query->num_rows > 0) {
             if (mysqli_num_rows($query) > 0) {
                 while($tmp = $query->fetch_assoc()) {
                     $res[] = $tmp;
                 }
                 $db->close();
-            } else {
+            } else if (mysqli_num_rows($query) == 0) {
                 $res = array();
+            } else {
+                throw new GroupControllerException($lang->error->getMyGroup);
             }
             return $res;
         } catch (DatabaseException $ex) {
@@ -292,8 +327,10 @@ class GroupController {
             if (mysqli_num_rows($query) > 0) {
                     $res[] = $query->fetch_assoc();
                 $db->close();
-            } else {
+            } else if (mysqli_num_rows($query) == 0) {
                 $res = array();
+            } else {
+                throw new GroupControllerException($lang->error->getGroupInfo);
             }
             return $res;
         } catch (DatabaseException $ex) {
@@ -308,15 +345,24 @@ class GroupController {
             
             $sql = "SELECT partecipate FROM ".DB_PREFIX."user_group WHERE id_group = ".$_idGroup." AND id_user = ".$_user->getIdTelegram();
             $result = $db->query($sql);
-            $group = $result->fetch_assoc();
-            if ($group["partecipate"] == 1) {
+            if (!$result) {
+                throw new GroupControllerException($lang->error->joinTheGameSelect);
+            }
+//            while ($row = $result->fetch_assoc()) {
+//                $group = $row;
+//            }
+            $group[] = $result->fetch_assoc();
+            if ($group[0]["partecipate"] == 1) {
                 $value = 0;
-            } else {
+            } else if ($group[0]["partecipate"] == 0) {
                 $value = 1;
             }
             
             $sql = "UPDATE ".DB_PREFIX."user_group SET partecipate = ".$value." WHERE id_group = ".$_idGroup." AND id_user = ".$_user->getIdTelegram();
             $db->query($sql);
+            if (!$result) {
+                throw new GroupControllerException($lang->error->joinTheGameUpdate);
+            }
             return $value;
             
         } catch (DatabaseException $ex) {
@@ -332,18 +378,17 @@ class GroupController {
             $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user_group
                     JOIN ".DB_PREFIX."user ON ".DB_PREFIX."user_group.id_user = ".DB_PREFIX."user.id_telegram
                     WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
-                    AND ".DB_PREFIX."user_group.partecipate = '1'
                     AND ".DB_PREFIX."user_group.leaves = '0'";
             $result = $db->query($sql);
             
-            if (mysqli_num_rows($result) > 0) {
+            if (mysqli_num_rows($result) > 1) {
                 while ($singleUser = $result->fetch_assoc()) {
                     $user[] = $singleUser; 
                 }
-            } else if(mysqli_num_rows($result) == 0) {
+            } else if(mysqli_num_rows($result) == 0 || mysqli_num_rows($result) == 1) {
                 $user = array();
             } else {
-                throw new GroupControllerException("Errore nella query per recuperare i vecchi partecipanti al gioco.");
+                throw new GroupControllerException($lang->error->getOlderMember);
             }
             return $user;
         } catch (DatabaseException $ex) {
@@ -359,7 +404,7 @@ class GroupController {
             $result = $db->query($sql);
             
             if (!$result) {
-                throw new GroupControllerException("Errore nella query per resettare la partecipazione al gioco.");
+                throw new GroupControllerException($lang->error->resetParticipate);
             }
             
             return true;            
@@ -382,7 +427,7 @@ class GroupController {
             } else if(mysqli_num_rows($result) == 0) {
                 $lang = "";
             } else {
-                throw new GroupControllerException("Errore nella query per recuperare la lingua del gruppo.");
+                throw new GroupControllerException($lang->error->getLang);
             }
             return $lang;
         } catch (DatabaseException $ex) {
@@ -398,11 +443,46 @@ class GroupController {
             $result = $db->query($sql);
             $db->close();
             if (!$result) {
-                throw new UserControllerException("Errore durante l'aggiornamento della lingua del gruppo");
+                throw new UserControllerException($lang->error->updateLang);
             }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }        
+    }
+    
+    public function checkUserInGroup($_user, $_idUser) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            if ($_idUser != null) {
+                $sql = "SELECT COUNT(".DB_PREFIX."user_group.id_user) FROM ".DB_PREFIX."user_group
+                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
+                    AND ".DB_PREFIX."user_group.id_user = '".$_idUser."'";
+            } else {
+                $sql = "SELECT COUNT(".DB_PREFIX."user_group.id_user) FROM ".DB_PREFIX."user_group
+                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
+                    AND ".DB_PREFIX."user_group.id_user = '".$_user->getIdTelegram()."'";
+            }
+            $result = $db->query($sql);
+            if (mysqli_num_rows($result) == 0) {
+                $return =  -1;
+            } else {
+                $return = $result->fetch_assoc();
+            }
+            return $return;
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
+    public function strikethrougText($_text) {
+        $chars = str_split($_text);
+            $text = "";
+            foreach($chars as $char){
+                $text .= $char."&#822;";
+            }
+        return $text;
     }
 }
 

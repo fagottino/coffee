@@ -27,6 +27,8 @@
         <exitToTheGame>Esci dal gioco</exitToTheGame>
         <keepOlderConfiguration>Tieni la vecchia configurazione</keepOlderConfiguration>
         <resetOlderConfiguration>Resetta i settaggi del gruppo</resetOlderConfiguration>
+        <resetOldHoldings>Resetta le partecipazioni</resetOldHoldings>
+        <resetOldCoffee>Resetta i caffè</resetOldCoffee>
         <continueParticipating>Voglio continuare a partecipare</continueParticipating>
         <selectAll>Seleziona tutti</selectAll>
         <changeLanguage>Cambia lingua</changeLanguage>
@@ -63,6 +65,8 @@
         <pendingChooseBenefactor>Hai un'operazione di aggiunta caffè in sospeso. Annullala per continuare a navigare con il bot.</pendingChooseBenefactor>
         <checkCoffee>Errore durante il controllo del caffè.</checkCoffee>
         <cantDoOperationOnOtherCoffee>Non puoi effettuare azioni su un caffè settato da altri. Scostumato.</cantDoOperationOnOtherCoffee>
+        <cantDeleteOtherCoffee>Dai, non fare così. Cerca di contenerti, il caffè lo stava settando qualcun altro.</cantDeleteOtherCoffee>
+        <cantSelectAllOnOtherCoffee>Eeeh, addrittura selezionarli tutti? Non ti sembra un po' esagerato da parte tua?</cantSelectAllOnOtherCoffee>
         <cantGoBack>Non riesco a tornare dietro perchè non capisco dove sei.</cantGoBack>
         <cantAddCoffeeNow>Non puoi farlo ora, c'è già chi sta aggiungendo un caffè.</cantAddCoffeeNow>
         <mustWaitToAddCoffee>Aspetta che finisca e solo dopo potrai registrare un nuovo caffè.</mustWaitToAddCoffee>
@@ -76,6 +80,19 @@
         <getPath>Errore durante il recupero del path.</getPath>
         <notEnoughUser>Non ci sono abbastanza persone che stanno partecipando al gioco</notEnoughUser>
         <cantHaveKeyboard>Mi risulta che non stai partecipando ai giochi, è così?</cantHaveKeyboard>
+        <checkGroup>Errore durante la selezione del gruppo.</checkGroup>
+        <getCompetitors>Errore durante il recupero dei papabili</getCompetitors>
+        <getOtherCompetitors>Errore durante il recupero dei restanti papabili</getOtherCompetitors>
+        <activateGroup>Errore mentre aggiornavo l'entrata nel gruppo.</activateGroup>
+        <leaveGroup>Errore mentre aggiornavo l'uscita dal gruppo.</leaveGroup>
+        <getMyGroup>Errore durante il recupero dei tuoi gruppi.</getMyGroup>
+        <getGroupInfo>Errore durante il recupero delle informazioni del gruppo.</getGroupInfo>
+        <joinTheGameSelect>Errore durante la selezione della partecipazione dell'utente.</joinTheGameSelect>
+        <joinTheGameUpdate>Errore durante l'aggiornamento della partecipazione dell'utente.</joinTheGameUpdate>
+        <getOlderMember>Errore nella query per recuperare i vecchi partecipanti al gioco.</getOlderMember>
+        <resetParticipate>Errore nella query per resettare la partecipazione al gioco.</resetParticipate>
+        <getLang>Errore nella query per recuperare la lingua del gruppo.</getLang>
+        <updateLang>Errore durante l'aggiornamento della lingua del gruppo</updateLang>
     </error>
     <general>
         <retry>Riprova.</retry>
@@ -103,7 +120,7 @@
         <thereAreActiveUsers>Mi risulta ci siano già utenti attivi.</thereAreActiveUsers>
         <whatDoYouWantToDoWithOlderConfiguration>Cosa vuoi farne della vecchia configurazione?</whatDoYouWantToDoWithOlderConfiguration>
         <keepOlderConfiguration> => I vecchi utenti iscritti al gioco dovranno confermare la loro volontà di partecipare ai giochi, prima di poter essere conteggiati nuovamente</keepOlderConfiguration>
-        <resetOlderConfiguration> => Saranno azzerati i partecipanti ai giochi ed eventuali vecchi caffè. Invierò dei pulsanti a tutti i membri del gruppo per poter scegliere di partecipare o meno ai giochi</resetOlderConfiguration>
+        <resetOldHoldings> => Saranno azzerati i partecipanti ai giochi. Invierò dei pulsanti a tutti i membri del gruppo per poter scegliere di partecipare o meno ai giochi</resetOldHoldings>
         <operationCanceled>Operazione annullata correttamente.</operationCanceled>
         <changedKeyboard>Ho cambiato anche la tastiera per farti sentire come a casa tua. Buon divertimento!</changedKeyboard>
     </general>
@@ -137,6 +154,7 @@
         <rememberYouCanRejoinGames>ricorda che puoi sempre scegliere di partecipare al gioco abilitando il gruppo tramite il tasto in basso</rememberYouCanRejoinGames>
         <myGroup><b>I miei gruppi</b></myGroup>
         <sendYouAMessageIfYouChangeIdea>ti ho inviato un messaggio privato con un piccolo promemoria qualora cambiassi idea.</sendYouAMessageIfYouChangeIdea>
+        <triedToSendYouAMessageIfYouChangeIdea>ho provato ad inviarti messaggio privato con un piccolo promemoria qualora cambiassi idea, ma probabilmente non abbiamo ancora parlato in privato.</triedToSendYouAMessageIfYouChangeIdea>
         <seeYouSoon>A presto!</seeYouSoon>
         <beforeStartConfirmConfiguration>Ok, prima di procedere ho bisogno della conferma dei singoli giocatori.</beforeStartConfirmConfiguration>
         <pleaseAnswerMeYourIntentions>per favore rispondetemi con le vostre intenzioni</pleaseAnswerMeYourIntentions>
@@ -151,9 +169,17 @@
         <manageGroupSettings>Perfetto, gestisci qui le impostazioni del gruppo</manageGroupSettings>
         <iLikeYouToo>Awwww, anche tu mi piaci</iLikeYouToo>
         <iLikeYouToo1>Se usi il &lt;b&gt;tasto in basso&lt;/b&gt; potremmo anche fidanzarci </iLikeYouToo1>
-        <resetAll>Stai per resettare tutte le partecipazioni degli utenti nel gruppo</resetAll>
-        <resetAll1>Continuare?</resetAll1>
-        <resetDone>Ok! Hai resettato i settaggi del gruppo</resetDone>
+        <resetAllParticipation>Stai per resettare tutte le partecipazioni degli utenti nel gruppo</resetAllParticipation>
+        <resetAllCoffee>Stai per resettare tutti i caffè registrati nel gruppo</resetAllCoffee>
+        <continue>Continuare?</continue>
+        <resetParticipiantDone>Ok! Hai resettato le partecipazioni del gruppo</resetParticipiantDone>
+        <resetCoffeeDone>Ok! Hai resettato i caffè del gruppo</resetCoffeeDone>
         <restartTogether>Se ti va possiamo riniziare insieme! Usa i tasti in basso</restartTogether>
+        <pleaseAddUsername>PS: ti consiglio di aggiungere uno Username al tuo account nelle impostazioni di Telegram, mi è utile per rintracciarti nel caso in cui tu ti nasconda per sfuggire al sorteggio dei benefattori</pleaseAddUsername>
+        <settingResetWhoWantToParticipate>Le impostazioni del gruppo sono state resettate. Chi vuole partecipare ai giochi?</settingResetWhoWantToParticipate>
+        <whatDoYouWantToReset>Cosa vuoi reimpostare?</whatDoYouWantToReset>
+        <doYouWantResetOther>Vuoi resettare altro?</doYouWantResetOther>
+        <pressNextToContinue>In caso contrario premi Avanti per continuare</pressNextToContinue>
+        <theCompetitorsAre>I concorrenti sono:</theCompetitorsAre>
     </ui>
 </document>

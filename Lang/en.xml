@@ -27,6 +27,8 @@
         <exitToTheGame>Quit to the game</exitToTheGame>
         <keepOlderConfiguration>Keep the older configuration</keepOlderConfiguration>
         <resetOlderConfiguration>Reset the older configuration</resetOlderConfiguration>
+        <resetOldHoldings>Resets the old holdings</resetOldHoldings>
+        <resetOldCoffee>Resets all coffee</resetOldCoffee>
         <continueParticipating>I want to continue to participate</continueParticipating>
         <selectAll>Select all</selectAll>
         <changeLanguage>Change language</changeLanguage>
@@ -63,6 +65,8 @@
         <pendingChooseBenefactor>You have a pending add coffee operation. Cancel it to continue to chat with the bot.</pendingChooseBenefactor>
         <checkCoffee>Error while checking coffee.</checkCoffee>
         <cantDoOperationOnOtherCoffee>You can't do an operation on coffee which is set by other. You lout.</cantDoOperationOnOtherCoffee>
+        <cantDeleteOtherCoffee>Come on, don't do this. Try to contain yourself, the coffee was setting up by someone else.</cantDeleteOtherCoffee>
+        <cantSelectAllOnOtherCoffee>WTF? Select it all? Doesn't seem like that is a bit exaggerated for you?</cantSelectAllOnOtherCoffee>
         <cantGoBack>Can't go back because I don't understand where you at.</cantGoBack>
         <cantAddCoffeeNow>You can't do it now. There's already someone who is adding a coffee.</cantAddCoffeeNow>
         <mustWaitToAddCoffee>You have to wait for him to finish and only after you can register a new coffee.</mustWaitToAddCoffee>
@@ -76,6 +80,19 @@
         <getPath>Error while retrieving the path.</getPath>
         <notEnoughUser>There is no one who is participating in the game</notEnoughUser>
         <cantHaveKeyboard>Seems like that you're not participating in the games, right?</cantHaveKeyboard>
+        <checkGroup>Error while selecting group.</checkGroup>
+        <getCompetitors>Error while trying to get the competitors</getCompetitors>
+        <getOtherCompetitors>Error while trying to get other competitors</getOtherCompetitors>
+        <activateGroup>Error while updating entry into the group.</activateGroup>
+        <leaveGroup>Error while updating the exit from the group.</leaveGroup>
+        <getMyGroup>Error while getting your groups.</getMyGroup>
+        <getGroupInfo>Error while getting info of group.</getGroupInfo>
+        <joinTheGameSelect>Error while selection the participating of user.</joinTheGameSelect>
+        <joinTheGameUpdate>Error while updating the participating of user.</joinTheGameUpdate>
+        <getOlderMember>Error while trying to get older participant to the game.</getOlderMember>
+        <resetParticipate>Error while reset the participate at the game.</resetParticipate>
+        <getLang>Error while trying to get the lang of group.</getLang>
+        <updateLang>Error while trying to update the lang of group.</updateLang>
     </error>
     <general>
         <retry>Retry.</retry>
@@ -103,7 +120,7 @@
         <thereAreActiveUsers>I think that there are already active users.</thereAreActiveUsers>
         <whatDoYouWantToDoWithOlderConfiguration>What do you want to do with the older configuration?</whatDoYouWantToDoWithOlderConfiguration>
         <keepOlderConfiguration> => The older active users must confirm again their willingness to participate to the game</keepOlderConfiguration>
-        <resetOlderConfiguration> => All the participants will be deleted. Each participant in the group will have to subscribe again his willingness to join in the game.</resetOlderConfiguration>
+        <resetOldHoldings> => All the participants will be deleted. Each participant in the group will have to subscribe again his willingness to join in the game.</resetOldHoldings>
         <operationCanceled>Operation successfully canceled.</operationCanceled>
         <changedKeyboard>I've also changed your keyboard to make you feel at home. Have fun!</changedKeyboard>
     </general>
@@ -137,6 +154,7 @@
         <rememberYouCanRejoinGames>Remember you can always choose to rejoin the game by enabling the group via the button below</rememberYouCanRejoinGames>
         <myGroup><b>I miei gruppi</b></myGroup>
         <sendYouAMessageIfYouChangeIdea>i sent you one private message with a small reminder if you change idea.</sendYouAMessageIfYouChangeIdea>
+        <triedToSendYouAMessageIfYouChangeIdea>i tried to sent you one private message with a small reminder if you wanted to change idea, but probabily we didn't have private chat yet.</triedToSendYouAMessageIfYouChangeIdea>
         <seeYouSoon>See you soon!</seeYouSoon>
         <beforeStartConfirmConfiguration>Ok, before starting i need of the confirmation of each sigle player.</beforeStartConfirmConfiguration>
         <pleaseAnswerMeYourIntentions>please answer me with your intentions</pleaseAnswerMeYourIntentions>
@@ -151,9 +169,17 @@
         <manageGroupSettings>Ok, handle the group settings here</manageGroupSettings>
         <iLikeYouToo>Awwww, i like you too</iLikeYouToo>
         <iLikeYouToo1>If you use the button below we can even engage</iLikeYouToo1>
-        <resetAll>You're for resetting all the participate of the user in the group</resetAll>
-        <resetAll1>Do you want to continue?</resetAll1>
-        <resetDone>Ok! You've correctly reset the settings of the group</resetDone>
+        <resetAllParticipation>You're for resetting all the participate of the user in the group</resetAllParticipation>
+        <resetAllCoffee>You're for resetting all the coffees of the group</resetAllCoffee>
+        <continue>Do you want to continue?</continue>
+        <resetParticipiantDone>Ok! You've correctly reset the participiant of the group</resetParticipiantDone>
+        <resetCoffeeDone>Ok! You've correctly reset the coffees of the group</resetCoffeeDone>
         <restartTogether>If you want we can start together again! Use the botton below</restartTogether>
+        <pleaseAddUsername>PS: I suggest you to add a username to your account (in the Telegram settings), it is useful to find you in case you hide to escape the benefactor draw</pleaseAddUsername>
+        <settingResetWhoWantToParticipate>Group settings have been reset. Who wants to participate to the games?</settingResetWhoWantToParticipate>
+        <whatDoYouWantToReset>What do you want to reset?</whatDoYouWantToReset>
+        <doYouWantResetOther>Do you want to reset other?</doYouWantResetOther>
+        <pressNextToContinue>If not, press Next to continue</pressNextToContinue>
+        <theCompetitorsAre>The competitors are</theCompetitorsAre>
     </ui>
 </document>

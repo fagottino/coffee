@@ -63,20 +63,19 @@ class UserController {
                 $result = $db->query($sql);
                 if (!$result) {
                     throw new UserControllerException($lang->error->errorWhileUserRegistration);
-    //                $lastId = $db->insert_id;
-    //                // Valore opzionale, non presente a tutti i messaggi
-    //                if ($_user->getUsername())
-    //                    $addUsername = $db->query ("UPDATE `user` SET username = '".$_user->getUsername()."' WHERE id_user = ".$lastId." AND id_telegram = '".$_user->getIdTelegram()."'");
-    //                // Valore opzionale, non presente a tutti i messaggi
-    //                if ($_user->getIdChat())
-    //                    $addChatId = $db->query ("UPDATE `user` SET chat_id = '".$_user->getIdChat()."' WHERE id_user = ".$lastId." AND id_telegram = '".$_user->getIdTelegram()."'");
-                } else {
-                    return true;
+                }
+                
+                // Valore opzionale, non presente a tutti i messaggi
+                if ($_user->getUsername()) {
+                    $addUsername = $db->query ("UPDATE `".DB_PREFIX."user` SET username = '".$_user->getUsername()."' WHERE id_telegram = '".$_user->getIdTelegram()."'");
+                
+                    if (!$addUsername) {
+                        throw new UserControllerException($lang->error->errorWhileUserRegistration);
+                    }
                 }
             } else {
                     throw new UserControllerException($lang->error->registerEmptyField);
             }
-            
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
         }
@@ -163,7 +162,7 @@ class UserController {
             $result = $db->query($sql);
             $db->close();
             if (!$result) {
-                throw new UserControllerException("Errore durante l'aggiornamento della lingua");
+                throw new UserControllerException($lang->error->updateLang);
             }
         } catch (DatabaseException $ex) {
             throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
