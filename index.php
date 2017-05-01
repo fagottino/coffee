@@ -343,11 +343,7 @@ if($user->getChat()->getType() != "") {
                         $menu = $menuController->myGroups($myGroups);
                         $messageManager->sendInline($user->getChat()->getId(), $text, $menu, $user->getIdMessage());
                     } else {
-                        $text = (string)$lang->ui->ok." "
-                                .$user->getName().", "
-                                .$lang->ui->triedToSendYouAMessageIfYouChangeIdea.chr(10)
-                                .$lang->ui->seeYouSoon." "
-                                .Emoticon::smile();
+                        $text = $user->getName()." sembra che non siamo ancora in nessun gruppo insieme".Emoticon::smile();
                         $menu = $menuController->writeMe("addToGroup");
                         $messageManager->sendInline($user->getChat()->getId(), $text, $menu, $user->getIdMessage(), true);
 //                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $lang->error->noResultsFound, $user->getIdMessage());
