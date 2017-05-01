@@ -370,15 +370,14 @@ class GroupController {
         }
     }
     
-    public function getOlderMember(User $_user) {
+    public function getOlderMember(User $_user, $_all = false) {
         global $lang;
         try {
             $db = Database::getConnection();
-            
-            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name FROM ".DB_PREFIX."user_group
-                    JOIN ".DB_PREFIX."user ON ".DB_PREFIX."user_group.id_user = ".DB_PREFIX."user.id_telegram
-                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
-                    AND ".DB_PREFIX."user_group.leaves = '0'";
+            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, ".DB_PREFIX."user.useryyname FROM ".DB_PREFIX."user_group
+                JOIN ".DB_PREFIX."user ON ".DB_PREFIX."user_group.id_user = ".DB_PREFIX."user.id_telegram
+                WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
+                AND ".DB_PREFIX."user_group.leaves = '0'";
             $result = $db->query($sql);
             
             if (mysqli_num_rows($result) > 1) {

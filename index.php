@@ -280,7 +280,6 @@ if($user->getChat()->getType() != "") {
                 break;
 
             case Emoticon::home().$lang->menu->home:
-                $messageManager->sendChatAction($user->getChat()->getId(), "typing");
                 $operation = $user->getCurrentOperation();
                 switch ($operation) {
 //                    case "setOperationGroup":
@@ -736,14 +735,22 @@ if($user->getChat()->getType() != "") {
                                     
                                     if (sizeof($userList) > 0) {
                                         $text = $lang->ui->beforeStartConfirmConfiguration.chr(10).chr(10);
+                                        $textNoUsername = "";
                                         foreach ($userList as $key => $value) {
-                                            $text .= "@".$value["name"].", ";
+                                            if ($value["username"] =! null) {
+                                                $text .= "@".$value["username"].", ";
+                                            } else {
+                                                $textNoUsername .= "".$value["name"].", ";
+                                            }
                                             $userController->setConfiguration($user->getChat(), $value["id_telegram"], 1);
                                         }
                                         $text .= $lang->ui->pleaseAnswerMeYourIntentions;
+                                        
+                                        $text .= chr(10).chr(10)."PS: avvisate anche ".$textNoUsername." che non hanno un username e non posso inviargli la tastiera.".chr(10)
+                                                ."Possono iniziare scrivendomi /".KEYBOARD."@".$me->result->username;
+                                        
                                     } else {
-                                        $text = "Nella vecchia configurazione non risultano esserci utenti attivi.";
-                                        $text .= chr(10)."Potete iniziare a partecipare ai giochi tramite i pulsanti in basso";
+                                        $text = "Potete iniziare a partecipare ai giochi tramite i pulsanti in basso";
                                     }
 
                                         $menu = array(
