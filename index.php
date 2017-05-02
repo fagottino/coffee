@@ -705,7 +705,7 @@ if($user->getChat()->getType() != "") {
 
                         case Emoticon::older().$lang->menu->keepOlderConfiguration:
                             try {
-//                                    $messageManager->sendChatAction($user->getChat()->getId(), "typing");
+                                $messageManager->sendChatAction($user->getChat()->getId(), "typing");
                                 $userList = $groupController->getOlderMember($user);
 
 //                                    $sendIt = true;
