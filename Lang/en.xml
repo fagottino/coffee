@@ -181,5 +181,9 @@
         <doYouWantResetOther>Do you want to reset other?</doYouWantResetOther>
         <pressNextToContinue>If not, press Next to continue</pressNextToContinue>
         <theCompetitorsAre>The competitors are</theCompetitorsAre>
+        <notInGroupTogether>seems that we aren't in any group together</notInGroupTogether>
+        <cantSendThemKeyboard>that doesn't have username, so i can't send the custom keyboard</cantSendThemKeyboard>
+        <canStartWith>Can start by typing</canStartWith>
+        <canStartGameWithButtonBelow>You can start to participate to the game with the botton below.</canStartGameWithButtonBelow>
     </ui>
 </document>

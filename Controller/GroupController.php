@@ -154,6 +154,32 @@ class GroupController {
         }
     }
     
+    public function checkConfiguration(User $_user) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            
+            $sql = "SELECT ".DB_PREFIX."usergroup.configuration FROM ".DB_PREFIX."user_group
+                    WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
+                    AND ".DB_PREFIX."user_group.id_user = '".$_user->getIdTelegram()."'
+                    AND ".DB_PREFIX."user_group.leaves = '0'";
+            $query = $db->query($sql);
+            
+            if (mysqli_num_rows($query) > 0) {
+                $res = $query->fetch_assoc();
+
+                $db->close();
+            } else if (mysqli_num_rows($query) == 0) {
+                $res = array();
+            } else {
+                throw new GroupControllerException($lang->error->getCompetitors);
+            }
+            return $res;
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
     public function getAllCompetitors(Chat $_chat) {
         global $lang;
         try {
@@ -348,9 +374,6 @@ class GroupController {
             if (!$result) {
                 throw new GroupControllerException($lang->error->joinTheGameSelect);
             }
-//            while ($row = $result->fetch_assoc()) {
-//                $group = $row;
-//            }
             $group[] = $result->fetch_assoc();
             if ($group[0]["partecipate"] == 1) {
                 $value = 0;
@@ -374,7 +397,7 @@ class GroupController {
         global $lang;
         try {
             $db = Database::getConnection();
-            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, ".DB_PREFIX."user.useryyname FROM ".DB_PREFIX."user_group
+            $sql = "SELECT ".DB_PREFIX."user.id_telegram, ".DB_PREFIX."user.name, ".DB_PREFIX."user.username FROM ".DB_PREFIX."user_group
                 JOIN ".DB_PREFIX."user ON ".DB_PREFIX."user_group.id_user = ".DB_PREFIX."user.id_telegram
                 WHERE ".DB_PREFIX."user_group.id_group = '".$_user->getChat()->getId()."'
                 AND ".DB_PREFIX."user_group.leaves = '0'";

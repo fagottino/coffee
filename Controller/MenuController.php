@@ -80,9 +80,13 @@ class MenuController {
                         "alone" => false
                         ),
                     array(
-                        "action" => Emoticon::settings().$lang->menu->settings,
+                        "action" => Emoticon::globe().$lang->menu->changeLanguage,
                         "alone" => false
                         ),
+//                    array(
+//                        "action" => Emoticon::settings().$lang->menu->settings,
+//                        "alone" => false
+//                        ),
                     array(
                         "action" => Emoticon::inLove().$lang->menu->doYouLikeTheBot,
                         "alone" => true

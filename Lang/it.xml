@@ -181,5 +181,10 @@
         <doYouWantResetOther>Vuoi resettare altro?</doYouWantResetOther>
         <pressNextToContinue>In caso contrario premi Avanti per continuare</pressNextToContinue>
         <theCompetitorsAre>I concorrenti sono:</theCompetitorsAre>
+        <notInGroupTogether>sembra che non siamo ancora in nessun gruppo insieme</notInGroupTogether>
+        <alsoWarn>PS: avvisate anche</alsoWarn>
+        <cantSendThemKeyboard>perchè non avendo un username all'account Telegram non posso inviargli la tastiera personalizzata.</cantSendThemKeyboard>
+        <canStartWith>Possono iniziare scrivendomi</canStartWith>
+        <canStartGameWithButtonBelow>Potete iniziare a partecipare ai giochi tramite i pulsanti in basso</canStartGameWithButtonBelow>
     </ui>
 </document>
