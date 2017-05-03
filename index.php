@@ -72,8 +72,8 @@ if($user->getChat()->getType() != "") {
                         ;
                 } else {
                     $text = '
-                        <strong>'.$user->getName().'</strong>, '.$lang->ui->botAlreadyStarted." ".Emoticon::smile().chr(10)."".chr(10)
-                        .$lang->ui->sendSomeButtons//.chr(10).chr(10)
+                        <strong>'.$user->getName().'</strong>, '.Emoticon::smile()." "
+                            .$lang->ui->sendSomeButtons//.chr(10).chr(10)
 //                        .$lang->ui->giveMeTips." <a href='http://www.orlandoantonio.it'>".$lang->ui->clickingHere."</a> ".Emoticon::smile()
                         ;
                 }
