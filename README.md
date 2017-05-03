@@ -12,7 +12,7 @@ Obviously you need to have [Telegram](https://telegram.org/)
 
 ## Built With
 
-PHP and with a bit of my heart.
+PHP and a bit of my heart.
 
 ## Authors
 
@@ -22,3 +22,4 @@ PHP and with a bit of my heart.
 
 This project is licensed under the *[CCPL License]*(https://en.wikipedia.org/wiki/Creative_Commons_license)
 
+# Enjoy!
