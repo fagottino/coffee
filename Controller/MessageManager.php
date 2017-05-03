@@ -198,7 +198,7 @@ class MessageManager {
                 $errorCurrent .= $data["description"];
                 $errorCurrent .= "\n";
                 file_put_contents($errorFile, $errorCurrent);
-                throw new MessageException("Errore nell'invio del messaggio");
+                throw new MessageException((string)$lang->error->sendingMessage);
             } else {
                 
             }

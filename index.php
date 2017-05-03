@@ -67,18 +67,48 @@ if($user->getChat()->getType() != "") {
                         .$lang->ui->initialText.chr(10)
                         .$lang->ui->initialText1.chr(10).chr(10)
                         .$lang->ui->initialText2.' '.Emoticon::smile().chr(10)
-                        .$lang->ui->enjoy.chr(10).chr(10)
-                        .$lang->ui->infoBot." <a href='http://www.orlandoantonio.it'>".$lang->ui->clickingHere."</a>."
-                    ;
+                        .$lang->ui->enjoy//.chr(10).chr(10)
+//                        .$lang->ui->infoBot." <a href='http://www.orlandoantonio.it'>".$lang->ui->clickingHere."</a>."
+                        ;
                 } else {
                     $text = '
                         <strong>'.$user->getName().'</strong>, '.$lang->ui->botAlreadyStarted." ".Emoticon::smile().chr(10)."".chr(10)
-                        .$lang->ui->sendSomeButtons.chr(10).chr(10)
-                        .$lang->ui->giveMeTips." <a href='http://www.orlandoantonio.it'>".$lang->ui->clickingHere."</a> ".Emoticon::smile();
+                        .$lang->ui->sendSomeButtons//.chr(10).chr(10)
+//                        .$lang->ui->giveMeTips." <a href='http://www.orlandoantonio.it'>".$lang->ui->clickingHere."</a> ".Emoticon::smile()
+                        ;
                 }
                 $menu = $menuController->defaultPrivate();
                 try {
                     $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $menu);
+                }
+                catch (MessageException $ex) {
+                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
+                }
+                break;
+
+            case INFO:
+                $messageManager->sendChatAction($user->getChat()->getId(), "typing");
+                try {
+                    $text = Emoticon::smile().Emoticon::smileTongue();
+                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $text, $user->getIdMessage());
+                }
+                catch (DatabaseException $ex) {
+                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
+                }
+                catch (UserControllerException $ex) {
+                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
+                }
+                catch (MessageException $ex) {
+                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
+                }
+                break;
+
+            case KEYBOARD:
+                $text = $lang->ui->hereComesAgain." ".($user->getUsername() != "" ? "@".$user->getUsername() : $user->getName()).", ".$lang->ui->youAskIobey." ".Emoticon::smile().Emoticon::victory();
+                $menu = $menuController->defaultPrivate();
+                try {
+                    $messageManager->sendChatAction($user->getChat()->getId(), "typing");
+                    $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $menu, $user->getIdMessage(), true, false);
                 }
                 catch (MessageException $ex) {
                     $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
@@ -230,6 +260,7 @@ if($user->getChat()->getType() != "") {
                     case (strpos($operation, CHANGE_LANGUAGE_GROUP) !== false):
                     case (strpos($operation, RESET_HOLD_HOLDINGS) !== false):
                     case (strpos($operation, RESET_OLD_COFFEE) !== false):
+                    case (strpos($operation, STATS_GROUP) !== false):
                         $groupInfo = explode("~", $operation);
                         $groupId = $groupInfo[1];
                         $groupTitle = $groupInfo[2];
@@ -384,6 +415,7 @@ if($user->getChat()->getType() != "") {
                 $groupInfo = explode("~", $user->getMessage());
                 $groupId = $groupInfo[1];
                 $groupTitle = $groupInfo[2];
+                $groupLang = $groupController->getLang($groupId);
 
                 try {
                     $groupController->joinTheGame($user, $groupId);
@@ -392,17 +424,22 @@ if($user->getChat()->getType() != "") {
                     $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $menu);
                     
                     if ($getGroupInfo[0]["partecipate"] == 0) {
+                        $user->getChat()->setLang($user->getMessage());
+                        $lang = Lang::getLang($user->getChat()->getLang());
                         $message = $lang->general->serviceCommunication.chr(10).($user->getUsername() != NULL ? "@".$user->getUsername() : $user->getName())
                                 ." ".$lang->general->hasJustLeftTheGame.chr(10)
                                 .$lang->general->excludeFromChooseBenefactor;
                         $messageManager->sendReplyMarkup($groupId, $message, "remove", 0, true, true);
+                        $lang = Lang::getLang($user->getLang());
                         $text = $lang->general->youChoseToLeaveGame." ".$groupTitle;
                     } else if ($getGroupInfo[0]["partecipate"] == 1) {
+                        $lang = Lang::getLang($user->getChat()->getLang());
                         $message = $lang->general->serviceCommunication.chr(10).($user->getUsername() != NULL ? "@".$user->getUsername() : $user->getName())
                                 ." ".$lang->general->hasJustJoinTheGame.chr(10)
                                 .$lang->general->includedInChooseBenefactor;
                         $menu = $menuController->defaultGroup();
                         $messageManager->sendReplyMarkup($groupId, $message, $menu, 0, true, true);
+                        $lang = Lang::getLang($user->getLang());
                         $text = $lang->general->youChoseToPlayIn." ".$groupTitle;
                     }
                     
@@ -441,8 +478,56 @@ if($user->getChat()->getType() != "") {
                 break;
 
             case (strpos($user->getMessage(), STATS_GROUP) !== false):
-                $text = $lang->error->notImplementedYet;
-                $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text, true);
+                try {
+                    $groupInfo = explode("~", $user->getMessage());
+                    $groupId = $groupInfo[1];
+                    $groupTitle = $groupInfo[2];
+                    $user->setCurrentOperation(STATS_GROUP."~".$groupId."~".$groupTitle);
+                    $userController->updateCurrentOperation($user);
+                    $candidate = $groupController->getCompetitors($user->getChat(), $groupId);
+                    if (sizeof($candidate) > 0) {
+                        foreach ($candidate as $data) {
+                            $countOfferCoffee[] = $coffeeController->countOfferCoffee($user, $data);
+                            $countReceivedCoffee[] = $coffeeController->countReceivedCoffee($user, $data);
+                        }
+                        $text = $lang->ui->currentSituationIs.chr(10).chr(10);
+
+                        $allIdOfferCoffee = array_column($countOfferCoffee, 'id_telegram');
+                        $allIdReceivedCoffee = array_column($countReceivedCoffee, 'id_telegram');
+                        $i = 0;
+                        foreach ($candidate as $data) {
+                            $idOffer = array_search($data["id_user"], $allIdOfferCoffee);
+                            $idReceived = array_search($data["id_user"], $allIdReceivedCoffee);
+                            $text .= $countOfferCoffee[$idOffer]["name"]." ".$lang->ui->offered." <b>".$countOfferCoffee[$idOffer]["caffe_offerti"]."</b> ".$lang->ui->andReceivedIt." <b>".$countReceivedCoffee[$idReceived]["caffe_ricevuti"]."</b>\n";
+                            $i++;
+                        }
+                        $menu = $menuController->createCustomInlineMenu(null, 3, true);
+                        $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
+                        $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $menu);
+                        $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage));
+//                        $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, null, $user->getIdMessage(), false, true);
+                    } else {
+                        $text = (string)$lang->error->notEnoughUser." ".Emoticon::smile();
+//                        $menu = $menuController->createCustomInlineMenu(null, 3, true);
+//                        $messageManager->editMessageText($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $text);
+//                        $messageManager->editInlineMessage($user->getChat()->getId(), $user->getMessageIdCallBack($unreadMessage), $menu);
+                        $messageManager->answerCallbackQuery($user->getCallbackQueryId($unreadMessage), $text);
+//                        $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, null, $user->getIdMessage(), false, true);
+                    }
+                }
+                catch (DatabaseException $ex) {
+                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
+                }
+                catch (UserControllerException $ex) {
+                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
+                }
+                catch (GroupControllerException $ex) {
+                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
+                }
+                catch (MessageException $ex) {
+                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
+                }
+//                $text = $lang->error->notImplementedYet;
                 break;
 
             case (strpos($user->getMessage(), RESET_HOLD_HOLDINGS) !== false):
@@ -639,6 +724,7 @@ if($user->getChat()->getType() != "") {
                                         $coffeeController->destroyCoffee($user, true);
                                     }
                                     $groupController->leaveGroup($user->getChat());
+                                    $groupController->resetOwner($user->getChat());
                                 }
                                 catch (DatabaseException $ex) {
                                     $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
@@ -672,7 +758,7 @@ if($user->getChat()->getType() != "") {
                             try {
                                 $messageManager->sendChatAction($user->getChat()->getId(), "typing");
                                 $olderMember = $groupController->getOlderMember($user);
-                                if (sizeof($olderMember) > 0) {
+                                if (sizeof($olderMember) >= 2) {
                                     $text = $lang->general->thereAreActiveUsers.chr(10)
                                             .$lang->general->whatDoYouWantToDoWithOlderConfiguration.chr(10).chr(10)
                                             .Emoticon::older()." ".$lang->menu->keepOlderConfiguration.$lang->general->keepOlderConfiguration.chr(10).chr(10)
@@ -708,18 +794,6 @@ if($user->getChat()->getType() != "") {
                                 $messageManager->sendChatAction($user->getChat()->getId(), "typing");
                                 $userList = $groupController->getOlderMember($user);
 
-//                                    $sendIt = true;
-//                                    foreach ($userList as $key => $value) {
-//                                        if ($user->getIdTelegram() == $value["id_telegram"]) {
-//                                            $sendIt = false;
-//                                        }
-//                                    }
-//
-//                                    if ($sendIt) {
-//                                        $messageManager->sendSimpleMessage($user->getChat()->getId(), $text, false, $user->getIdMessage());
-//                                        $text = "";
-//                                    }
-
                                 if (sizeof($userList) > 0) {
                                     $text = $lang->ui->beforeStartConfirmConfiguration.chr(10).chr(10);
                                     $textNoUsername = "";
@@ -734,7 +808,7 @@ if($user->getChat()->getType() != "") {
                                     $text .= $lang->ui->pleaseAnswerMeYourIntentions;
 
                                     $text .= chr(10).chr(10).$lang->ui->alsoWarn." <b>".$textNoUsername."</b>".$lang->ui->cantSendThemKeyboard.chr(10)
-                                            .$lang->ui->canStartWith.":".chr(10)
+                                            .$lang->ui->canStartWith." ".Emoticon::down().chr(10)
                                             .KEYBOARD."@".$me->result->username;
                                 } else {
                                     $text = (string)$lang->ui->canStartGameWithButtonBelow;
@@ -1268,26 +1342,17 @@ if($user->getChat()->getType() != "") {
                                         $lang = Lang::getLang($user->getChat()->getLang());
                                         $text = (string)$lang->ui->ok." "
                                                 .$user->getName().", "
-                                                .$lang->ui->triedToSendYouAMessageIfYouChangeIdea.chr(10)
+                                                .$lang->ui->ifYouWantCanGetKeyboard.chr(10)
+                                                ." ".KEYBOARD."@".$me->result->username.chr(10)
                                                 .$lang->ui->seeYouSoon." "
-                                                .Emoticon::smile();
+                                                .Emoticon::smile().Emoticon::smile();
+                                        $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, "remove", $user->getIdMessage(), true, true);
                                         $menu = $menuController->writeMe("privateChat");
-                                    $messageManager->sendInline($user->getChat()->getId(), $text, $menu, $user->getIdMessage(), true);
+                                        $text = $lang->ui->triedToSendYouAMessageIfYouChangeIdea.Emoticon::smile();
+                                        $messageManager->sendInline($user->getChat()->getId(), $text, $menu, $user->getIdMessage(), true);
                                     }
                                 }
                             break;
-
-//                            case KEYBOARD:
-//                                $text = $lang->ui->hereComesAgain." ".($user->getUsername() != "" ? "@".$user->getUsername() : $user->getName()).", ".$lang->ui->youAskIobey." ".Emoticon::smile().Emoticon::victory();
-//                                $menu = $menuController->defaultGroup();
-//                                try {
-//                                    $messageManager->sendChatAction($user->getChat()->getId(), "typing");
-//                                    $messageManager->sendReplyMarkup($user->getChat()->getId(), $text, $menu, $user->getIdMessage(), true, false);
-//                                }
-//                                catch (MessageException $ex) {
-//                                    $messageManager->sendSimpleMessage($user->getChat()->getId(), $ex->getMessage(), $user->getIdMessage());
-//                                }
-//                                break;
 
                         case START."@".$me->result->username:
                         case KEYBOARD."@".$me->result->username:

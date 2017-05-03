@@ -32,6 +32,8 @@
         <continueParticipating>I want to continue to participate</continueParticipating>
         <selectAll>Select all</selectAll>
         <changeLanguage>Change language</changeLanguage>
+        <addMeToGroup>Add me to a group</addMeToGroup>
+        <writeMe>Write me now</writeMe>
     </menu>
     <error>
         <errorWithCreationOfCustomMenu>Error while the creation of the custom menu'.</errorWithCreationOfCustomMenu>
@@ -93,6 +95,7 @@
         <resetParticipate>Error while reset the participate at the game.</resetParticipate>
         <getLang>Error while trying to get the lang of group.</getLang>
         <updateLang>Error while trying to update the lang of group.</updateLang>
+        <sendingMessage>Error while sending message.</sendingMessage>
     </error>
     <general>
         <retry>Retry.</retry>
@@ -105,9 +108,9 @@
         <youAreHere>You are here:</youAreHere>
         <listsOfYourGroup>This is the list of your groups</listsOfYourGroup>
         <legend>Legend</legend>
-        <notParticipatingToGame>You <b>aren't participating</b> in the game</notParticipatingToGame>
+        <notParticipatingToGame>You &lt;b&gt;aren't participating&lt;/b&gt; in the game</notParticipatingToGame>
         <notParticipatingToGame1>You aren't participating in the game</notParticipatingToGame1>
-        <participatingToGame>You <b>are participating</b> in the game</participatingToGame>
+        <participatingToGame>You &lt;b&gt;are participating&lt;/b&gt; in the game</participatingToGame>
         <participatingToGame1>You are participating in the game</participatingToGame1>
         <changeGroupState>Tap on group to change his settings</changeGroupState>
         <serviceCommunication>Service communication:</serviceCommunication>
@@ -123,6 +126,7 @@
         <resetOldHoldings> => All the participants will be deleted. Each participant in the group will have to subscribe again his willingness to join in the game.</resetOldHoldings>
         <operationCanceled>Operation successfully canceled.</operationCanceled>
         <changedKeyboard>I've also changed your keyboard to make you feel at home. Have fun!</changedKeyboard>
+        <reconfirmWillPartecipate>(must reconfirm the will to participate)</reconfirmWillPartecipate>
     </general>
     <ui>
         <hi>Hi</hi>
@@ -182,8 +186,10 @@
         <pressNextToContinue>If not, press Next to continue</pressNextToContinue>
         <theCompetitorsAre>The competitors are</theCompetitorsAre>
         <notInGroupTogether>seems that we aren't in any group together</notInGroupTogether>
+        <alsoWarn>PS: Also warn</alsoWarn>
         <cantSendThemKeyboard>that doesn't have username, so i can't send the custom keyboard</cantSendThemKeyboard>
         <canStartWith>Can start by typing</canStartWith>
         <canStartGameWithButtonBelow>You can start to participate to the game with the botton below.</canStartGameWithButtonBelow>
+        <ifYouWantCanGetKeyboard>whenever you want you can get the keyboard with</ifYouWantCanGetKeyboard>
     </ui>
 </document>

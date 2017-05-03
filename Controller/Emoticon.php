@@ -169,4 +169,12 @@ class Emoticon {
     public static function smileTongue() {
         return "\xF0\x9F\x98\x9C";
     }
+    
+    public static function down() {
+        return "\xE2\xAC\x87";
+    }
+    
+//    public static function group() {
+//        return "\xF0\x9F\x91\xAC";
+//    }
 }

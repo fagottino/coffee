@@ -75,10 +75,10 @@ class MenuController {
                         "action" => Emoticon::group().$lang->menu->yourGroups,
                         "alone" => true
                         ),
-                    array(
-                        "action" => Emoticon::help().$lang->menu->help,
-                        "alone" => false
-                        ),
+//                    array(
+//                        "action" => Emoticon::help().$lang->menu->help,
+//                        "alone" => false
+//                        ),
                     array(
                         "action" => Emoticon::globe().$lang->menu->changeLanguage,
                         "alone" => false
@@ -245,11 +245,11 @@ class MenuController {
                         $state,
                         array(
                             "text" => Emoticon::globe().$lang->menu->changeLanguage,
-                            "callback_data" => "changeLanguageGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]
+                            "callback_data" => CHANGE_LANGUAGE_GROUP."~".$_group[0]["id_group"]."~".$_group[0]["title"]
                             ),
                         array(
                             "text" => Emoticon::stats().$lang->menu->stats,
-                            "callback_data" => "statsGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]
+                            "callback_data" => STATS_GROUP."~".$_group[0]["id_group"]."~".$_group[0]["title"]
                             ),
                         array(
                             "text" => Emoticon::neww().$lang->menu->resetOldHoldings,
@@ -265,7 +265,7 @@ class MenuController {
                         $state,
                         array(
                             "text" => Emoticon::stats().$lang->menu->stats,
-                            "callback_data" => "statsGroup~".$_group[0]["id_group"]."~".$_group[0]["title"]
+                            "callback_data" => STATS_GROUP."~".$_group[0]["id_group"]."~".$_group[0]["title"]
                             )
                     );
         }
@@ -298,12 +298,12 @@ class MenuController {
     }
     
     public function writeMe($_type) {
-        
+        global $lang;
         switch ($_type) {
             case "privateChat":
                 $item = array(
                     array(
-                        "text" => "Scrivimi ora",
+                        "text" => (string)$lang->menu->writeMe,
                         "url" => "https://t.me/IlBenefattoreDelCaffe_Bot"
                     )
                 );
@@ -312,7 +312,7 @@ class MenuController {
             case "addToGroup":
                 $item = array(
                     array(
-                        "text" => "Aggiungimi ad un gruppo",
+                        "text" => Emoticon::group()." ".$lang->menu->addMeToGroup,
                         "url" => "http://t.me/IlBenefattoreDelCaffe_Bot?startgroup=start"
                     )
                 );

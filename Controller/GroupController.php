@@ -125,17 +125,26 @@ class GroupController {
         return true;
     }
     
-    public function getCompetitors(Chat $_chat) {
+    public function getCompetitors(Chat $_chat, $_idChat = null) {
         global $lang;
         try {
             $db = Database::getConnection();
             
-            $sql = "SELECT ".DB_PREFIX."user.id_telegram AS id_user, ".DB_PREFIX."user.name, ".DB_PREFIX."user.username, ".DB_PREFIX."user_group.configuration FROM ".DB_PREFIX."user
-                    JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
-                    WHERE ".DB_PREFIX."user_group.id_group = '".$_chat->getId()."'
-                    AND ".DB_PREFIX."user_group.partecipate = '1'
-                    AND ".DB_PREFIX."user_group.configuration = '0'
-                    AND ".DB_PREFIX."user_group.leaves = '0'";
+            if ($_idChat != null) {
+                $sql = "SELECT ".DB_PREFIX."user.id_telegram AS id_user, ".DB_PREFIX."user.name, ".DB_PREFIX."user.username, ".DB_PREFIX."user_group.configuration FROM ".DB_PREFIX."user
+                        JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
+                        WHERE ".DB_PREFIX."user_group.id_group = '".$_idChat."'
+                        AND ".DB_PREFIX."user_group.partecipate = '1'
+                        AND ".DB_PREFIX."user_group.configuration = '0'
+                        AND ".DB_PREFIX."user_group.leaves = '0'";
+            } else {
+                $sql = "SELECT ".DB_PREFIX."user.id_telegram AS id_user, ".DB_PREFIX."user.name, ".DB_PREFIX."user.username, ".DB_PREFIX."user_group.configuration FROM ".DB_PREFIX."user
+                        JOIN ".DB_PREFIX."user_group ON ".DB_PREFIX."user.id_telegram = ".DB_PREFIX."user_group.id_user
+                        WHERE ".DB_PREFIX."user_group.id_group = '".$_chat->getId()."'
+                        AND ".DB_PREFIX."user_group.partecipate = '1'
+                        AND ".DB_PREFIX."user_group.configuration = '0'
+                        AND ".DB_PREFIX."user_group.leaves = '0'";
+            }
             $query = $db->query($sql);
             
             if (mysqli_num_rows($query) > 0) {
@@ -295,6 +304,22 @@ class GroupController {
         }
     }
     
+    public function resetOwner(Chat $_chat) {
+        global $lang;
+        try {
+            $db = Database::getConnection();
+            $sql = "UPDATE ".DB_PREFIX."user_group SET bot_owner = '0' WHERE id_group = ".$_chat->getId();
+            $result = $db->query($sql);
+            
+            if (!$result) {
+                throw new GroupControllerException($lang->error->leaveGroup);
+            }
+            
+        } catch (DatabaseException $ex) {
+            throw new DatabaseException($ex->getMessage().$lang->general->line.$ex->getLine().$lang->general->code.$ex->getCode());
+        }
+    }
+    
     public function createText($_data) {
         global $lang;
         $text = $lang->ui->theCompetitorsAre.chr(10).chr(10);
@@ -304,7 +329,7 @@ class GroupController {
             if ($value["configuration"] == 1) {
                 $text .= ++$i."<b>)</b> ";
                 $text .= $this->strikethrougText($value["name"]);
-                $text .= " (deve riconfermare la volontà a partecipare)".chr(10);
+                $text .= " ".$lang->general->reconfirmWillPartecipate.chr(10);
             } else {
                 $text .= ++$i.") ".$value["name"].chr(10);
             }
@@ -321,6 +346,7 @@ class GroupController {
                     JOIN ".DB_PREFIX."group ON ".DB_PREFIX."user_group.id_group = ".DB_PREFIX."group.id_group
                     WHERE ".DB_PREFIX."user_group.id_user = '".$_user->getIdTelegram()."'
                     AND ".DB_PREFIX."user_group.leaves = '0'
+                    AND ".DB_PREFIX."group.leaves = '0'
                     ";
 
             $query = $db->query($sql);
@@ -403,11 +429,11 @@ class GroupController {
                 AND ".DB_PREFIX."user_group.leaves = '0'";
             $result = $db->query($sql);
             
-            if (mysqli_num_rows($result) > 1) {
+            if (mysqli_num_rows($result) > 0) {
                 while ($singleUser = $result->fetch_assoc()) {
                     $user[] = $singleUser; 
                 }
-            } else if(mysqli_num_rows($result) == 0 || mysqli_num_rows($result) == 1) {
+            } else if(mysqli_num_rows($result) == 0) {
                 $user = array();
             } else {
                 throw new GroupControllerException($lang->error->getOlderMember);

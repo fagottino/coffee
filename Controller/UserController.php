@@ -30,7 +30,7 @@ class UserController {
         } else if ($result->num_rows == 0) {
             $row = array();
         } else {
-            $row = $result->fetch_assoc();
+            $row[] = $result->fetch_assoc();
             $result->free();
         }
         return $row;
