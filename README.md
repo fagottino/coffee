@@ -24,7 +24,7 @@ Made with PHP and with a bit of my heart.
 
 ## Authors
 
-* **fagottino** - *Check my [Twitter profile](https://twitter.com/fagottino)*
+* **fagottino** - Check my *[Twitter profile](https://twitter.com/fagottino)*
 
 
 ## License
