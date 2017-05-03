@@ -10,15 +10,15 @@ Check [IlBenefattoreDelCaffe_Bot](https://t.me/IlBenefattoreDelCaffe_Bot) to get
 
 Obviously you need to have [Telegram](https://telegram.org/)
 
-## Built With
+#### Built With
 
 PHP and a bit of my heart.
 
-## Authors
+##### Authors
 
 * **fagottino** - Check my *[Twitter profile](https://twitter.com/fagottino)*
 
-## License
+###### License
 
 This project is licensed under the *[CCPL License](https://en.wikipedia.org/wiki/Creative_Commons_license)*
 
@@ -28,4 +28,4 @@ This project is licensed under the *[CCPL License](https://en.wikipedia.org/wiki
 
 
 
-###### Enjoy!
+# Enjoy!
