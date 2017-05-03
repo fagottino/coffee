@@ -10,29 +10,15 @@ Check [IlBenefattoreDelCaffe_Bot](https://t.me/IlBenefattoreDelCaffe_Bot) to get
 
 Obviously you need to have [Telegram](https://telegram.org/)
 
-
-## Deployment
-
-Made with PHP and with a bit of my heart.
-
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
+PHP and with a bit of my heart.
 
 ## Authors
 
 * **fagottino** - Check my *[Twitter profile](https://twitter.com/fagottino)*
 
-
 ## License
 
-This project is licensed under the CCPL License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the *[CCPL License]*(https://en.wikipedia.org/wiki/Creative_Commons_license)
 
-## Acknowledgments
-
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
