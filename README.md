@@ -8,7 +8,7 @@ Check https://t.me/IlBenefattoreDelCaffe_Bot to getting started
 
 ### Prerequisites
 
-Obviously you need to have Telegram https://telegram.org/
+Obviously you need to have [Telegram](https://telegram.org/)
 
 
 ## Deployment
