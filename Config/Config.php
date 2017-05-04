@@ -25,7 +25,6 @@ define('HOME', 'home');
 define('HELP', 'help');
 define('SETTINGS', 'settings');
 define('SETTINGS_INLINE', 'settingsInline');
-define('SETTINGS_INLINE', 'settingsInline');
 define('CANCEL_COFFEE', 'cancel');
 define('SELECT_ALL', 'selectAll');
 define('CHANGE_LANGUAGE', 'changeLanguage');
@@ -44,7 +43,6 @@ define('CHOOSE_BENEFACTOR', 'chooseBenefactor');
 define('CHOOSE_BENEFACTOR2', 'chooseBenefactor2');
 define('BENEFACTOR_LIST', 'benefactorList');
 define('SETTING_OPERATION_GROUP', 'setOperationGroup');
-define('CHANGE_LANGUAGE_GROUP', 'changeLanguageGroup');
 
 //class Config {
 //    
