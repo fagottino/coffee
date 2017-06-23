@@ -67,8 +67,8 @@ class User {
     }
     
     public function setUserDataFromDb($_user) {
-        $this->currentOperation = $_user['operation'];
-        $this->lang = $_user['name_lang'];
+        $this->currentOperation = $_user[0]['operation'];
+        $this->lang = $_user[0]['name_lang'];
     }
     
     public function getIdTelegram() {
